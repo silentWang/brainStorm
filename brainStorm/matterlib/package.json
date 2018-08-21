@@ -1,0 +1,5 @@
+{
+	"name": "matterlib",
+	"typings": "src/matter.d.ts",
+	"dependencies": {}
+}
