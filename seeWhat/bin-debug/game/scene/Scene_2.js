@@ -86,6 +86,10 @@ var Scene_2 = (function (_super) {
         text.addEventListener(egret.TouchEvent.TOUCH_TAP, this.textClk, this);
         return text;
     };
+    Scene_2.prototype.enter = function () {
+        _super.prototype.enter.call(this);
+        this.timeItem.start();
+    };
     Scene_2.prototype.exit = function () {
         _super.prototype.exit.call(this);
         while (this.numChildren > 1) {

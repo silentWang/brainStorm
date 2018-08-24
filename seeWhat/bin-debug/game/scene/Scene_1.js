@@ -87,7 +87,6 @@ var Scene_1 = (function (_super) {
         text.textColor = 0xffffff * (8 * Math.random() + 2) / 10;
         text.stroke = 0.5;
         text.strokeColor = 0xffff00;
-        text.width = 60;
         text.bold = true;
         text.x = this.bounds.width * Math.random();
         text.y = this.bounds.height * Math.random();
@@ -105,6 +104,10 @@ var Scene_1 = (function (_super) {
         }, 5000 + 2000 * Math.random()).call(function () {
             _this.back(target);
         });
+    };
+    Scene_1.prototype.enter = function () {
+        _super.prototype.enter.call(this);
+        this.timeItem.start();
     };
     //清内存
     Scene_1.prototype.exit = function () {

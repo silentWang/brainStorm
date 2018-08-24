@@ -11,7 +11,7 @@
 	"game": [
 		"bin-debug/game/scene/BaseScene.js",
 		"bin-debug/game/view/BaseView.js",
-		"bin-debug/game/item/TimeItem.js",
+		"bin-debug/game/scene/MenuScene.js",
 		"bin-debug/Main.js",
 		"bin-debug/Platform.js",
 		"bin-debug/game/EventCenter.js",
@@ -19,16 +19,21 @@
 		"bin-debug/game/GameScene.js",
 		"bin-debug/game/GameView.js",
 		"bin-debug/game/events/GameEvent.js",
-		"bin-debug/Game.js",
+		"bin-debug/game/item/ScoreItem.js",
+		"bin-debug/game/item/TimeItem.js",
 		"bin-debug/EgretRender.js",
-		"bin-debug/game/scene/MenuScene.js",
+		"bin-debug/game/vo/DataVO.js",
 		"bin-debug/game/scene/OverScene.js",
 		"bin-debug/game/scene/Scene_1.js",
 		"bin-debug/game/scene/Scene_2.js",
+		"bin-debug/game/scene/Scene_3.js",
+		"bin-debug/game/scene/Scene_4.js",
+		"bin-debug/game/scene/Scene_5.js",
+		"bin-debug/game/scene/Scene_6.js",
 		"bin-debug/game/utils/CommonUtil.js",
 		"bin-debug/game/utils/SpriteUtil.js",
 		"bin-debug/LoadingUI.js",
 		"bin-debug/game/view/GuideView.js",
-		"bin-debug/game/vo/DataVO.js"
+		"bin-debug/Game.js"
 	]
 }

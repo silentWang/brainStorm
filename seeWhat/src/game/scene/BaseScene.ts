@@ -6,14 +6,13 @@ class BaseScene extends egret.DisplayObjectContainer{
     private isShow:boolean = false;
     //倒计时 子类实现
     public timeItem:TimeItem = null;
+    //分数 子类实现
+    public scoreItem:ScoreItem = null;
 
     enter(){
         if(this.isShow) return;
         this.isShow = true;
         Game.instance().addBottom(this);
-        if(this.timeItem){
-            this.timeItem.start();
-        }
     }
 
     exit(){

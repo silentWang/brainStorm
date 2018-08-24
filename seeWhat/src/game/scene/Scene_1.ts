@@ -82,7 +82,6 @@ class Scene_1 extends BaseScene{
         text.textColor = 0xffffff*(8*Math.random() + 2)/10;
         text.stroke = 0.5;
         text.strokeColor = 0xffff00;
-        text.width = 60;
         text.bold = true;
         text.x = this.bounds.width * Math.random();
         text.y = this.bounds.height * Math.random();
@@ -100,6 +99,11 @@ class Scene_1 extends BaseScene{
             5000+2000*Math.random()).call(()=>{
                 this.back(target);
             });
+    }
+
+    enter(){
+        super.enter();
+        this.timeItem.start();
     }
 
     //清内存

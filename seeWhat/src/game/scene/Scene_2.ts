@@ -81,6 +81,11 @@ class Scene_2 extends BaseScene{
         return text;
     }
 
+    enter(){
+        super.enter();
+        this.timeItem.start();
+    }
+
     exit(){
         super.exit();
         while(this.numChildren > 1){

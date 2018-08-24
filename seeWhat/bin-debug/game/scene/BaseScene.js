@@ -16,6 +16,8 @@ var BaseScene = (function (_super) {
         _this.isShow = false;
         //倒计时 子类实现
         _this.timeItem = null;
+        //分数 子类实现
+        _this.scoreItem = null;
         return _this;
     }
     BaseScene.prototype.enter = function () {
@@ -23,9 +25,6 @@ var BaseScene = (function (_super) {
             return;
         this.isShow = true;
         Game.instance().addBottom(this);
-        if (this.timeItem) {
-            this.timeItem.start();
-        }
     };
     BaseScene.prototype.exit = function () {
         this.isShow = false;

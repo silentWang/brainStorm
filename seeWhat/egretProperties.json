@@ -23,7 +23,7 @@
     },
     {
       "name":"matter",
-      "path":"../matterlib/src"
+      "path":"../matterlib"
     }
   ]
 }

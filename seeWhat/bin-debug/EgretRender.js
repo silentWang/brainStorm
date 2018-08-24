@@ -71,8 +71,10 @@ var EgretRender = (function () {
         }, EgretRender);
     };
     EgretRender.stop = function (cb) {
+        if (cb === void 0) { cb = null; }
         egret.stopTick(function (timeStamp) {
-            cb();
+            if (cb)
+                cb();
             return false;
         }, EgretRender);
     };

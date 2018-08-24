@@ -65,9 +65,9 @@ class EgretRender {
 		}, EgretRender);
     }
 
-    public static stop(cb: Function) {
+    public static stop(cb: Function = null) {
         egret.stopTick((timeStamp: number)=> {
-            cb();
+			if(cb) cb();
             return false;
         }, EgretRender);
     }

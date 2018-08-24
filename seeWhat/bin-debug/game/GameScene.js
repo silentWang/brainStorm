@@ -8,7 +8,8 @@ var GameScene = (function () {
     GameScene.prototype.init = function () {
         this._menuScene = new MenuScene();
         this._overScene = new OverScene();
-        this.allScenes = [Scene_1, Scene_2];
+        //十二生肖  连连看  营救女友  
+        this.allScenes = [0, Scene_1, Scene_2, Scene_3, Scene_4, Scene_5, Scene_6];
         //添加事件
         this.addEvent();
     };
@@ -39,6 +40,7 @@ var GameScene = (function () {
         var lvl = GameData.currentLevel;
         lvl++;
         GameData.currentLevel = lvl;
+        GameData.currentLevel = 6;
         Game.instance().gameView.guideView.show('本关：十二生肖\n在有限时间内尽可能找出十二生肖所对应的文字，要按照顺序额');
         this._menuScene.exit();
         this._overScene.exit();

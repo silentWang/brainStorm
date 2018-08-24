@@ -26,14 +26,39 @@ class SpriteUtil{
         return rect;
     }
     //多边形
-    static createPolygon(vertices,color:number = 0x00ff00){
-        // if(!vertices || !vertices.length){
-        //     vertices = [0,0]
-        // }
-        // let polygon = new egret.Shape();
-        // polygon.graphics.beginFill(color);
-        // polygon.graphics.lineStyle(1,color);
-        // polygon.graphics.moveTo()
+    static createPolygon(points:Array<number>,color:number = 0x00ff00){
+        if(!points || !points.length){
+            return;
+        }
+        let polygon = new egret.Shape();
+        let len = points.length;
+        polygon.graphics.beginFill(color);
+        polygon.graphics.lineStyle(1,color);
+        polygon.graphics.moveTo(points[0],points[1]);
+        for(let i = 0;i < len;i+=2){
+            polygon.graphics.lineTo(points[i],points[i+1]);
+            polygon.graphics.moveTo(points[i],points[i+1]);
+        }
+        polygon.graphics.lineTo(points[0],points[1]);
+        polygon.graphics.endFill();
+        polygon.anchorOffsetX = polygon.width/2;
+        polygon.anchorOffsetY = polygon.height/2;
+        return polygon;
+    }
+    //text 图
+    static createText(str:string,size:number = 40,color = 0xff0000,isBackground:boolean = false){
+        let text = new egret.TextField();
+        text.size = size;
+        text.text = str;
+        text.textColor = color;
+        text.background = isBackground;
+        text.backgroundColor = 0xffff00;
+        text.textAlign = 'center';
+        text.verticalAlign = 'middle';
+        text.bold = true;
+        text.anchorOffsetX = text.width/2;
+        text.anchorOffsetY = text.height/2;
+        return text;
     }
     //创建bitmap
     static createImage(src:string){

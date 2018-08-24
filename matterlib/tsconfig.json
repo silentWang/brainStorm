@@ -7,6 +7,5 @@
     "files": [
     	"src/decomp.js",
         "src/matter.js"
-        
     ]
 }
