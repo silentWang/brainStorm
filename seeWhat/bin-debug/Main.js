@@ -150,7 +150,7 @@ var Main = (function (_super) {
      */
     Main.prototype.createGameScene = function () {
         var sp = new egret.Shape();
-        sp.graphics.beginFill(0x000000);
+        sp.graphics.beginFill(0x111111);
         sp.graphics.drawRect(0, 0, this.stage.stageWidth, this.stage.stageHeight);
         sp.graphics.endFill();
         this.stage.addChild(sp);

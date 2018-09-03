@@ -20,7 +20,7 @@ class GuideView extends BaseView{
         this.tipsTxt.stroke = 1;
         this.tipsTxt.strokeColor = 0x0000ff;
         this.tipsTxt.bold = true;
-        this.tipsTxt.lineSpacing = 10;
+        this.tipsTxt.lineSpacing = 20;
         this.tipsTxt.width = SpriteUtil.stageWidth - 200;
         this.tipsTxt.x = (SpriteUtil.stageWidth - this.tipsTxt.width)/2;
         this.tipsTxt.y = SpriteUtil.stageHeight/2 - 200;
@@ -38,6 +38,7 @@ class GuideView extends BaseView{
 
     public show(desc:string = ''){
         this.tipsTxt.text = desc;
+        this.tipsTxt.y = SpriteUtil.stageCenterY - this.tipsTxt.height;
         super.open();
     }
 

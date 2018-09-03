@@ -12,10 +12,10 @@ class ScoreItem extends egret.Sprite{
         this.scoreTxt.size = 32;
         this.scoreTxt.text = '0';
         this.scoreTxt.textColor = 0x00ff00;
-        this.scoreTxt.textAlign = 'center';
-        this.scoreTxt.width = 200;
-        this.scoreTxt.bold = true;
+        this.scoreTxt.width = 300;
+        // this.scoreTxt.bold = true;
         this.addChild(this.scoreTxt);
+        this.y = 10;
     }
     //目标分和当前分
     public setSTScore(score,tarScore?){
@@ -23,7 +23,7 @@ class ScoreItem extends egret.Sprite{
         if(tarScore){
             this.tarScore = tarScore;
         }
-        this.scoreTxt.text = `分数 ${this.score}  目标分 ${this.tarScore}`;
+        this.scoreTxt.text = `分数 ${this.score}  目标 ${this.tarScore}`;
     }
     //分数
     public setScore(score){

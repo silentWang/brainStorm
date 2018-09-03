@@ -13,8 +13,9 @@ var TimeItem = (function (_super) {
     function TimeItem(time) {
         if (time === void 0) { time = 0; }
         var _this = _super.call(this) || this;
-        _this.leftTime = 0;
-        _this.leftTime = time;
+        _this._leftTime = 0;
+        _this.callBackContext = null;
+        _this._leftTime = time;
         _this.init();
         return _this;
     }
@@ -22,22 +23,51 @@ var TimeItem = (function (_super) {
         this.timeTxt = new egret.TextField();
         this.timeTxt.width = 240;
         this.timeTxt.size = 32;
-        this.timeTxt.textColor = 0x00ff00;
-        this.timeTxt.text = "\u5269\u4F59\u65F6\u95F4  " + CommonUtil.getMSTimeBySeconds(this.leftTime);
-        this.timeTxt.y = 10;
-        this.timeTxt.x = (SpriteUtil.stageWidth - 200) / 2;
+        this.timeTxt.textColor = 0xff0000;
+        this.timeTxt.text = "\u5269\u4F59\u65F6\u95F4  " + CommonUtil.getMSTimeBySeconds(this._leftTime);
+        this.y = 10;
+        this.x = (SpriteUtil.stageWidth - 200) / 2;
         this.addChild(this.timeTxt);
     };
-    TimeItem.prototype.start = function () {
+    //开始
+    TimeItem.prototype.start = function (loop, thisObj) {
+        if (thisObj === void 0) { thisObj = null; }
         this.timer = new egret.Timer(1000);
+        this.loop = loop;
+        this.callBackContext = thisObj;
         this.timer.addEventListener(egret.TimerEvent.TIMER, this.timerTick, this);
         this.timer.start();
     };
+    //restart
+    TimeItem.prototype.restart = function (time, loop, thisObj) {
+        if (time === void 0) { time = 0; }
+        if (thisObj === void 0) { thisObj = null; }
+        this._leftTime = time;
+        this.timeTxt.text = "\u5269\u4F59\u65F6\u95F4  " + CommonUtil.getMSTimeBySeconds(this._leftTime);
+        this.timer = new egret.Timer(1000);
+        this.loop = loop;
+        this.callBackContext = thisObj;
+        this.timer.addEventListener(egret.TimerEvent.TIMER, this.timerTick, this);
+        this.timer.start();
+    };
+    Object.defineProperty(TimeItem.prototype, "leftTime", {
+        get: function () {
+            return this._leftTime;
+        },
+        enumerable: true,
+        configurable: true
+    });
     TimeItem.prototype.timerTick = function () {
-        this.leftTime--;
-        this.timeTxt.text = "\u5269\u4F59\u65F6\u95F4  " + CommonUtil.getMSTimeBySeconds(this.leftTime);
-        if (this.leftTime <= 0) {
-            Game.instance().gameScene.gotoOver();
+        this._leftTime--;
+        this.timeTxt.text = "\u5269\u4F59\u65F6\u95F4  " + CommonUtil.getMSTimeBySeconds(this._leftTime);
+        if (this.loop) {
+            this.loop.call(this.callBackContext, this._leftTime);
+        }
+        if (this._leftTime <= 0) {
+            if (!this.loop) {
+                EffectUtil.showResultEffect();
+            }
+            this.stop();
         }
     };
     TimeItem.prototype.stop = function () {
@@ -46,6 +76,8 @@ var TimeItem = (function (_super) {
             this.timer.removeEventListener(egret.TimerEvent.TIMER, this.timerTick, this);
             this.timer = null;
         }
+        this.loop = null;
+        this.callBackContext = null;
     };
     return TimeItem;
 }(egret.Sprite));

@@ -22,10 +22,10 @@ var ScoreItem = (function (_super) {
         this.scoreTxt.size = 32;
         this.scoreTxt.text = '0';
         this.scoreTxt.textColor = 0x00ff00;
-        this.scoreTxt.textAlign = 'center';
-        this.scoreTxt.width = 200;
-        this.scoreTxt.bold = true;
+        this.scoreTxt.width = 300;
+        // this.scoreTxt.bold = true;
         this.addChild(this.scoreTxt);
+        this.y = 10;
     };
     //目标分和当前分
     ScoreItem.prototype.setSTScore = function (score, tarScore) {
@@ -33,7 +33,7 @@ var ScoreItem = (function (_super) {
         if (tarScore) {
             this.tarScore = tarScore;
         }
-        this.scoreTxt.text = "\u5206\u6570 " + this.score + "  \u76EE\u6807\u5206 " + this.tarScore;
+        this.scoreTxt.text = "\u5206\u6570 " + this.score + "  \u76EE\u6807 " + this.tarScore;
     };
     //分数
     ScoreItem.prototype.setScore = function (score) {

@@ -3,7 +3,7 @@
   "compilerVersion": "5.2.7",
   "template": {},
   "target": {
-    "current": "web"
+    "current": "wxgame"
   },
   "modules": [
     {
@@ -22,8 +22,14 @@
       "name": "promise"
     },
     {
-      "name":"matter",
-      "path":"../matterlib"
+      "name": "matter",
+      "path": "../matterlib"
     }
-  ]
+  ],
+  "targets": {
+    "android": {
+      "appname": "welldown",
+      "packagename": "com.silencewzs"
+    }
+  }
 }

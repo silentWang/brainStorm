@@ -12,7 +12,7 @@ class GameScene{
         this._menuScene = new MenuScene();
         this._overScene = new OverScene();
         //十二生肖  连连看  营救女友  
-        this.allScenes = [0,Scene_1,Scene_2,Scene_3,Scene_4,Scene_5,Scene_6];
+        this.allScenes = [0,Scene_001,Scene_002,Scene_003,Scene_004,Scene_005,Scene_006,Scene_007,Scene_008,Scene_009,Scene_010];
         //添加事件
         this.addEvent();
     }
@@ -36,6 +36,7 @@ class GameScene{
         if(this._currentScene){
             this._currentScene.exit();
         }
+        GameData.currentLevel = 0;
         this._menuScene.exit();
         this._overScene.enter();
     }
@@ -44,9 +45,10 @@ class GameScene{
         let lvl = GameData.currentLevel;
         lvl++;
         GameData.currentLevel = lvl;
-        GameData.currentLevel = 6;
+        // GameData.currentLevel = 10;
 
-        Game.instance().gameView.guideView.show('本关：十二生肖\n在有限时间内尽可能找出十二生肖所对应的文字，要按照顺序额');
+        let desc = `${GameData.config[GameData.currentLevel]['title']}\n${GameData.config[GameData.currentLevel]['desc']}`;
+        Game.instance().gameView.guideView.show(desc);
         this._menuScene.exit();
         this._overScene.exit();
         if(this._currentScene){
