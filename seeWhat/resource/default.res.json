@@ -1,15 +1,20 @@
 {
 	"groups": [
 		{
-			"keys": "description_json",
+			"keys": "bg_png,config_json",
 			"name": "preload"
 		}
 	],
 	"resources": [
 		{
-			"name": "description_json",
+			"name": "bg_png",
+			"type": "image",
+			"url": "assets/bg.png"
+		},
+		{
+			"name": "config_json",
 			"type": "json",
-			"url": "config/description.json"
+			"url": "config/config.json"
 		}
 	]
 }

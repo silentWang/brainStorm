@@ -76,7 +76,7 @@ var SpriteUtil = (function () {
         if (height === void 0) { height = 80; }
         var btn = new egret.Sprite();
         var rect = new egret.Shape();
-        rect.graphics.beginFill(0x00ff00);
+        rect.graphics.beginFill(0x0000ff);
         rect.graphics.drawRect(0, 0, width, height);
         rect.graphics.endFill();
         var text = new egret.TextField();

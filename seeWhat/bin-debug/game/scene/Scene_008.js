@@ -14,14 +14,12 @@ var Scene_008 = (function (_super) {
     function Scene_008() {
         var _this = _super.call(this) || this;
         _this.animalsArr = CommonUtil.allAnimals.concat();
-        _this.emojiArr = ['😭', '😄', '😎', '😡', '😍', '😜', '😴'];
         _this.needCount = 0;
+        _this.isOperating = false;
         _this.init();
         return _this;
     }
     Scene_008.prototype.init = function () {
-        this.dataVo.time = 30;
-        this.dataVo.tData = '😄';
         this.passArr = [];
         this.animalsArr.sort(function (a, b) {
             if (Math.random() > 0.5)
@@ -43,7 +41,7 @@ var Scene_008 = (function (_super) {
     Scene_008.prototype.playShow = function () {
         var _this = this;
         var animal = this.animalsArr[this.needCount];
-        var emoji = this.emojiArr[Math.floor(this.emojiArr.length * Math.random())];
+        var emoji = this.dataVo.sData[Math.floor(this.dataVo.sData.length * Math.random())];
         this.passArr.push({ animal: animal, emoji: emoji });
         this.animalSpr.text = animal;
         var pos = this.getRandomPos();
@@ -94,7 +92,7 @@ var Scene_008 = (function (_super) {
         this.dataVo.tData = this.passArr[Math.floor(this.passArr.length * Math.random())].emoji;
         console.log(this.passArr);
         var askstr = "\u8C1C\u9898:\u627E\u51FA\u6240\u6709\u53D1\u51FA\u8868\u60C5" + this.dataVo.tData + "\u7684\u52A8\u7269";
-        var text = SpriteUtil.createText(askstr, 36, 0xF8F8FF);
+        var text = SpriteUtil.createText(askstr, 36, 0x0000FF);
         text.x = SpriteUtil.stageCenterX;
         text.y = 100;
         this.addChild(text);
@@ -111,6 +109,8 @@ var Scene_008 = (function (_super) {
         this.timeItem.start();
     };
     Scene_008.prototype.selectClk = function (evt) {
+        if (this.isOperating)
+            return;
         var text = evt.target;
         var isFind = false;
         var len = this.passArr.length;
@@ -124,6 +124,7 @@ var Scene_008 = (function (_super) {
             }
         }
         if (!isFind) {
+            this.isOperating = true;
             EffectUtil.showResultEffect();
         }
         else {

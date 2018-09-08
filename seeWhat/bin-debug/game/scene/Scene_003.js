@@ -28,7 +28,7 @@ var Scene_003 = (function (_super) {
     }
     Scene_003.prototype.init = function () {
         var _this = this;
-        this.timeItem = new TimeItem(60);
+        this.timeItem = new TimeItem(this.dataVo.time);
         this.timeItem.x = SpriteUtil.stageWidth - 250;
         this.addChild(this.timeItem);
         this.engine = Matter.Engine.create({ enableSleeping: false }, null);
@@ -91,7 +91,7 @@ var Scene_003 = (function (_super) {
         this.enemies.push(arrow1);
         this.enemies.push(arrow2);
         //player
-        var playerSpr = SpriteUtil.createText('👦', 60);
+        var playerSpr = SpriteUtil.createText('👦', 80);
         this.player = Matter.Bodies.circle(50, 1250, playerSpr.width / 2, {
             stiffness: 1,
             collisionFilter: {
@@ -102,7 +102,7 @@ var Scene_003 = (function (_super) {
             }
         }, 0);
         //target
-        var girl = SpriteUtil.createText('👧', 60);
+        var girl = SpriteUtil.createText('👧', 80);
         this.girlbdy = Matter.Bodies.circle(SpriteUtil.stageCenterX, girl.height / 2 + 10, girl.width / 2, {
             stiffness: 1,
             collisionFilter: {
@@ -206,7 +206,7 @@ var Scene_003 = (function (_super) {
         });
         var spr = new egret.Sprite();
         for (var i = 0; i < num; i++) {
-            var t1 = SpriteUtil.createText('✴', radius * 2, 0xff0000, false);
+            var t1 = SpriteUtil.createText('🔥', radius * 2, 0xff0000, false);
             t1.x = i * radius * 2;
             spr.addChild(t1);
         }

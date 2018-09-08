@@ -24,7 +24,7 @@ class Scene_003 extends BaseScene{
     private isRunning = true;
 
     private init(){
-        this.timeItem = new TimeItem(60);
+        this.timeItem = new TimeItem(this.dataVo.time);
         this.timeItem.x = SpriteUtil.stageWidth - 250;
         this.addChild(this.timeItem);
         this.engine = Matter.Engine.create({enableSleeping:false},null);

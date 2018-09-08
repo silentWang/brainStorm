@@ -10,20 +10,19 @@ class Scene_006 extends BaseScene{
     private tarPoints:Array<egret.Point>;
     private picSprs:Array<egret.Sprite>;
     private selectNum:number = 0;
+    private isOperating:boolean = false;
     private init(){
-        this.dataVo.time = 60;
-
         this.timeItem = new TimeItem(30);
         this.addChild(this.timeItem);
         //修身 齐家 治国 平天下
-        let arr1 = ['🔨','💃','💕','🏡','💉','🚩','🍼','👆','👇'];
+        let arr1 = this.dataVo.sData;
         this.tarSprite1 = this.createPic(arr1);
         this.tarSprite1.x = SpriteUtil.stageCenterX - this.tarSprite1.width/2;
         this.tarSprite1.y = 100;
         this.tarSprite1.name = 'target_1';
         this.addChild(this.tarSprite1);
         //玉不琢，不成器。人不学，不知义
-        let arr2 = ['🍦','🌀','👌','📏','✋','☝','☀','🌿','❄'];
+        let arr2 = this.dataVo.tData;
         this.tarSprite2 = this.createPic(arr2);
         this.tarSprite2.x = SpriteUtil.stageCenterX - this.tarSprite2.width/2;
         this.tarSprite2.y = this.tarSprite1.y + this.tarSprite1.height + 100;
@@ -83,10 +82,11 @@ class Scene_006 extends BaseScene{
     }
 
     private selectClk(evt){
-        console.log(evt.target.name);
+        if(this.isOperating) return;
         let name:string = evt.target.name;
         if(name == 'mistake'){
             this.timeItem.stop();
+            this.isOperating = true;
             EffectUtil.showResultEffect();
             return;
         }

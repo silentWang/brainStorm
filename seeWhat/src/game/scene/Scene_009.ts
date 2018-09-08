@@ -15,7 +15,7 @@ class Scene_009 extends BaseScene{
     private currDragBall;
 
     private init(){
-        this.timeItem = new TimeItem(60);
+        this.timeItem = new TimeItem(this.dataVo.time);
         this.addChild(this.timeItem);
 
         this.engine = Matter.Engine.create({enableSleeping:false},null);
@@ -52,10 +52,10 @@ class Scene_009 extends BaseScene{
         });
         Matter.World.add(this.engine.world,[auncel,constraint]);
 
-        this.createVc(60,400,0x00ffff);
-        this.createVc(SpriteUtil.stageWidth - 100,400,0x00ffff);
+        this.createVc(60,400,0x000000);
+        this.createVc(SpriteUtil.stageWidth - 100,400,0x000000);
 
-        let lspr = SpriteUtil.createRect(200,10,0x00ff00);
+        let lspr = SpriteUtil.createRect(200,10,0x0000ff);
         let leftBoard = Matter.Bodies.rectangle(80,120,200,10,{
             isStatic:true,
             angle:Math.PI/4,
@@ -63,7 +63,7 @@ class Scene_009 extends BaseScene{
                 sprite:lspr
             }
         });
-        let rspr = SpriteUtil.createRect(200,10,0x00ff00);
+        let rspr = SpriteUtil.createRect(200,10,0x0000ff);
         let rightBoard = Matter.Bodies.rectangle(SpriteUtil.stageWidth - 80,120,200,10,{
             isStatic:true,
             angle:-Math.PI/4,
@@ -105,16 +105,17 @@ class Scene_009 extends BaseScene{
             Matter.Events.off(this.engine,'collisionActive',this.collision);
             Matter.Runner.stop(this.runner);
             EgretRender.stop();
-            if(this.timeItem.leftTime >= 30){
+            let time = this.timeItem.leftTime;
+            this.timeItem.stop();
+            if(time >= 30){
                 EffectUtil.showResultEffect(EffectUtil.PERFECT);
             }
-            else if(this.timeItem.leftTime >= 15){
+            else if(time >= 15){
                 EffectUtil.showResultEffect(EffectUtil.EXCELLENT);
             }
             else{
                 EffectUtil.showResultEffect(EffectUtil.GOOD);
             }
-            this.timeItem.stop();
         }
         else if((isLight || isHeavy) && wrongNum == 1){
             Matter.Events.off(this.engine,'collisionActive',this.collision);
@@ -232,7 +233,7 @@ class Scene_009 extends BaseScene{
         text.x = xx + 20;
         text.y = yy - 60;
         text.textAlign = 'center';
-        text.textColor = 0x00ff00;
+        text.textColor = 0x0000ff;
         text.size = 22;
         text.width = 100;
         text.anchorOffsetX = 50;

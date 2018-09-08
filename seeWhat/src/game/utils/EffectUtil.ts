@@ -39,7 +39,7 @@ class EffectUtil{
                 else{
                     EventCenter.instance().dispatchEvent(new GameEvent(GameEvent.GOTO_NEXT));
                 }
-            },this,500);
+            },this,800);
         });
     }
 

@@ -18,7 +18,7 @@ var Scene_009 = (function (_super) {
         return _this;
     }
     Scene_009.prototype.init = function () {
-        this.timeItem = new TimeItem(60);
+        this.timeItem = new TimeItem(this.dataVo.time);
         this.addChild(this.timeItem);
         this.engine = Matter.Engine.create({ enableSleeping: false }, null);
         this.runner = Matter.Runner.create(null);
@@ -51,9 +51,9 @@ var Scene_009 = (function (_super) {
             stiffness: 1
         });
         Matter.World.add(this.engine.world, [auncel, constraint]);
-        this.createVc(60, 400, 0x00ffff);
-        this.createVc(SpriteUtil.stageWidth - 100, 400, 0x00ffff);
-        var lspr = SpriteUtil.createRect(200, 10, 0x00ff00);
+        this.createVc(60, 400, 0x000000);
+        this.createVc(SpriteUtil.stageWidth - 100, 400, 0x000000);
+        var lspr = SpriteUtil.createRect(200, 10, 0x0000ff);
         var leftBoard = Matter.Bodies.rectangle(80, 120, 200, 10, {
             isStatic: true,
             angle: Math.PI / 4,
@@ -61,7 +61,7 @@ var Scene_009 = (function (_super) {
                 sprite: lspr
             }
         });
-        var rspr = SpriteUtil.createRect(200, 10, 0x00ff00);
+        var rspr = SpriteUtil.createRect(200, 10, 0x0000ff);
         var rightBoard = Matter.Bodies.rectangle(SpriteUtil.stageWidth - 80, 120, 200, 10, {
             isStatic: true,
             angle: -Math.PI / 4,
@@ -103,16 +103,17 @@ var Scene_009 = (function (_super) {
             Matter.Events.off(this.engine, 'collisionActive', this.collision);
             Matter.Runner.stop(this.runner);
             EgretRender.stop();
-            if (this.timeItem.leftTime >= 30) {
+            var time = this.timeItem.leftTime;
+            this.timeItem.stop();
+            if (time >= 30) {
                 EffectUtil.showResultEffect(EffectUtil.PERFECT);
             }
-            else if (this.timeItem.leftTime >= 15) {
+            else if (time >= 15) {
                 EffectUtil.showResultEffect(EffectUtil.EXCELLENT);
             }
             else {
                 EffectUtil.showResultEffect(EffectUtil.GOOD);
             }
-            this.timeItem.stop();
         }
         else if ((isLight || isHeavy) && wrongNum == 1) {
             Matter.Events.off(this.engine, 'collisionActive', this.collision);
@@ -162,7 +163,7 @@ var Scene_009 = (function (_super) {
         });
         console.log(rans);
         var idx = egret.setInterval(function () {
-            var spr = SpriteUtil.createText('🏀', 50);
+            var spr = SpriteUtil.createText('🏀', 60);
             var xx = nums % 2 == 0 ? 20 : SpriteUtil.stageWidth - 20;
             var mass = rans[0] == nums ? 1 : 2;
             if (mass != 1) {
@@ -225,7 +226,7 @@ var Scene_009 = (function (_super) {
         text.x = xx + 20;
         text.y = yy - 60;
         text.textAlign = 'center';
-        text.textColor = 0x00ff00;
+        text.textColor = 0x0000ff;
         text.size = 22;
         text.width = 100;
         text.anchorOffsetX = 50;
@@ -237,7 +238,7 @@ var Scene_009 = (function (_super) {
         var left = Matter.Bodies.rectangle(-5, SpriteUtil.stageCenterY, 10, SpriteUtil.stageHeight, { isStatic: true });
         var right = Matter.Bodies.rectangle(SpriteUtil.stageWidth + 5, SpriteUtil.stageCenterY, 10, SpriteUtil.stageHeight, { isStatic: true });
         var top = Matter.Bodies.rectangle(SpriteUtil.stageCenterX, -5, SpriteUtil.stageWidth, 10, { isStatic: true });
-        var bottom = Matter.Bodies.rectangle(SpriteUtil.stageCenterX, SpriteUtil.stageHeight + 5, SpriteUtil.stageWidth, 10, { isStatic: true });
+        var bottom = Matter.Bodies.rectangle(SpriteUtil.stageCenterX, SpriteUtil.stageHeight - 100, SpriteUtil.stageWidth, 10, { isStatic: true });
         Matter.World.add(this.engine.world, [left, right, top, bottom]);
     };
     //创建竖直隔板

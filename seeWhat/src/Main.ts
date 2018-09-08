@@ -64,12 +64,12 @@ class Main extends egret.DisplayObjectContainer {
 
     private async runGame() {
         await this.loadResource()
-        this.createGameScene();
-        const result = await RES.getResAsync("description_json")
+        const result = await RES.getResAsync("config_json");
+        GameData.config = result;
         await platform.login();
         const userInfo = await platform.getUserInfo();
         console.log(userInfo);
-
+        this.createGameScene();
     }
 
     private async loadResource() {
@@ -92,11 +92,13 @@ class Main extends egret.DisplayObjectContainer {
      * Create a game scene
      */
     private createGameScene() {
-        let sp = new egret.Shape();
-        sp.graphics.beginFill(0x111111);
-        sp.graphics.drawRect(0,0,this.stage.stageWidth,this.stage.stageHeight);
-        sp.graphics.endFill();
-        this.stage.addChild(sp);
+        // let sp = new egret.Shape();
+        // sp.graphics.beginFill(0xB0C4DE);
+        // sp.graphics.drawRect(0,0,this.stage.stageWidth,this.stage.stageHeight);
+        // sp.graphics.endFill();
+        // this.stage.addChild(sp);
+        let bg = new egret.Bitmap(RES.getRes('bg_png'));
+        this.stage.addChild(bg);
 
         Game.instance().setStage(this.stage);
     }

@@ -7,15 +7,11 @@ class Scene_008 extends BaseScene{
 
     private passArr:Array<any>;
     private animalsArr= CommonUtil.allAnimals.concat();
-    private emojiArr = ['😭','😄','😎','😡','😍','😜','😴'];
     private animalSpr:egret.TextField;
     private emojiSpr:egret.TextField;
     private needCount = 0;
-
+    private isOperating:boolean = false;
     private init(){
-        this.dataVo.time = 30;
-        this.dataVo.tData = '😄';
-
         this.passArr = [];
         this.animalsArr.sort((a,b)=>{
             if(Math.random() > 0.5) return 1;
@@ -37,7 +33,7 @@ class Scene_008 extends BaseScene{
     //播放前动画
     private playShow(){
         let animal = this.animalsArr[this.needCount];
-        let emoji = this.emojiArr[Math.floor(this.emojiArr.length * Math.random())];
+        let emoji = this.dataVo.sData[Math.floor(this.dataVo.sData.length * Math.random())];
         this.passArr.push({animal:animal,emoji:emoji});
         this.animalSpr.text = animal;
         let pos = this.getRandomPos();
@@ -93,7 +89,7 @@ class Scene_008 extends BaseScene{
         console.log(this.passArr);
 
         let askstr = `谜题:找出所有发出表情${this.dataVo.tData}的动物`
-        let text = SpriteUtil.createText(askstr,36,0xF8F8FF);
+        let text = SpriteUtil.createText(askstr,36,0x0000FF);
         text.x = SpriteUtil.stageCenterX;
         text.y = 100;
         this.addChild(text);
@@ -113,6 +109,7 @@ class Scene_008 extends BaseScene{
     }
 
     private selectClk(evt){
+        if(this.isOperating) return;
         let text = evt.target;
         let isFind = false;
         let len = this.passArr.length;
@@ -126,6 +123,7 @@ class Scene_008 extends BaseScene{
             }
         }
         if(!isFind){
+            this.isOperating = true;
             EffectUtil.showResultEffect();
         }
         else{

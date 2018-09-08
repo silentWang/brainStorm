@@ -9,9 +9,9 @@ class Scene_001 extends BaseScene{
     private selectedArr:Array<egret.TextField>;
     private bounds;
     private init(){
-        this.dataVo.sData = '鼠鹅牛猫虎驴兔鸭龙鱼蛇龟马鸟羊象猴蛙鸡熊狗狼猪凤';
-        this.dataVo.tData = '鼠牛虎兔龙蛇马羊猴鸡狗猪';
-        this.dataVo.time = 60;
+        // this.dataVo.sData = '鼠鹅牛猫虎驴兔鸭龙鱼蛇龟马鸟羊象猴蛙鸡熊狗狼猪凤';
+        // this.dataVo.tData = '鼠牛虎兔龙蛇马羊猴鸡狗猪';
+        // this.dataVo.time = 60;
         
         this.selectedArr = [];
         let rect = SpriteUtil.createRect(SpriteUtil.stageWidth,SpriteUtil.stageHeight/8,0xCDCDC1);

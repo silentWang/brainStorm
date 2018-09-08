@@ -71,7 +71,7 @@ class SpriteUtil{
     static createButton(label:string,width = 200,height = 80){
         let btn = new egret.Sprite();
         let rect = new egret.Shape();
-        rect.graphics.beginFill(0x00ff00);
+        rect.graphics.beginFill(0x0000ff);
         rect.graphics.drawRect(0,0,width,height);
         rect.graphics.endFill();
 

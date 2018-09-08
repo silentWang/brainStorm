@@ -17,8 +17,6 @@ var Scene_002 = (function (_super) {
         return _this;
     }
     Scene_002.prototype.init = function () {
-        this.dataVo.sData = '✍✉☎☀☻✌♈✿✪❈❦㊣☝☯➽❤▦卐❂☬☣※☂⊗◍✠♝♞㉿➽♬☑웃유❖☃☊큐☠Ю✍✉☎☀☻✌♈✿✪❈❦㊣☝☯➽❤▦卐❂☬☣※☂⊗◍✠♝♞㉿➽♬☑웃유❖☃☊큐☠Ю';
-        this.dataVo.time = 90;
         //无序化
         var arr = this.dataVo.sData.split('');
         arr.sort(function (a, b) {
@@ -86,7 +84,7 @@ var Scene_002 = (function (_super) {
         text.width = 80;
         text.height = 80;
         text.background = true;
-        text.backgroundColor = 0xffff00;
+        text.backgroundColor = 0x00C5CD;
         text.textAlign = 'center';
         text.verticalAlign = 'middle';
         text.bold = true;

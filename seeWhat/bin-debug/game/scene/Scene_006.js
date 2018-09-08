@@ -14,22 +14,22 @@ var Scene_006 = (function (_super) {
     function Scene_006() {
         var _this = _super.call(this) || this;
         _this.selectNum = 0;
+        _this.isOperating = false;
         _this.init();
         return _this;
     }
     Scene_006.prototype.init = function () {
-        this.dataVo.time = 60;
         this.timeItem = new TimeItem(30);
         this.addChild(this.timeItem);
         //修身 齐家 治国 平天下
-        var arr1 = ['🔨', '💃', '💏', '👪', '💉', '🚩', '🍼', '👆', '👇'];
+        var arr1 = this.dataVo.sData;
         this.tarSprite1 = this.createPic(arr1);
         this.tarSprite1.x = SpriteUtil.stageCenterX - this.tarSprite1.width / 2;
         this.tarSprite1.y = 100;
         this.tarSprite1.name = 'target_1';
         this.addChild(this.tarSprite1);
         //玉不琢，不成器。人不学，不知义
-        var arr2 = ['🍦', '🌀', '✊', '📏', '✋', '☝', '☀', '🌿', '❄'];
+        var arr2 = this.dataVo.tData;
         this.tarSprite2 = this.createPic(arr2);
         this.tarSprite2.x = SpriteUtil.stageCenterX - this.tarSprite2.width / 2;
         this.tarSprite2.y = this.tarSprite1.y + this.tarSprite1.height + 100;
@@ -88,10 +88,12 @@ var Scene_006 = (function (_super) {
     };
     Scene_006.prototype.selectClk = function (evt) {
         var _this = this;
-        console.log(evt.target.name);
+        if (this.isOperating)
+            return;
         var name = evt.target.name;
         if (name == 'mistake') {
             this.timeItem.stop();
+            this.isOperating = true;
             EffectUtil.showResultEffect();
             return;
         }

@@ -15,19 +15,17 @@ var Scene_007 = (function (_super) {
         var _this = _super.call(this) || this;
         _this.needNums = 0;
         _this.score = 0;
+        _this.isOperating = false;
         _this.init();
         return _this;
     }
     Scene_007.prototype.init = function () {
-        this.dataVo.sData = ['🐁', '🐖', '🐄', '🐆', '🐕', '🐒', '🐏', '🐢', '🐓', '🐇', '🐦', '🐘'];
-        this.dataVo.tData = 20;
-        this.dataVo.time = 30;
         //时间和分数
         this.timeItem = new TimeItem(this.dataVo.time);
         this.addChild(this.timeItem);
         this.scoreItem = new ScoreItem();
         this.scoreItem.x = 50;
-        this.scoreItem.setSTScore(this.score, this.dataVo.tData);
+        this.scoreItem.setSTScore(this.score, this.dataVo.score);
         this.addChild(this.scoreItem);
         this.timeItem.x = SpriteUtil.stageWidth - 300;
         this.needNums = 1;
@@ -121,6 +119,8 @@ var Scene_007 = (function (_super) {
             spr = SpriteUtil.createText(char, 100);
             this.pools.push(spr);
             spr.addEventListener(egret.TouchEvent.TOUCH_TAP, function (evt) {
+                if (_this.isOperating)
+                    return;
                 var spr = evt.target;
                 if (spr.name == '🐁') {
                     spr.visible = false;
@@ -144,6 +144,7 @@ var Scene_007 = (function (_super) {
                 }
                 else {
                     _this.timeItem.stop();
+                    _this.isOperating = true;
                     EffectUtil.showResultEffect();
                 }
             }, this);

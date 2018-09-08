@@ -9,7 +9,21 @@ var GameScene = (function () {
         this._menuScene = new MenuScene();
         this._overScene = new OverScene();
         //十二生肖  连连看  营救女友  
-        this.allScenes = [0, Scene_001, Scene_002, Scene_003, Scene_004, Scene_005, Scene_006, Scene_007, Scene_008, Scene_009, Scene_010];
+        //一笔画  
+        this.allScenes = {};
+        this.allScenes['001'] = Scene_001;
+        this.allScenes['002'] = Scene_002;
+        this.allScenes['003'] = Scene_003;
+        this.allScenes['004'] = Scene_004;
+        this.allScenes['005'] = Scene_005;
+        this.allScenes['006'] = Scene_006;
+        this.allScenes['007'] = Scene_007;
+        this.allScenes['008'] = Scene_008;
+        this.allScenes['009'] = Scene_009;
+        this.allScenes['010'] = Scene_010;
+        this.allScenes['011'] = Scene_011;
+        this.allScenes['012'] = Scene_012;
+        // this.allScenes['013'] = Scene_013;
         //添加事件
         this.addEvent();
     };
@@ -41,9 +55,8 @@ var GameScene = (function () {
         var lvl = GameData.currentLevel;
         lvl++;
         GameData.currentLevel = lvl;
-        GameData.currentLevel = 10;
-        var desc = GameData.config[GameData.currentLevel]['title'] + "\n" + GameData.config[GameData.currentLevel]['desc'];
-        Game.instance().gameView.guideView.show(desc);
+        GameData.currentLevel = 12;
+        Game.instance().gameView.guideView.show();
         this._menuScene.exit();
         this._overScene.exit();
         if (this._currentScene) {
@@ -53,7 +66,8 @@ var GameScene = (function () {
     //开始当前关卡
     GameScene.prototype.startGame = function (evt) {
         if (evt === void 0) { evt = null; }
-        this._currentScene = new this.allScenes[GameData.currentLevel]();
+        var config = GameData.getCurrentSceneData();
+        this._currentScene = new this.allScenes[config.levelType]();
         this._currentScene.enter();
     };
     return GameScene;

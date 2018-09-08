@@ -10,7 +10,7 @@ class OverScene extends BaseScene{
         text.textAlign = 'center';
         text.text = 'Game\nOver';
         text.size = 120;
-        text.textColor = 0xCFCFCF;
+        text.textColor = 0xFF0000;
         text.stroke = 1;
         text.strokeColor = 0xffffff;
         text.bold = true;

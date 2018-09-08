@@ -39,7 +39,7 @@ var EffectUtil = (function () {
                 else {
                     EventCenter.instance().dispatchEvent(new GameEvent(GameEvent.GOTO_NEXT));
                 }
-            }, _this, 500);
+            }, _this, 800);
         });
     };
     //呼吸

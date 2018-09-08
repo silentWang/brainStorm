@@ -8,8 +8,6 @@ class Scene_002 extends BaseScene{
     private currentSelect:egret.TextField;
     private group:egret.Sprite;
     private init(){
-        this.dataVo.sData = '✍✉☎☀☻✌♈✿✪❈❦㊣☝☯➽❤▦卐❂☬☣※☂⊗◍✠♝♞㉿➽♬☑웃유❖☃☊큐☠Ю✍✉☎☀☻✌♈✿✪❈❦㊣☝☯➽❤▦卐❂☬☣※☂⊗◍✠♝♞㉿➽♬☑웃유❖☃☊큐☠Ю';
-        this.dataVo.time = 90;
         //无序化
         let arr = this.dataVo.sData.split('');
         arr.sort((a,b)=>{
@@ -80,7 +78,7 @@ class Scene_002 extends BaseScene{
         text.width = 80;
         text.height = 80;
         text.background = true;
-        text.backgroundColor = 0xffff00;
+        text.backgroundColor = 0x00C5CD;
         text.textAlign = 'center';
         text.verticalAlign = 'middle';
         text.bold = true;

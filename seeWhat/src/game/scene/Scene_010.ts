@@ -1,4 +1,4 @@
-//灯泡找线 这个是留给伟大程序员的
+//问答 奇趣
 class Scene_010 extends BaseScene{
     constructor(){
         super();
@@ -8,6 +8,7 @@ class Scene_010 extends BaseScene{
     private questions:Array<any>;
     private questionTxt:egret.TextField;
     private curIndex = 0;
+    private isOperating:boolean = false;
     private init(){
         this.questions = GameData.questions;
         this.questions.sort((a,b)=>{
@@ -18,9 +19,9 @@ class Scene_010 extends BaseScene{
         this.questionTxt = new egret.TextField();
         this.questionTxt.size = 32;
         this.questionTxt.width = SpriteUtil.stageWidth - 120;
-        this.questionTxt.textColor = 0xffff00;
+        this.questionTxt.textColor = 0x0000ff;
         this.questionTxt.stroke = 2;
-        this.questionTxt.strokeColor = 0x0000ff;
+        this.questionTxt.strokeColor = 0xffffff;
         this.questionTxt.bold = true;
         this.questionTxt.lineSpacing = 20;
         this.questionTxt.textAlign = 'center';
@@ -41,11 +42,12 @@ class Scene_010 extends BaseScene{
         btn3.x = SpriteUtil.stageCenterX + btn3.width;
         btn3.name = 'btn_2';
 
-        this.timeItem = new TimeItem(60);
+        this.timeItem = new TimeItem(this.dataVo.time);
         this.addChild(this.timeItem);
     }
 
     private clkSwitch(evt){
+        if(this.isOperating) return;
         let target = evt.target;
         let name = target.name;
         if(!name || name.search('btn_') < 0) return;
@@ -55,6 +57,7 @@ class Scene_010 extends BaseScene{
             this.askQuestion();
         }
         else{
+            this.isOperating = true;
             this.timeItem.stop();
             EffectUtil.showResultEffect();
         }

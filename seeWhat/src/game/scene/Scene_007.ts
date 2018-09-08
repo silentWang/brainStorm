@@ -9,16 +9,14 @@ class Scene_007 extends BaseScene{
     private pointsArr:Array<egret.Point>;
     private needNums:number = 0;
     private score = 0;
+    private isOperating:boolean = false;
     private init(){
-        this.dataVo.sData = ['🐁','🐖','🐄','🐆','🐕','🐒','🐏','🐢','🐓','🐇','🐦','🐘'];
-        this.dataVo.tData = 20;
-        this.dataVo.time = 30;
         //时间和分数
         this.timeItem = new TimeItem(this.dataVo.time);
         this.addChild(this.timeItem);
         this.scoreItem = new ScoreItem();
         this.scoreItem.x = 50;
-        this.scoreItem.setSTScore(this.score,this.dataVo.tData);
+        this.scoreItem.setSTScore(this.score,this.dataVo.score);
         this.addChild(this.scoreItem);
         this.timeItem.x = SpriteUtil.stageWidth - 300;
         this.needNums  = 1;
@@ -110,6 +108,7 @@ class Scene_007 extends BaseScene{
             spr = SpriteUtil.createText(char,100);
             this.pools.push(spr);
             spr.addEventListener(egret.TouchEvent.TOUCH_TAP,(evt)=>{
+                if(this.isOperating) return;
                 let spr = evt.target;
                 if(spr.name == '🐁'){
                     spr.visible = false;
@@ -133,6 +132,7 @@ class Scene_007 extends BaseScene{
                 }
                 else{
                     this.timeItem.stop();
+                    this.isOperating = true;
                     EffectUtil.showResultEffect();
                 }
             },this);

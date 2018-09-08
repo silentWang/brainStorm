@@ -26,9 +26,9 @@ var GuideView = (function (_super) {
         this.tipsTxt.name = '';
         this.tipsTxt.textAlign = 'center';
         this.tipsTxt.size = 40;
-        this.tipsTxt.textColor = 0x00ff00;
+        this.tipsTxt.textColor = 0xffffff;
         this.tipsTxt.stroke = 1;
-        this.tipsTxt.strokeColor = 0x0000ff;
+        this.tipsTxt.strokeColor = 0xff0000;
         this.tipsTxt.bold = true;
         this.tipsTxt.lineSpacing = 20;
         this.tipsTxt.width = SpriteUtil.stageWidth - 200;
@@ -44,11 +44,18 @@ var GuideView = (function (_super) {
             EventCenter.instance().dispatchEvent(new GameEvent(GameEvent.START_GAME));
         }, this);
     };
-    GuideView.prototype.show = function (desc) {
-        if (desc === void 0) { desc = ''; }
-        this.tipsTxt.text = desc;
+    GuideView.prototype.show = function () {
+        this.tipsTxt.textFlow = this.getDesc();
         this.tipsTxt.y = SpriteUtil.stageCenterY - this.tipsTxt.height;
         _super.prototype.open.call(this);
+    };
+    GuideView.prototype.getDesc = function () {
+        var config = GameData.config[GameData.currentLevel];
+        var arr = new Array();
+        arr.push({ text: config.title, style: { bold: true, size: 40, textColor: 0xFFC125 } });
+        arr.push({ text: '\n' });
+        arr.push({ text: config['desc'], style: { size: 32, bold: false, textColor: 0xEEEED1, stroke: 0 } });
+        return arr;
     };
     return GuideView;
 }(BaseView));

@@ -23,14 +23,13 @@ var Scene_004 = (function (_super) {
         return _this;
     }
     Scene_004.prototype.init = function () {
-        this.dataVo.time = 15;
         this.giftBoxArr = [];
         this.giftGroup = new egret.Sprite();
         this.giftGroup.x = 200;
         this.giftGroup.y = 300;
         this.addChild(this.giftGroup);
         for (var i = 0; i < 16; i++) {
-            var bag = SpriteUtil.createText('🎁', 100);
+            var bag = SpriteUtil.createText(this.dataVo.sData, 100);
             bag.x = (i % 4) * 110;
             bag.y = 110 * Math.floor(i / 4);
             bag.name = "giftBag_" + i;
@@ -41,7 +40,7 @@ var Scene_004 = (function (_super) {
         }
         this.rotatePoint = new egret.Point(SpriteUtil.stageCenterX, 450);
         this.startPoint = new egret.Point(SpriteUtil.stageCenterX, 150);
-        this.giftDisplay = SpriteUtil.createText('🌹', 60);
+        this.giftDisplay = SpriteUtil.createText(this.dataVo.tData, 60);
         this.giftDisplay.x = SpriteUtil.stageCenterX;
         this.giftDisplay.y = 50;
         this.addChild(this.giftDisplay);
@@ -108,6 +107,7 @@ var Scene_004 = (function (_super) {
         var name = evt.target.name;
         if (name.search('giftBag') < 0)
             return;
+        this.isGameStart = false;
         var index = evt.target.name.split('_')[1];
         this.timeItem.stop();
         if (index == this.targetIndex) {

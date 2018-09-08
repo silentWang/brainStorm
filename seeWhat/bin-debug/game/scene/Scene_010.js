@@ -8,12 +8,13 @@ var __extends = this && this.__extends || function __extends(t, e) {
 for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
 r.prototype = e.prototype, t.prototype = new r();
 };
-//灯泡找线 这个是留给伟大程序员的
+//问答 奇趣
 var Scene_010 = (function (_super) {
     __extends(Scene_010, _super);
     function Scene_010() {
         var _this = _super.call(this) || this;
         _this.curIndex = 0;
+        _this.isOperating = false;
         _this.init();
         return _this;
     }
@@ -29,9 +30,9 @@ var Scene_010 = (function (_super) {
         this.questionTxt = new egret.TextField();
         this.questionTxt.size = 32;
         this.questionTxt.width = SpriteUtil.stageWidth - 120;
-        this.questionTxt.textColor = 0xffff00;
+        this.questionTxt.textColor = 0x0000ff;
         this.questionTxt.stroke = 2;
-        this.questionTxt.strokeColor = 0x0000ff;
+        this.questionTxt.strokeColor = 0xffffff;
         this.questionTxt.bold = true;
         this.questionTxt.lineSpacing = 20;
         this.questionTxt.textAlign = 'center';
@@ -50,10 +51,12 @@ var Scene_010 = (function (_super) {
         var btn3 = this.createAnswerButton('❎');
         btn3.x = SpriteUtil.stageCenterX + btn3.width;
         btn3.name = 'btn_2';
-        this.timeItem = new TimeItem(60);
+        this.timeItem = new TimeItem(this.dataVo.time);
         this.addChild(this.timeItem);
     };
     Scene_010.prototype.clkSwitch = function (evt) {
+        if (this.isOperating)
+            return;
         var target = evt.target;
         var name = target.name;
         if (!name || name.search('btn_') < 0)
@@ -64,6 +67,7 @@ var Scene_010 = (function (_super) {
             this.askQuestion();
         }
         else {
+            this.isOperating = true;
             this.timeItem.stop();
             EffectUtil.showResultEffect();
         }

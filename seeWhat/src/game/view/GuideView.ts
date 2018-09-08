@@ -16,9 +16,9 @@ class GuideView extends BaseView{
         this.tipsTxt.name = '';
         this.tipsTxt.textAlign = 'center';
         this.tipsTxt.size = 40;
-        this.tipsTxt.textColor = 0x00ff00;
+        this.tipsTxt.textColor = 0xffffff;
         this.tipsTxt.stroke = 1;
-        this.tipsTxt.strokeColor = 0x0000ff;
+        this.tipsTxt.strokeColor = 0xff0000;
         this.tipsTxt.bold = true;
         this.tipsTxt.lineSpacing = 20;
         this.tipsTxt.width = SpriteUtil.stageWidth - 200;
@@ -36,10 +36,19 @@ class GuideView extends BaseView{
         },this);
     }
 
-    public show(desc:string = ''){
-        this.tipsTxt.text = desc;
+    public show(){
+        this.tipsTxt.textFlow = this.getDesc();
         this.tipsTxt.y = SpriteUtil.stageCenterY - this.tipsTxt.height;
         super.open();
+    }
+
+    private getDesc(){
+        let config = GameData.config[GameData.currentLevel];
+        let arr = new Array<egret.ITextElement>();
+        arr.push({text:config.title,style:{bold:true,size:40,textColor:0xFFC125}});
+        arr.push({text:'\n'});
+        arr.push({text:config['desc'],style:{size:32,bold:false,textColor:0xEEEED1,stroke:0}});
+        return arr;
     }
 
 }

@@ -1,8 +1,9 @@
 class BaseScene extends egret.DisplayObjectContainer{
     constructor(){
-        super();    
+        super();
+        this.dataVo = GameData.getCurrentSceneData();
     }
-    public dataVo:DataVO = new DataVO;
+    public dataVo:DataVO;
     private isShow:boolean = false;
     //倒计时 子类实现
     public timeItem:TimeItem = null;

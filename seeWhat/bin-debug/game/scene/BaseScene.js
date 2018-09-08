@@ -12,12 +12,12 @@ var BaseScene = (function (_super) {
     __extends(BaseScene, _super);
     function BaseScene() {
         var _this = _super.call(this) || this;
-        _this.dataVo = new DataVO;
         _this.isShow = false;
         //倒计时 子类实现
         _this.timeItem = null;
         //分数 子类实现
         _this.scoreItem = null;
+        _this.dataVo = GameData.getCurrentSceneData();
         return _this;
     }
     BaseScene.prototype.enter = function () {

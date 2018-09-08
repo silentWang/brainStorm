@@ -17,15 +17,13 @@ class Scene_004 extends BaseScene{
     private exchangeTimes:number = 0;
     private isGameStart:boolean = false;
     private init(){
-        this.dataVo.time = 15;
-
         this.giftBoxArr = [];
         this.giftGroup = new egret.Sprite();
         this.giftGroup.x = 200;
         this.giftGroup.y = 300;
         this.addChild(this.giftGroup);
         for(let i = 0;i < 16;i++){
-            let bag = SpriteUtil.createText('📦',100);
+            let bag = SpriteUtil.createText(this.dataVo.sData,100);
             bag.x = (i%4)*110;
             bag.y = 110*Math.floor(i/4);
             bag.name = `giftBag_${i}`;
@@ -38,7 +36,7 @@ class Scene_004 extends BaseScene{
         this.startPoint = new egret.Point(SpriteUtil.stageCenterX,150);
 
 
-        this.giftDisplay = SpriteUtil.createText('🌹',60);
+        this.giftDisplay = SpriteUtil.createText(this.dataVo.tData,60);
         this.giftDisplay.x = SpriteUtil.stageCenterX;
         this.giftDisplay.y = 50;
         this.addChild(this.giftDisplay);
@@ -106,6 +104,7 @@ class Scene_004 extends BaseScene{
         if(!this.isGameStart) return;
         let name:string = evt.target.name;
         if(name.search('giftBag') < 0) return;
+        this.isGameStart = false;
         let index = evt.target.name.split('_')[1];
         this.timeItem.stop();
         if(index == this.targetIndex){

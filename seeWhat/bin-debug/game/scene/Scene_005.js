@@ -38,7 +38,7 @@ var Scene_005 = (function (_super) {
         this.recycleArr = [];
         this.initAllItem();
         var plySpr = SpriteUtil.createText('🙉', 100);
-        this.player = Matter.Bodies.circle(100, 1230, plySpr.height / 2, {
+        this.player = Matter.Bodies.circle(100, 1200, plySpr.height / 2, {
             isStatic: true,
             collisionFilter: {
                 category: this.playerCategory
@@ -54,7 +54,7 @@ var Scene_005 = (function (_super) {
         }, this);
         plySpr.addEventListener(egret.TouchEvent.TOUCH_MOVE, function (evt) {
             if (_this.isTouching) {
-                Matter.Body.setPosition(_this.player, { x: evt['stageX'], y: 1230 });
+                Matter.Body.setPosition(_this.player, { x: evt['stageX'], y: 1200 });
             }
         }, this);
         plySpr.addEventListener(egret.TouchEvent.TOUCH_END, function () {

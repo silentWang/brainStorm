@@ -102,10 +102,10 @@ var Main = (function (_super) {
                     case 0: return [4 /*yield*/, this.loadResource()];
                     case 1:
                         _a.sent();
-                        this.createGameScene();
-                        return [4 /*yield*/, RES.getResAsync("description_json")];
+                        return [4 /*yield*/, RES.getResAsync("config_json")];
                     case 2:
                         result = _a.sent();
+                        GameData.config = result;
                         return [4 /*yield*/, platform.login()];
                     case 3:
                         _a.sent();
@@ -113,6 +113,7 @@ var Main = (function (_super) {
                     case 4:
                         userInfo = _a.sent();
                         console.log(userInfo);
+                        this.createGameScene();
                         return [2 /*return*/];
                 }
             });
@@ -149,11 +150,13 @@ var Main = (function (_super) {
      * Create a game scene
      */
     Main.prototype.createGameScene = function () {
-        var sp = new egret.Shape();
-        sp.graphics.beginFill(0x111111);
-        sp.graphics.drawRect(0, 0, this.stage.stageWidth, this.stage.stageHeight);
-        sp.graphics.endFill();
-        this.stage.addChild(sp);
+        // let sp = new egret.Shape();
+        // sp.graphics.beginFill(0xB0C4DE);
+        // sp.graphics.drawRect(0,0,this.stage.stageWidth,this.stage.stageHeight);
+        // sp.graphics.endFill();
+        // this.stage.addChild(sp);
+        var bg = new egret.Bitmap(RES.getRes('bg_png'));
+        this.stage.addChild(bg);
         Game.instance().setStage(this.stage);
     };
     return Main;
