@@ -6,20 +6,24 @@ class Scene_011 extends BaseScene{
     }
 
     private isOperating:boolean = false;
+    private tarTxt:egret.TextField;
     private init(){
         this.timeItem = new TimeItem(this.dataVo.time);
         this.addChild(this.timeItem);
 
         let sprite = new egret.Sprite();
-        let rand = Math.floor(100*Math.random() + 10);
+        let str = this.dataVo.sData[0];
+        let num = this.dataVo.sData[1];
+        let rand = Math.floor((num - 10)*Math.random() + 10);
         console.log(rand);
-        for(let i = 0;i < 120;i++){
+        for(let i = 0;i < num;i++){
             let text;
             if(i == rand){
                 text = this.createText(this.dataVo.tData);
+                this.tarTxt = text;
             }
             else{
-                text = this.createText(this.dataVo.sData);
+                text = this.createText(str);
             }
 
             text.x = (i%10)*66;
@@ -27,7 +31,6 @@ class Scene_011 extends BaseScene{
             sprite.addChild(text);
         }
         sprite.anchorOffsetX = sprite.width/2;
-        // sprite.anchorOffsetY = sprite.height/2;
         sprite.x = SpriteUtil.stageCenterX;
         sprite.y = 100;
         this.addChild(sprite);
@@ -35,6 +38,7 @@ class Scene_011 extends BaseScene{
 
     private textClk(evt){
         if(this.isOperating) return;
+        GameSound.instance().playSound('click');
         this.isOperating = true;
         let name = evt.target.text;
         if(name == this.dataVo.tData){
@@ -44,7 +48,7 @@ class Scene_011 extends BaseScene{
                 EffectUtil.showResultEffect(EffectUtil.PERFECT);
             }
             else if(time >= 15){
-                EffectUtil.showResultEffect(EffectUtil.EXCELLENT);
+                EffectUtil.showResultEffect(EffectUtil.GREAT);
             }
             else{
                 EffectUtil.showResultEffect(EffectUtil.GOOD);
@@ -52,6 +56,7 @@ class Scene_011 extends BaseScene{
         }
         else{
             this.timeItem.stop();
+            this.tarTxt.textColor = 0xff0000;
             EffectUtil.showResultEffect();
         }
     }

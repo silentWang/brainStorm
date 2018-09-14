@@ -9,10 +9,6 @@ class Scene_001 extends BaseScene{
     private selectedArr:Array<egret.TextField>;
     private bounds;
     private init(){
-        // this.dataVo.sData = '鼠鹅牛猫虎驴兔鸭龙鱼蛇龟马鸟羊象猴蛙鸡熊狗狼猪凤';
-        // this.dataVo.tData = '鼠牛虎兔龙蛇马羊猴鸡狗猪';
-        // this.dataVo.time = 60;
-        
         this.selectedArr = [];
         let rect = SpriteUtil.createRect(SpriteUtil.stageWidth,SpriteUtil.stageHeight/8,0xCDCDC1);
         rect.x = SpriteUtil.stageWidth/2;
@@ -44,7 +40,9 @@ class Scene_001 extends BaseScene{
     }
     //事件处理
     private textClk(evt){
+        if(this.timeItem.leftTime <= 0) return;
         let text = evt.target;
+        GameSound.instance().playSound('click');
         if(this.tarText == text){
             text = this.selectedArr.pop();
             let xx = 200 + 320*Math.random();
@@ -68,16 +66,17 @@ class Scene_001 extends BaseScene{
                 this.tarText.touchEnabled = true;
                 this.selectedArr.push(text);
                 if(str == this.dataVo.tData){
-                    if(this.timeItem.leftTime >= 30){
+                    let leftTime = this.timeItem.leftTime;
+                    this.timeItem.stop();
+                    if(leftTime >= 30){
                         EffectUtil.showResultEffect(EffectUtil.PERFECT);
                     }
-                    else if(this.timeItem.leftTime >= 15){
-                        EffectUtil.showResultEffect(EffectUtil.EXCELLENT);
+                    else if(leftTime >= 15){
+                        EffectUtil.showResultEffect(EffectUtil.GREAT);
                     }
                     else{
                         EffectUtil.showResultEffect(EffectUtil.GOOD);
                     }
-                    this.timeItem.stop();
                 }
             });
         }

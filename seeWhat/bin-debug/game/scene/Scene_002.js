@@ -41,6 +41,8 @@ var Scene_002 = (function (_super) {
         this.addChild(this.timeItem);
     };
     Scene_002.prototype.textClk = function (evt) {
+        if (this.timeItem && this.timeItem.leftTime <= 0)
+            return;
         if (!this.currentSelect) {
             this.currentSelect = evt.target;
             this.currentSelect.alpha = 0.5;
@@ -62,16 +64,17 @@ var Scene_002 = (function (_super) {
             }
         }
         if (this.group.numChildren <= 0) {
-            if (this.timeItem.leftTime >= 60) {
+            var leftTime = this.timeItem.leftTime;
+            this.timeItem.stop();
+            if (leftTime >= 60) {
                 EffectUtil.showResultEffect(EffectUtil.PERFECT);
             }
-            else if (this.timeItem.leftTime >= 30) {
+            else if (leftTime >= 30) {
                 EffectUtil.showResultEffect(EffectUtil.EXCELLENT);
             }
             else {
                 EffectUtil.showResultEffect(EffectUtil.GOOD);
             }
-            this.timeItem.stop();
         }
     };
     Scene_002.prototype.createText = function (name) {

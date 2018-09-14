@@ -39,7 +39,12 @@ class Game{
         this._gameScene = new GameScene();
         this._gameView = new GameView();
         //进入菜单
-        this._gameScene.gotoMenu();
+        if(!GameData.isWxGame){
+            this._gameScene.gotoMenu();
+        }
+        else{
+            WXApi.getSetting();
+        }
     }
 
     addBottom(display:egret.DisplayObject){

@@ -1,5 +1,6 @@
-!function (e) { if ("object" == typeof exports && "undefined" != typeof module)
+!function (e) { if ("object" == typeof exports && "undefined" != typeof module){
     module.exports = e();
+}
 else if ("function" == typeof define && define.amd)
     define([], e);
 else {
@@ -587,6 +588,7 @@ else {
  */
 (function (f) { if (typeof exports === "object" && typeof module !== "undefined") {
     module.exports = f();
+    window.Matter = f();
 }
 else if (typeof define === "function" && define.amd) {
     define([], f);

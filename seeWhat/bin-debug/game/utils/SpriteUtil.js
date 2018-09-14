@@ -46,16 +46,19 @@ var SpriteUtil = (function () {
         return polygon;
     };
     //text 图
-    SpriteUtil.createText = function (str, size, color, isBackground) {
+    SpriteUtil.createText = function (str, size, color, isBackground, backgroundColor) {
         if (size === void 0) { size = 40; }
         if (color === void 0) { color = 0xff0000; }
         if (isBackground === void 0) { isBackground = false; }
+        if (backgroundColor === void 0) { backgroundColor = 0x0000ff; }
         var text = new egret.TextField();
         text.size = size;
         text.text = str;
         text.textColor = color;
         text.background = isBackground;
-        text.backgroundColor = 0xffff00;
+        text.backgroundColor = backgroundColor;
+        text.stroke = 1;
+        text.strokeColor = 0x000000;
         text.textAlign = 'center';
         text.verticalAlign = 'middle';
         text.bold = true;
@@ -71,17 +74,20 @@ var SpriteUtil = (function () {
         return bitmap;
     };
     //create a button
-    SpriteUtil.createButton = function (label, width, height) {
+    SpriteUtil.createButton = function (label, width, height, backgroundColor, size) {
         if (width === void 0) { width = 200; }
         if (height === void 0) { height = 80; }
+        if (backgroundColor === void 0) { backgroundColor = 0x0000ff; }
+        if (size === void 0) { size = 40; }
         var btn = new egret.Sprite();
         var rect = new egret.Shape();
-        rect.graphics.beginFill(0x0000ff);
+        rect.graphics.lineStyle(5, 0xB03060);
+        rect.graphics.beginFill(backgroundColor);
         rect.graphics.drawRect(0, 0, width, height);
         rect.graphics.endFill();
         var text = new egret.TextField();
         text.text = label;
-        text.size = 40;
+        text.size = size;
         text.textAlign = 'center';
         text.width = width;
         text.y = 20;

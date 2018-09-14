@@ -25,13 +25,13 @@ var Scene_004 = (function (_super) {
     Scene_004.prototype.init = function () {
         this.giftBoxArr = [];
         this.giftGroup = new egret.Sprite();
-        this.giftGroup.x = 200;
+        this.giftGroup.x = 150;
         this.giftGroup.y = 300;
         this.addChild(this.giftGroup);
         for (var i = 0; i < 16; i++) {
-            var bag = SpriteUtil.createText(this.dataVo.sData, 100);
-            bag.x = (i % 4) * 110;
-            bag.y = 110 * Math.floor(i / 4);
+            var bag = SpriteUtil.createText(this.dataVo.sData, 120);
+            bag.x = (i % 4) * 140;
+            bag.y = 140 * Math.floor(i / 4);
             bag.name = "giftBag_" + i;
             this.giftGroup.addChild(bag);
             bag.touchEnabled = true;
@@ -78,7 +78,6 @@ var Scene_004 = (function (_super) {
         var _this = this;
         var index1 = Math.floor(this.giftBoxArr.length * Math.random());
         var index2 = Math.floor(this.giftBoxArr.length * Math.random());
-        console.log(index1 + "," + index2);
         if (index1 == index2) {
             this.randomBox();
             return;
@@ -102,6 +101,7 @@ var Scene_004 = (function (_super) {
         });
     };
     Scene_004.prototype.giftTap = function (evt) {
+        var _this = this;
         if (!this.isGameStart)
             return;
         var name = evt.target.name;
@@ -109,21 +109,33 @@ var Scene_004 = (function (_super) {
             return;
         this.isGameStart = false;
         var index = evt.target.name.split('_')[1];
-        this.timeItem.stop();
+        var point = this.giftGroup.localToGlobal(this.giftBoxArr[this.targetIndex].x, this.giftBoxArr[this.targetIndex].y);
+        this.giftDisplay.x = point.x;
+        this.giftDisplay.y = point.y;
+        this.giftDisplay.alpha = 0;
+        this.giftDisplay.visible = true;
         if (index == this.targetIndex) {
-            if (this.timeItem.leftTime >= 10) {
-                EffectUtil.showResultEffect(EffectUtil.PERFECT);
-            }
-            else if (this.timeItem.leftTime >= 5) {
-                EffectUtil.showResultEffect(EffectUtil.EXCELLENT);
-            }
-            else {
-                EffectUtil.showResultEffect(EffectUtil.GOOD);
-            }
+            var leftTime_1 = this.timeItem.leftTime;
             this.timeItem.stop();
+            egret.Tween.get(this.giftDisplay).to({ alpha: 1 }, 300).call(function () {
+                egret.Tween.removeTweens(_this.giftDisplay);
+                if (leftTime_1 >= 10) {
+                    EffectUtil.showResultEffect(EffectUtil.PERFECT);
+                }
+                else if (leftTime_1 >= 5) {
+                    EffectUtil.showResultEffect(EffectUtil.EXCELLENT);
+                }
+                else {
+                    EffectUtil.showResultEffect(EffectUtil.GOOD);
+                }
+            });
         }
         else {
-            EffectUtil.showResultEffect();
+            this.timeItem.stop();
+            egret.Tween.get(this.giftDisplay).to({ alpha: 1 }, 300).call(function () {
+                egret.Tween.removeTweens(_this.giftDisplay);
+                EffectUtil.showResultEffect();
+            });
         }
     };
     Scene_004.prototype.enter = function () {

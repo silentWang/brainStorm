@@ -23,7 +23,10 @@ var GameScene = (function () {
         this.allScenes['010'] = Scene_010;
         this.allScenes['011'] = Scene_011;
         this.allScenes['012'] = Scene_012;
-        // this.allScenes['013'] = Scene_013;
+        this.allScenes['013'] = Scene_013;
+        this.allScenes['014'] = Scene_014;
+        this.allScenes['015'] = Scene_015;
+        this.allScenes['016'] = Scene_016;
         //添加事件
         this.addEvent();
     };
@@ -45,9 +48,12 @@ var GameScene = (function () {
         if (this._currentScene) {
             this._currentScene.exit();
         }
-        GameData.currentLevel = 0;
+        if (GameData.isWxGame) {
+            WXApi.updateRankLvl();
+        }
         this._menuScene.exit();
         this._overScene.enter();
+        GameData.currentLevel = 0;
     };
     //下一关
     GameScene.prototype.gotoNext = function (evt) {
@@ -55,7 +61,7 @@ var GameScene = (function () {
         var lvl = GameData.currentLevel;
         lvl++;
         GameData.currentLevel = lvl;
-        GameData.currentLevel = 12;
+        GameData.currentLevel = 16;
         Game.instance().gameView.guideView.show();
         this._menuScene.exit();
         this._overScene.exit();

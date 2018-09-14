@@ -9,7 +9,14 @@ class Scene_002 extends BaseScene{
     private group:egret.Sprite;
     private init(){
         //无序化
-        let arr = this.dataVo.sData.split('');
+        let arr1 = this.dataVo.sData;
+        let arr = arr1.concat(arr1);
+        let num = arr.length;
+        //多少列
+        let columns = Math.round(Math.sqrt(num));
+        //每个格子宽度
+        let wid = Math.round(SpriteUtil.stageWidth - 50)/columns;
+        //乱序
         arr.sort((a,b)=>{
             if(Math.random() > 0.5) return 1;
             if(Math.random() < 0.5) return -1;
@@ -20,10 +27,11 @@ class Scene_002 extends BaseScene{
         this.group.x = 5;
         this.group.y = 200;
         let len = arr.length;
+        let size = columns == 10 ? wid - 20 : wid - 40;
         for(let i = 0;i < len;i++){
-            let text = this.createText(arr[i]);
-            text.x = 90*(i%8);
-            text.y = 86*Math.floor(i/8);
+            let text = this.createText(arr[i],size,wid);
+            text.x = (wid+5)*(i%columns);
+            text.y = (wid+5)*Math.floor(i/columns);
             this.group.addChild(text);
         }
         this.addChild(this.group);
@@ -33,6 +41,8 @@ class Scene_002 extends BaseScene{
     }
 
     private textClk(evt){
+        if(this.timeItem && this.timeItem.leftTime <= 0) return;
+        GameSound.instance().playSound('click');
         if(!this.currentSelect){
             this.currentSelect = evt.target;
             this.currentSelect.alpha = 0.5;
@@ -55,28 +65,29 @@ class Scene_002 extends BaseScene{
         }
 
         if(this.group.numChildren <= 0){
-            if(this.timeItem.leftTime >= 60){
+            let leftTime = this.timeItem.leftTime;
+            this.timeItem.stop();
+            if(leftTime >= 60){
                 EffectUtil.showResultEffect(EffectUtil.PERFECT);
             }
-            else if(this.timeItem.leftTime >= 30){
-                EffectUtil.showResultEffect(EffectUtil.EXCELLENT);
+            else if(leftTime >= 30){
+                EffectUtil.showResultEffect(EffectUtil.GREAT);
             }
             else{
                 EffectUtil.showResultEffect(EffectUtil.GOOD);
             }
-            this.timeItem.stop();
         }
     }
 
-    private createText(name:string){
+    private createText(name:string,size = 60,width = 0){
         let text = new egret.TextField();
-        text.size = 60;
+        text.size = size;
         text.text = name;
         text.textColor = 0x0000ff;
         text.stroke = 0.5;
         text.strokeColor = 0x000000;
-        text.width = 80;
-        text.height = 80;
+        text.width = width;
+        text.height = width;
         text.background = true;
         text.backgroundColor = 0x00C5CD;
         text.textAlign = 'center';

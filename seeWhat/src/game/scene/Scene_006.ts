@@ -5,72 +5,79 @@ class Scene_006 extends BaseScene{
         this.init();
     }
 
-    private tarSprite1:egret.Sprite;
-    private tarSprite2:egret.Sprite;
-    private tarPoints:Array<egret.Point>;
+    private tarSprite:egret.Sprite;
     private picSprs:Array<egret.Sprite>;
-    private selectNum:number = 0;
     private isOperating:boolean = false;
     private init(){
-        this.timeItem = new TimeItem(30);
+        this.timeItem = new TimeItem(5);
         this.addChild(this.timeItem);
         //修身 齐家 治国 平天下
-        let arr1 = this.dataVo.sData;
-        this.tarSprite1 = this.createPic(arr1);
-        this.tarSprite1.x = SpriteUtil.stageCenterX - this.tarSprite1.width/2;
-        this.tarSprite1.y = 100;
-        this.tarSprite1.name = 'target_1';
-        this.addChild(this.tarSprite1);
-        //玉不琢，不成器。人不学，不知义
-        let arr2 = this.dataVo.tData;
-        this.tarSprite2 = this.createPic(arr2);
-        this.tarSprite2.x = SpriteUtil.stageCenterX - this.tarSprite2.width/2;
-        this.tarSprite2.y = this.tarSprite1.y + this.tarSprite1.height + 100;
-        this.addChild(this.tarSprite2);
-        this.tarSprite2.name = 'target_2';
+        let arr = this.dataVo.sData;
+        this.tarSprite = this.createPic(arr);
+        this.tarSprite.x = SpriteUtil.stageCenterX - this.tarSprite.width/2;
+        this.tarSprite.y = SpriteUtil.stageCenterY - this.tarSprite.height/2 - 100;
+        this.tarSprite.name = 'target_1';
+        this.addChild(this.tarSprite);
 
-        this.tarPoints = []
-        this.tarPoints.push(new egret.Point(80,SpriteUtil.stageCenterY + 200));
-        this.tarPoints.push(new egret.Point(400,SpriteUtil.stageCenterY + 200));
         this.picSprs = [];
         //创建其他图形
-        this.createRandomPic(arr1,2,3);
-        this.createRandomPic(arr1,1,4);
-        this.createRandomPic(arr1,5,6);
-        this.createRandomPic(arr1,0,8);
-        this.createRandomPic(arr1,6,3);
-        this.createRandomPic(arr1,1,2);
-        this.createRandomPic(arr1,0,4);
-
-        this.createRandomPic(arr2,2,3);
-        this.createRandomPic(arr2,1,4);
-        this.createRandomPic(arr2,5,6);
-        this.createRandomPic(arr2,0,8);
-        this.createRandomPic(arr2,6,3);
-        this.createRandomPic(arr2,1,2);
-        this.createRandomPic(arr2,0,5);
-    }
-
-    private startGame(){
-        this.picSprs.push(this.tarSprite1);
-        this.picSprs.push(this.tarSprite2);
-        this.tarSprite1.touchEnabled = true;
-        this.tarSprite2.touchEnabled = true;
-        this.tarSprite1.addEventListener(egret.TouchEvent.TOUCH_TAP,this.selectClk,this);
-        this.tarSprite2.addEventListener(egret.TouchEvent.TOUCH_TAP,this.selectClk,this);
-        this.picSprs.sort((a,b)=>{return Math.random() > 0.5 ? 1 : -1;});
-        for(let i = 0;i < this.picSprs.length;i++){
-            let xx = 10 + (i%4)*180;
-            let yy = 100 + 175*Math.floor(i/4);
-            this.picSprs[i].x = xx;
-            this.picSprs[i].y = yy;
-            this.addChild(this.picSprs[i]);
-            this.picSprs[i].scaleX = 0.45;
-            this.picSprs[i].scaleY = 0.45;
+        this.createRandomPic(arr,2,3);
+        this.createRandomPic(arr,3,4);
+        this.createRandomPic(arr,2,4);
+        this.createRandomPic(arr,3,5);
+        this.createRandomPic(arr,5,6);
+        this.createRandomPic(arr,4,7);
+        this.createRandomPic(arr,5,8);
+        this.createRandomPic(arr,6,7);
+        //这里的tdata代表展示图片的数量
+        let num = this.dataVo.tData;
+        let snum = this.dataVo.sData.length;
+        if(num == 16 && snum == 9){
+            this.createRandomPic(arr,1,4);
+            this.createRandomPic(arr,2,6);
+            this.createRandomPic(arr,0,6);
+            this.createRandomPic(arr,7,3);
+            this.createRandomPic(arr,5,2);
+            this.createRandomPic(arr,7,4);
+            this.createRandomPic(arr,0,7);
+        }
+        else if(num == 16 && snum == 16){
+            this.createRandomPic(arr,9,12);
+            this.createRandomPic(arr,10,14);
+            this.createRandomPic(arr,8,15);
+            this.createRandomPic(arr,6,11);
+            this.createRandomPic(arr,7,13);
+            this.createRandomPic(arr,3,12);
+            this.createRandomPic(arr,4,10);
         }
     }
 
-    private createRandomPic(arr = [],index1 = 0,index2 = 0){
+    private startGame(){
+        this.picSprs.push(this.tarSprite);
+        this.tarSprite.touchEnabled = true;
+        this.tarSprite.addEventListener(egret.TouchEvent.TOUCH_TAP,this.selectClk,this);
+        this.picSprs.sort((a,b)=>{return Math.random() > 0.5 ? 1 : -1;});
+        let num = this.dataVo.tData;
+        let cols = Math.sqrt(num);
+        let scale = (SpriteUtil.stageWidth - 50) / (this.tarSprite.width*cols);
+        let wid = scale*this.tarSprite.width;
+        let sprite = new egret.Sprite();
+        for(let i = 0;i < this.picSprs.length;i++){
+            let xx = (i%cols)*(wid+10);
+            let yy = 100 + (wid+20)*Math.floor(i/cols);
+            this.picSprs[i].x = xx;
+            this.picSprs[i].y = yy;
+            sprite.addChild(this.picSprs[i]);
+            this.picSprs[i].scaleX = scale;
+            this.picSprs[i].scaleY = scale;
+        }
+        this.addChild(sprite);
+        sprite.x = SpriteUtil.stageCenterX - sprite.width/2;
+        sprite.y = 100;
+    }
+
+    private createRandomPic(sarr = [],index1 = 0,index2 = 0){
+        let arr = sarr.concat();
         let temp = arr[index1];
         arr[index1] = arr[index2];
         arr[index2] = temp;
@@ -83,10 +90,11 @@ class Scene_006 extends BaseScene{
 
     private selectClk(evt){
         if(this.isOperating) return;
+        this.isOperating = true;
+        GameSound.instance().playSound('click');
         let name:string = evt.target.name;
         if(name == 'mistake'){
             this.timeItem.stop();
-            this.isOperating = true;
             EffectUtil.showResultEffect();
             return;
         }
@@ -94,36 +102,38 @@ class Scene_006 extends BaseScene{
         let idx:number = parseInt(name.split('_')[1]);
         let spr:egret.Sprite = evt.target;
         spr.touchEnabled = false;
-        egret.Tween.get(spr).to({x:this.tarPoints[idx-1].x,y:this.tarPoints[idx-1].y,scaleX:0.7,scaleY:0.7},800).call(()=>{
-            this.selectNum++;
-            if(this.selectNum >= 2){
-                if(this.timeItem.leftTime >= 30){
-                    EffectUtil.showResultEffect(EffectUtil.PERFECT);
-                }
-                else if(this.timeItem.leftTime >= 15){
-                    EffectUtil.showResultEffect(EffectUtil.EXCELLENT);
-                }
-                else{
-                    EffectUtil.showResultEffect(EffectUtil.GOOD);
-                }
-                this.timeItem.stop();
+        spr.parent.setChildIndex(spr,spr.parent.numChildren - 1);
+        let leftTime = this.timeItem.leftTime;
+        this.timeItem.stop();
+        egret.Tween.get(spr).to({x:SpriteUtil.stageCenterX - spr.width*0.5/2,y:200,scaleX:0.5,scaleY:0.5},800).call(()=>{
+            if(leftTime >= 30){
+                EffectUtil.showResultEffect(EffectUtil.PERFECT);
+            }
+            else if(leftTime >= 15){
+                EffectUtil.showResultEffect(EffectUtil.GREAT);
+            }
+            else{
+                EffectUtil.showResultEffect(EffectUtil.GOOD);
             }
         });
     }
-
+    //创建图片
     private createPic(arr){
+        let len = arr.length;
+        let cols = Math.sqrt(len);
+        let wid = (SpriteUtil.stageWidth - 120)/cols;
         let sprite = new egret.Sprite();
-        for(let i = 0;i < arr.length;i++){
+        for(let i = 0;i < len;i++){
             let item = SpriteUtil.createText(arr[i],100);
-            item.x = item.width/2+(i%3)*120;
-            item.y = item.height/2 + 120*Math.floor(i/3);
-            item.stroke = 0.5;
-            item.strokeColor = 0x00ff00;
+            let scale = wid/item.width;
+            item.scaleX = scale;
+            item.scaleY = scale;
+            item.x = wid/2+(i%cols)*(wid + 10);
+            item.y = wid/2 + (wid + 10)*Math.floor(i/cols);
             sprite.addChild(item);
         }
-        sprite.width = sprite.height;
-        sprite.graphics.beginFill(0x96cdcd);
-        sprite.graphics.drawRect(0,0,sprite.width,sprite.height);
+        sprite.graphics.beginFill(0x707070);
+        sprite.graphics.drawRect(0,0,(wid+10)*cols,(wid + 20)*cols);
         sprite.graphics.endFill();
         return sprite;
     }

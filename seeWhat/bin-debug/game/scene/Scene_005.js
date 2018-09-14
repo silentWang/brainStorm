@@ -15,6 +15,7 @@ var Scene_005 = (function (_super) {
         var _this = _super.call(this) || this;
         _this.itemCategory = 0x0002;
         _this.playerCategory = 0x0100;
+        _this.score = 0;
         _this.isTouching = false;
         _this.init();
         return _this;
@@ -38,7 +39,7 @@ var Scene_005 = (function (_super) {
         this.recycleArr = [];
         this.initAllItem();
         var plySpr = SpriteUtil.createText('🙉', 100);
-        this.player = Matter.Bodies.circle(100, 1200, plySpr.height / 2, {
+        this.player = Matter.Bodies.circle(SpriteUtil.stageCenterX, SpriteUtil.stageCenterY, plySpr.height / 2, {
             isStatic: true,
             collisionFilter: {
                 category: this.playerCategory
@@ -54,7 +55,7 @@ var Scene_005 = (function (_super) {
         }, this);
         plySpr.addEventListener(egret.TouchEvent.TOUCH_MOVE, function (evt) {
             if (_this.isTouching) {
-                Matter.Body.setPosition(_this.player, { x: evt['stageX'], y: 1200 });
+                Matter.Body.setPosition(_this.player, { x: evt['stageX'], y: evt['stageY'] });
             }
         }, this);
         plySpr.addEventListener(egret.TouchEvent.TOUCH_END, function () {
@@ -67,6 +68,10 @@ var Scene_005 = (function (_super) {
                 egret.clearInterval(ids);
             }
         }, this, 500);
+        this.scoreItem = new ScoreItem();
+        this.scoreItem.setSTScore(0, this.dataVo.score);
+        this.scoreItem.x = 50;
+        this.addChild(this.scoreItem);
     };
     //创建items
     Scene_005.prototype.initAllItem = function () {
@@ -78,8 +83,24 @@ var Scene_005 = (function (_super) {
         var len2 = arr2.length;
         var index = 0;
         for (var i = 0; i < 80; i++) {
-            var xx = 50 + (i % 10) * 70;
-            var yy = 25 + 70 * Math.floor(i / 10);
+            var xx = 0;
+            var yy = 0;
+            if (i < 25) {
+                xx = -50;
+                yy = (i % 25) * (SpriteUtil.stageHeight / 25);
+            }
+            else if (i < 40) {
+                xx = ((i - 25) % 15) * (SpriteUtil.stageWidth / 15);
+                yy = SpriteUtil.stageHeight + 50;
+            }
+            else if (i < 65) {
+                xx = SpriteUtil.stageWidth + 50;
+                yy = ((i - 40) % 25) * (SpriteUtil.stageHeight / 25);
+            }
+            else {
+                xx = ((i - 65) % 15) * (SpriteUtil.stageWidth / 15);
+                yy = -50;
+            }
             var fruit = void 0;
             if (Math.random() > 0.5) {
                 index = Math.floor(len1 * Math.random());
@@ -105,6 +126,12 @@ var Scene_005 = (function (_super) {
             if (pair.bodyA == this.player) {
                 if (pair.bodyB.name == 'fruit') {
                     this.removeBody(pair.bodyB);
+                    this.score++;
+                    this.scoreItem.setSTScore(this.score);
+                    if (this.scoreItem.isCanPass()) {
+                        this.destroy();
+                        EffectUtil.showResultEffect(EffectUtil.GOOD);
+                    }
                 }
                 else if (pair.bodyB.name == 'enemy') {
                     this.destroy();
@@ -114,6 +141,12 @@ var Scene_005 = (function (_super) {
             else if (pair.bodyB == this.player) {
                 if (pair.bodyA.name == 'fruit') {
                     this.removeBody(pair.bodyA);
+                    this.score++;
+                    this.scoreItem.setSTScore(this.score);
+                    if (this.scoreItem.isCanPass()) {
+                        this.destroy();
+                        EffectUtil.showResultEffect(EffectUtil.GOOD);
+                    }
                 }
                 else if (pair.bodyA.name == 'enemy') {
                     this.destroy();
@@ -137,7 +170,10 @@ var Scene_005 = (function (_super) {
             var len = this.recycleArr.length;
             for (var i = len - 1; i >= 0; i--) {
                 var body = this.recycleArr[i];
-                if (body.position.y > SpriteUtil.stageHeight) {
+                if (body.position.x < -100
+                    || body.position.x > SpriteUtil.stageWidth + 100
+                    || body.position.y < -100
+                    || body.position.y > SpriteUtil.stageHeight + 100) {
                     Matter.World.remove(this.engine.world, body, 0);
                     this.recycleArr.splice(i, 1);
                     this.removeChild(body.render.sprite);
@@ -162,11 +198,11 @@ var Scene_005 = (function (_super) {
         var dx = this.player.position.x - body.position.x;
         var dy = this.player.position.y - body.position.y;
         var rate = dy / dx;
-        if (rate > 5) {
-            rate = 5;
+        if (rate > 10) {
+            rate = 10;
         }
-        if (rate < -5) {
-            rate = -5;
+        if (rate < -10) {
+            rate = -10;
         }
         var fx = dx / Math.abs(dx);
         var fy = fx * rate;
@@ -179,7 +215,7 @@ var Scene_005 = (function (_super) {
         if (sx === void 0) { sx = 0; }
         if (sy === void 0) { sy = 0; }
         var item = SpriteUtil.createText(cstr, 50);
-        var itemBody = Matter.Bodies.circle(sx, sy, item.width / 2, {
+        var itemBody = Matter.Bodies.circle(sx, sy, item.height / 2, {
             name: name,
             frictionAir: 0,
             collisionFilter: {

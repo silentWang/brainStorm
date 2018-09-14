@@ -21,43 +21,64 @@ class Scene_007 extends BaseScene{
         this.timeItem.x = SpriteUtil.stageWidth - 300;
         this.needNums  = 1;
         this.pointsArr = [];
-        for(let i = 0;i < 50;i++){
+        for(let i = 0;i < 40;i++){
             let point = new egret.Point();
-            point.x = 104+104*(i%5);
-            point.y = 108 + 108*Math.floor(i/5);
+            point.x = 90 + 140*(i%5);
+            point.y = 120 + 120*Math.floor(i/5);
             this.pointsArr.push(point);
         }
     }
 
     private loop(time){
         if(time <= 0){
+            this.isOperating = true;
             this.timeItem.stop();
+            if(this.scoreItem.isCanPass()){
+                let score = this.score - this.dataVo.score;
+                if(score >= 10){
+                    EffectUtil.showResultEffect(EffectUtil.PERFECT);
+                }
+                else if(score >= 5){
+                    EffectUtil.showResultEffect(EffectUtil.GREAT);
+                }
+                else{
+                    EffectUtil.showResultEffect(EffectUtil.GOOD);
+                }
+            }
+            else{
+                EffectUtil.showResultEffect();
+            }
             return;
         }
         if(time <= 8){
-            this.needNums = 15;
+            this.needNums = 30;
         }
         else if(time <= 10){
-            this.needNums = 12;
+            this.needNums = 20;
         }
         else if(time <= 20){
-            this.needNums = 8;
+            this.needNums = 15;
         }
         else if(time <= 25){
-            this.needNums = 4;
+            this.needNums = 10;
         }
-        else if(time <= 30){
-            this.needNums = 1;
+        else{
+            this.needNums = 5;
         }
     }
 
     private showSprites(nums){
         let num = 0;
+        let randnum = Math.floor(nums*Math.random());
         let arr = this.getRandomPoints(nums);
         let idx = egret.setInterval(()=>{
-            let index = 0;
-            if(num > 0){
-                index = Math.floor(this.dataVo.sData.length * Math.random());
+            if(this.isOperating){
+                egret.clearInterval(idx);
+                return;
+            }
+            let index = Math.floor(this.dataVo.sData.length * Math.random());
+            if(num == randnum){
+                index = 0;
             }
             let spr = this.getPools(index);
             spr.x = this.pointsArr[arr[num]].x;
@@ -67,22 +88,21 @@ class Scene_007 extends BaseScene{
                 egret.clearInterval(idx);
                 let xid = egret.setTimeout(()=>{
                     egret.clearTimeout(xid);
+                    if(this.isOperating) return;
                     for(let spr of this.pools){
                         spr.visible = false;
-                        spr.scaleX = 1;
-                        spr.scaleY = 1;
                         spr.text = '';
                     }
                     this.showSprites(this.needNums);
                 },this,1000);
             }
-        },this,200);
+        },this,100);
     }
     //这个随机不同的逻辑写的不太好
     private getRandomPoints(nums:number){
         let arr = [];
         while(arr.length < nums){
-            let index = Math.floor(50*Math.random());
+            let index = Math.floor(40*Math.random());
             if(arr.indexOf(index) < 0){
                 arr.push(index);
             }
@@ -109,26 +129,13 @@ class Scene_007 extends BaseScene{
             this.pools.push(spr);
             spr.addEventListener(egret.TouchEvent.TOUCH_TAP,(evt)=>{
                 if(this.isOperating) return;
+                GameSound.instance().playSound('click');
                 let spr = evt.target;
-                if(spr.name == '🐁'){
+                if(spr.name == this.dataVo.sData[0]){
                     spr.visible = false;
-                    spr.scaleX = 1;
-                    spr.scaleY = 1;
                     spr.text = '';
                     this.score++;
                     this.scoreItem.setSTScore(this.score);
-                    if(this.scoreItem.isCanPass()){
-                        if(this.timeItem.leftTime >= 10){
-                            EffectUtil.showResultEffect(EffectUtil.PERFECT);
-                        }
-                        else if(this.timeItem.leftTime >= 5){
-                            EffectUtil.showResultEffect(EffectUtil.EXCELLENT);
-                        }
-                        else{
-                            EffectUtil.showResultEffect(EffectUtil.GOOD);
-                        }
-                        this.timeItem.stop();
-                    }
                 }
                 else{
                     this.timeItem.stop();

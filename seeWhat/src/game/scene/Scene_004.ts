@@ -4,7 +4,6 @@ class Scene_004 extends BaseScene{
         super();
         this.init();
     }
-
     private giftBoxArr:Array<egret.TextField>;
     private giftDisplay:egret.TextField;
     private giftGroup:egret.Sprite;
@@ -13,36 +12,61 @@ class Scene_004 extends BaseScene{
     private rotateAngle = 0;
     //目标箱子索引
     private targetIndex = 0;
+    //交换间隔时间
+    private intervalTime = 0;
     //交换次数
     private exchangeTimes:number = 0;
+    //最大交换次数
+    private maxTimes:number = 0;
     private isGameStart:boolean = false;
     private init(){
         this.giftBoxArr = [];
         this.giftGroup = new egret.Sprite();
-        this.giftGroup.x = 200;
-        this.giftGroup.y = 300;
         this.addChild(this.giftGroup);
-        for(let i = 0;i < 16;i++){
-            let bag = SpriteUtil.createText(this.dataVo.sData,100);
-            bag.x = (i%4)*110;
-            bag.y = 110*Math.floor(i/4);
+        let box = this.dataVo.sData[0];
+        let num = this.dataVo.sData[1];
+        let cols = Math.sqrt(num);
+        let wid = (SpriteUtil.stageWidth - 100)/cols;
+        for(let i = 0;i < num;i++){
+            let bag = SpriteUtil.createText(box,100);
+            let scale = wid/bag.width;
+            bag.scaleX = scale;
+            bag.scaleY = scale;
+            bag.x = wid/2 + (i%cols)*(wid + 10);
+            bag.y = wid/2 + (wid + 10)*Math.floor(i/cols);
             bag.name = `giftBag_${i}`;
             this.giftGroup.addChild(bag);
             bag.touchEnabled = true;
             bag.addEventListener(egret.TouchEvent.TOUCH_TAP,this.giftTap,this);
             this.giftBoxArr.push(bag);
         }
-        this.rotatePoint = new egret.Point(SpriteUtil.stageCenterX,450);
-        this.startPoint = new egret.Point(SpriteUtil.stageCenterX,150);
 
+        this.giftGroup.x = SpriteUtil.stageCenterX - this.giftGroup.width/2;
+        this.giftGroup.y = SpriteUtil.stageCenterY - this.giftGroup.height/2 - 200;
 
-        this.giftDisplay = SpriteUtil.createText(this.dataVo.tData,60);
+        this.rotatePoint = new egret.Point(SpriteUtil.stageCenterX,SpriteUtil.stageCenterY - 200);
+        this.startPoint = new egret.Point(SpriteUtil.stageCenterX,100);
+
+        this.giftDisplay = SpriteUtil.createText(this.dataVo.tData,100);
         this.giftDisplay.x = SpriteUtil.stageCenterX;
         this.giftDisplay.y = 50;
         this.addChild(this.giftDisplay);
 
         this.timeItem = new TimeItem(this.dataVo.time);
         this.addChild(this.timeItem);
+        //确定交换时间 写死
+        if(num == 9){
+            this.intervalTime = 300;
+            this.maxTimes = 25;
+        }
+        else if(num == 16){
+            this.intervalTime = 200;
+            this.maxTimes = 30;
+        }
+        else {
+            this.intervalTime = 150;
+            this.maxTimes = 60;
+        }
 
         this.playDrop();
     }
@@ -65,23 +89,22 @@ class Scene_004 extends BaseScene{
             egret.Tween.get(this.giftDisplay).to({x:point.x,y:point.y},500,egret.Ease.cubicIn).to({alpha:0},1000).call(()=>{
                 egret.Tween.removeTweens(this.giftDisplay);
                 this.giftDisplay.visible = false;
-                this.randomBox();
+                this.randomBox(true);
             });
         }
         return false;
     }
     //随机移动箱子
-    private randomBox(){
-        let index1 = Math.floor(this.giftBoxArr.length*Math.random());
+    private randomBox(isbool:boolean = false){
+        let index1 = Math.random() < 0.2 || isbool ? this.targetIndex : Math.floor(this.giftBoxArr.length*Math.random());
         let index2 = Math.floor(this.giftBoxArr.length*Math.random());
 
-        console.log(`${index1},${index2}`);
         if(index1 == index2){
             this.randomBox();
             return;
         }
         this.exchangeTimes++;
-        if(this.exchangeTimes >= 50){
+        if(this.exchangeTimes >= this.maxTimes){
             this.isGameStart = true;
             this.timeItem.start();
             return;
@@ -90,8 +113,8 @@ class Scene_004 extends BaseScene{
         let box2 = this.giftBoxArr[index2];
         let point1 = new egret.Point(box1.x,box1.y);
         let point2 = new egret.Point(box2.x,box2.y);
-        egret.Tween.get(box1).to({x:point2.x,y:point2.y},120);
-        egret.Tween.get(box2).to({x:point1.x,y:point1.y},120).call(()=>{
+        egret.Tween.get(box1).to({x:point2.x,y:point2.y},this.intervalTime);
+        egret.Tween.get(box2).to({x:point1.x,y:point1.y},this.intervalTime).call(()=>{
             let sid = egret.setTimeout(()=>{
                 egret.clearTimeout(sid);
                 this.randomBox();
@@ -102,25 +125,38 @@ class Scene_004 extends BaseScene{
 
     private giftTap(evt){
         if(!this.isGameStart) return;
+        GameSound.instance().playSound('click');
         let name:string = evt.target.name;
         if(name.search('giftBag') < 0) return;
         this.isGameStart = false;
         let index = evt.target.name.split('_')[1];
-        this.timeItem.stop();
+        let point = this.giftGroup.localToGlobal(this.giftBoxArr[this.targetIndex].x,this.giftBoxArr[this.targetIndex].y);
+        this.giftDisplay.x = point.x;
+        this.giftDisplay.y = point.y;
+        this.giftDisplay.alpha = 0;
+        this.giftDisplay.visible = true;
         if(index == this.targetIndex){
-            if(this.timeItem.leftTime >= 10){
-                EffectUtil.showResultEffect(EffectUtil.PERFECT);
-            }
-            else if(this.timeItem.leftTime >= 5){
-                EffectUtil.showResultEffect(EffectUtil.EXCELLENT);
-            }
-            else{
-                EffectUtil.showResultEffect(EffectUtil.GOOD);
-            }
+            let leftTime = this.timeItem.leftTime;
             this.timeItem.stop();
+            egret.Tween.get(this.giftDisplay).to({alpha:1},300).call(()=>{
+                egret.Tween.removeTweens(this.giftDisplay);
+                if(leftTime >= 10){
+                    EffectUtil.showResultEffect(EffectUtil.PERFECT);
+                }
+                else if(leftTime >= 5){
+                    EffectUtil.showResultEffect(EffectUtil.GREAT);
+                }
+                else{
+                    EffectUtil.showResultEffect(EffectUtil.GOOD);
+                }
+            });
         }
         else{
-            EffectUtil.showResultEffect();
+            this.timeItem.stop();
+            egret.Tween.get(this.giftDisplay).to({alpha:1},300).call(()=>{
+                egret.Tween.removeTweens(this.giftDisplay);
+                EffectUtil.showResultEffect();
+            });
         }
     }
 

@@ -23,6 +23,8 @@ var ScoreItem = (function (_super) {
         this.scoreTxt.text = '0';
         this.scoreTxt.textColor = 0x00ff00;
         this.scoreTxt.width = 300;
+        this.scoreTxt.stroke = 1;
+        this.scoreTxt.strokeColor = 0x000000;
         // this.scoreTxt.bold = true;
         this.addChild(this.scoreTxt);
         this.y = 10;

@@ -11,7 +11,7 @@
 	"game": [
 		"bin-debug/game/scene/BaseScene.js",
 		"bin-debug/game/view/BaseView.js",
-		"bin-debug/game/scene/Scene_002.js",
+		"bin-debug/game/scene/Scene_005.js",
 		"bin-debug/Main.js",
 		"bin-debug/Platform.js",
 		"bin-debug/game/EventCenter.js",
@@ -25,10 +25,10 @@
 		"bin-debug/game/scene/MenuScene.js",
 		"bin-debug/game/scene/OverScene.js",
 		"bin-debug/game/scene/Scene_001.js",
-		"bin-debug/Game.js",
+		"bin-debug/game/scene/Scene_002.js",
 		"bin-debug/game/scene/Scene_003.js",
 		"bin-debug/game/scene/Scene_004.js",
-		"bin-debug/game/scene/Scene_005.js",
+		"bin-debug/game/vo/DataVO.js",
 		"bin-debug/game/scene/Scene_006.js",
 		"bin-debug/game/scene/Scene_007.js",
 		"bin-debug/game/scene/Scene_008.js",
@@ -36,11 +36,17 @@
 		"bin-debug/game/scene/Scene_010.js",
 		"bin-debug/game/scene/Scene_011.js",
 		"bin-debug/game/scene/Scene_012.js",
+		"bin-debug/game/scene/Scene_013.js",
+		"bin-debug/game/scene/Scene_014.js",
+		"bin-debug/game/scene/Scene_015.js",
+		"bin-debug/game/scene/Scene_016.js",
 		"bin-debug/game/utils/CommonUtil.js",
 		"bin-debug/game/utils/EffectUtil.js",
 		"bin-debug/game/utils/SpriteUtil.js",
+		"bin-debug/game/utils/WXApi.js",
 		"bin-debug/LoadingUI.js",
 		"bin-debug/game/view/GuideView.js",
-		"bin-debug/game/vo/DataVO.js"
+		"bin-debug/game/view/RankView.js",
+		"bin-debug/Game.js"
 	]
 }

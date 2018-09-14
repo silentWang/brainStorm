@@ -18,6 +18,7 @@ class Scene_005 extends BaseScene{
     private recycleArr:Array<any>;
     private itemCategory = 0x0002;
     private playerCategory = 0x0100;
+    private score = 0;
     private isTouching:boolean = false;
     
     private init(){
@@ -40,7 +41,7 @@ class Scene_005 extends BaseScene{
         this.initAllItem();
 
         let plySpr = SpriteUtil.createText('🙉',100);
-        this.player = Matter.Bodies.circle(100,1200,plySpr.height/2,{
+        this.player = Matter.Bodies.circle(SpriteUtil.stageCenterX,SpriteUtil.stageCenterY,plySpr.height/2,{
             isStatic:true,
             collisionFilter:{
                 category:this.playerCategory
@@ -56,7 +57,7 @@ class Scene_005 extends BaseScene{
         },this);
         plySpr.addEventListener(egret.TouchEvent.TOUCH_MOVE,(evt)=>{
             if(this.isTouching){
-                Matter.Body.setPosition(this.player,{x:evt['stageX'],y:1200});
+                Matter.Body.setPosition(this.player,{x:evt['stageX'],y:evt['stageY']});
             }
         },this);
         plySpr.addEventListener(egret.TouchEvent.TOUCH_END,()=>{
@@ -71,6 +72,11 @@ class Scene_005 extends BaseScene{
                 egret.clearInterval(ids);
             }
         },this,500);
+
+        this.scoreItem = new ScoreItem();
+        this.scoreItem.setSTScore(0,this.dataVo.score);
+        this.scoreItem.x = 50;
+        this.addChild(this.scoreItem);
     }
     //创建items
     private initAllItem(){
@@ -82,8 +88,24 @@ class Scene_005 extends BaseScene{
         let len2 = arr2.length;
         let index = 0;
         for(let i = 0;i < 80;i++){
-            let xx = 50 + (i%10)*70;
-            let yy = 25 + 70*Math.floor(i/10);
+            let xx = 0;
+            let yy = 0;
+            if(i < 25){
+                xx = -50;
+                yy = (i%25)*(SpriteUtil.stageHeight/25);
+            }
+            else if(i < 40){
+                xx = ((i-25)%15)*(SpriteUtil.stageWidth/15);
+                yy = SpriteUtil.stageHeight + 50;
+            }
+            else if(i < 65){
+                xx = SpriteUtil.stageWidth + 50;
+                yy = ((i-40)%25)*(SpriteUtil.stageHeight/25);
+            }
+            else{
+                xx = ((i - 65)%15)*(SpriteUtil.stageWidth/15);
+                yy = -50;
+            }
             let fruit;
             if(Math.random() > 0.5){
                 index = Math.floor(len1*Math.random());
@@ -109,6 +131,12 @@ class Scene_005 extends BaseScene{
             if(pair.bodyA == this.player){
                 if(pair.bodyB.name == 'fruit'){
                     this.removeBody(pair.bodyB);
+                    this.score++;
+                    this.scoreItem.setSTScore(this.score);
+                    if(this.scoreItem.isCanPass()){
+                        this.destroy();
+                        EffectUtil.showResultEffect(EffectUtil.GOOD);
+                    }
                 }
                 else if(pair.bodyB.name == 'enemy'){
                     this.destroy();
@@ -118,6 +146,12 @@ class Scene_005 extends BaseScene{
             else if(pair.bodyB == this.player){
                 if(pair.bodyA.name == 'fruit'){
                     this.removeBody(pair.bodyA);
+                    this.score++;
+                    this.scoreItem.setSTScore(this.score);
+                    if(this.scoreItem.isCanPass()){
+                        this.destroy();
+                        EffectUtil.showResultEffect(EffectUtil.GOOD);
+                    }
                 }
                 else if(pair.bodyA.name == 'enemy'){
                     this.destroy();
@@ -141,7 +175,11 @@ class Scene_005 extends BaseScene{
             let len = this.recycleArr.length;
             for(let i = len - 1;i>=0;i--){
                 let body = this.recycleArr[i];
-                if(body.position.y > SpriteUtil.stageHeight){
+                if(body.position.x < -100 
+                    || body.position.x > SpriteUtil.stageWidth + 100
+                    || body.position.y < -100
+                    || body.position.y > SpriteUtil.stageHeight + 100)
+                {
                     Matter.World.remove(this.engine.world,body,0);
                     this.recycleArr.splice(i,1);
                     this.removeChild(body.render.sprite);
@@ -166,11 +204,11 @@ class Scene_005 extends BaseScene{
         let dx = this.player.position.x - body.position.x;
         let dy = this.player.position.y - body.position.y;
         let rate = dy/dx;
-        if(rate > 5){
-            rate = 5;
+        if(rate > 10){
+            rate = 10;
         }
-        if(rate < -5){
-            rate = -5;
+        if(rate < -10){
+            rate = -10;
         }
         let fx = dx/Math.abs(dx);
         let fy = fx*rate;
@@ -182,7 +220,7 @@ class Scene_005 extends BaseScene{
     //create fruit
     private createItem(cstr:string,name:string,sx:number = 0,sy:number = 0){
         let item = SpriteUtil.createText(cstr,50);
-        let itemBody = Matter.Bodies.circle(sx,sy,item.width/2,{
+        let itemBody = Matter.Bodies.circle(sx,sy,item.height/2,{
             name:name,
             frictionAir:0,
             collisionFilter:{

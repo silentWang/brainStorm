@@ -111,7 +111,7 @@ class Scene_009 extends BaseScene{
                 EffectUtil.showResultEffect(EffectUtil.PERFECT);
             }
             else if(time >= 15){
-                EffectUtil.showResultEffect(EffectUtil.EXCELLENT);
+                EffectUtil.showResultEffect(EffectUtil.GREAT);
             }
             else{
                 EffectUtil.showResultEffect(EffectUtil.GOOD);
@@ -247,7 +247,7 @@ class Scene_009 extends BaseScene{
         let left = Matter.Bodies.rectangle(-5,SpriteUtil.stageCenterY,10,SpriteUtil.stageHeight,{isStatic:true});
         let right = Matter.Bodies.rectangle(SpriteUtil.stageWidth + 5,SpriteUtil.stageCenterY,10,SpriteUtil.stageHeight,{isStatic:true});
         let top = Matter.Bodies.rectangle(SpriteUtil.stageCenterX,-5,SpriteUtil.stageWidth,10,{isStatic:true});
-        let bottom = Matter.Bodies.rectangle(SpriteUtil.stageCenterX,SpriteUtil.stageHeight - 100,SpriteUtil.stageWidth,10,{isStatic:true});
+        let bottom = Matter.Bodies.rectangle(SpriteUtil.stageCenterX,SpriteUtil.stageHeight - 200,SpriteUtil.stageWidth,10,{isStatic:true});
         Matter.World.add(this.engine.world,[left,right,top,bottom]);
     }
     //创建竖直隔板

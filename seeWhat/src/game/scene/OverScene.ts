@@ -23,6 +23,7 @@ class OverScene extends BaseScene{
         btn.y = SpriteUtil.stageCenterY + 100;
         this.addChild(btn);
         btn.addEventListener(egret.TouchEvent.TOUCH_TAP,()=>{
+            GameSound.instance().playSound('click');
             Game.instance().gameScene.gotoMenu();
         },this);
     }

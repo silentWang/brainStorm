@@ -19,11 +19,15 @@ class Scene_008 extends BaseScene{
             return 0;
         });
 
-        this.animalSpr = SpriteUtil.createText(this.animalsArr[this.needCount],200);
+        this.animalSpr = SpriteUtil.createText(this.animalsArr[this.needCount],100);
         this.animalSpr.y = SpriteUtil.stageCenterY - 100;
+        this.animalSpr.scaleX = 2;
+        this.animalSpr.scaleY = 2;
         this.addChild(this.animalSpr);
 
-        this.emojiSpr = SpriteUtil.createText('😭',280);
+        this.emojiSpr = SpriteUtil.createText('😭',100);
+        this.emojiSpr.scaleX = 3;
+        this.emojiSpr.scaleY = 3;
         this.emojiSpr.visible = false;
         this.addChild(this.emojiSpr);
         EffectUtil.breath(this.emojiSpr);
@@ -55,7 +59,7 @@ class Scene_008 extends BaseScene{
                     this.emojiSpr.visible = false;
                     this.animalSpr.visible = false;
                     this.needCount++;
-                    if(this.needCount >= 10){
+                    if(this.needCount >= this.dataVo.tData){
                         this.startLook();
                         return;
                     }
@@ -91,13 +95,13 @@ class Scene_008 extends BaseScene{
         let askstr = `谜题:找出所有发出表情${this.dataVo.tData}的动物`
         let text = SpriteUtil.createText(askstr,36,0x0000FF);
         text.x = SpriteUtil.stageCenterX;
-        text.y = 100;
+        text.y = 150;
         this.addChild(text);
 
         for(let i = 0;i < this.animalsArr.length;i++){
             let spr = SpriteUtil.createText(this.animalsArr[i],100);
             spr.x = 100 + (i%5)*125;
-            spr.y = 200 + 125*Math.floor(i/5);
+            spr.y = 250 + 125*Math.floor(i/5);
             spr.touchEnabled = true;
             spr.addEventListener(egret.TouchEvent.TOUCH_TAP,this.selectClk,this);
             this.addChild(spr);
@@ -110,6 +114,7 @@ class Scene_008 extends BaseScene{
 
     private selectClk(evt){
         if(this.isOperating) return;
+        GameSound.instance().playSound('click');
         let text = evt.target;
         let isFind = false;
         let len = this.passArr.length;
@@ -132,7 +137,7 @@ class Scene_008 extends BaseScene{
                     EffectUtil.showResultEffect(EffectUtil.PERFECT);
                 }
                 else if(this.timeItem.leftTime >= 15){
-                    EffectUtil.showResultEffect(EffectUtil.EXCELLENT);
+                    EffectUtil.showResultEffect(EffectUtil.GREAT);
                 }
                 else{
                     EffectUtil.showResultEffect(EffectUtil.GOOD);

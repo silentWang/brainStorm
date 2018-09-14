@@ -96,7 +96,7 @@ var Main = (function (_super) {
     };
     Main.prototype.runGame = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var result, userInfo;
+            var result;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.loadResource()];
@@ -109,10 +109,6 @@ var Main = (function (_super) {
                         return [4 /*yield*/, platform.login()];
                     case 3:
                         _a.sent();
-                        return [4 /*yield*/, platform.getUserInfo()];
-                    case 4:
-                        userInfo = _a.sent();
-                        console.log(userInfo);
                         this.createGameScene();
                         return [2 /*return*/];
                 }

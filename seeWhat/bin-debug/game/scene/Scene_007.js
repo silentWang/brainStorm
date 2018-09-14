@@ -30,44 +30,53 @@ var Scene_007 = (function (_super) {
         this.timeItem.x = SpriteUtil.stageWidth - 300;
         this.needNums = 1;
         this.pointsArr = [];
-        for (var i = 0; i < 50; i++) {
+        for (var i = 0; i < 40; i++) {
             var point = new egret.Point();
-            point.x = 104 + 104 * (i % 5);
-            point.y = 108 + 108 * Math.floor(i / 5);
+            point.x = 90 + 140 * (i % 5);
+            point.y = 120 + 120 * Math.floor(i / 5);
             this.pointsArr.push(point);
         }
     };
     Scene_007.prototype.loop = function (time) {
         if (time <= 0) {
+            this.isOperating = true;
             this.timeItem.stop();
             return;
         }
         if (time <= 8) {
-            this.needNums = 15;
+            this.needNums = 30;
         }
         else if (time <= 10) {
-            this.needNums = 12;
+            this.needNums = 20;
         }
         else if (time <= 20) {
-            this.needNums = 8;
+            this.needNums = 15;
         }
         else if (time <= 25) {
-            this.needNums = 4;
+            this.needNums = 10;
         }
-        else if (time <= 30) {
-            this.needNums = 1;
+        else {
+            this.needNums = 5;
         }
     };
     Scene_007.prototype.showSprites = function (nums) {
         var _this = this;
         var num = 0;
+        var randnum = Math.floor(nums * Math.random());
         var arr = this.getRandomPoints(nums);
         var idx = egret.setInterval(function () {
-            var index = 0;
-            if (num > 0) {
-                index = Math.floor(_this.dataVo.sData.length * Math.random());
+            if (_this.isOperating) {
+                egret.clearInterval(idx);
+                return;
+            }
+            var index = Math.floor(_this.dataVo.sData.length * Math.random());
+            if (num == randnum) {
+                index = 0;
             }
             var spr = _this.getPools(index);
+            if (spr.name == '🐁') {
+                console.log('ccccccccccccc');
+            }
             spr.x = _this.pointsArr[arr[num]].x;
             spr.y = _this.pointsArr[arr[num]].y;
             num++;
@@ -75,6 +84,8 @@ var Scene_007 = (function (_super) {
                 egret.clearInterval(idx);
                 var xid_1 = egret.setTimeout(function () {
                     egret.clearTimeout(xid_1);
+                    if (_this.isOperating)
+                        return;
                     for (var _i = 0, _a = _this.pools; _i < _a.length; _i++) {
                         var spr_1 = _a[_i];
                         spr_1.visible = false;
@@ -85,13 +96,13 @@ var Scene_007 = (function (_super) {
                     _this.showSprites(_this.needNums);
                 }, _this, 1000);
             }
-        }, this, 200);
+        }, this, 100);
     };
     //这个随机不同的逻辑写的不太好
     Scene_007.prototype.getRandomPoints = function (nums) {
         var arr = [];
         while (arr.length < nums) {
-            var index = Math.floor(50 * Math.random());
+            var index = Math.floor(40 * Math.random());
             if (arr.indexOf(index) < 0) {
                 arr.push(index);
             }
@@ -130,16 +141,18 @@ var Scene_007 = (function (_super) {
                     _this.score++;
                     _this.scoreItem.setSTScore(_this.score);
                     if (_this.scoreItem.isCanPass()) {
-                        if (_this.timeItem.leftTime >= 10) {
+                        _this.isOperating = true;
+                        var leftTime = _this.timeItem.leftTime;
+                        _this.timeItem.stop();
+                        if (leftTime >= 10) {
                             EffectUtil.showResultEffect(EffectUtil.PERFECT);
                         }
-                        else if (_this.timeItem.leftTime >= 5) {
+                        else if (leftTime >= 5) {
                             EffectUtil.showResultEffect(EffectUtil.EXCELLENT);
                         }
                         else {
                             EffectUtil.showResultEffect(EffectUtil.GOOD);
                         }
-                        _this.timeItem.stop();
                     }
                 }
                 else {

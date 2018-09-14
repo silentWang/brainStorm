@@ -22,11 +22,14 @@ class GameScene{
         this.allScenes['006'] = Scene_006;
         this.allScenes['007'] = Scene_007;
         this.allScenes['008'] = Scene_008;
-        this.allScenes['009'] = Scene_009;
+        this.allScenes['009'] = Scene_009; 
         this.allScenes['010'] = Scene_010;
         this.allScenes['011'] = Scene_011;
         this.allScenes['012'] = Scene_012;
-        // this.allScenes['013'] = Scene_013;
+        this.allScenes['013'] = Scene_013;
+        this.allScenes['014'] = Scene_014;
+        this.allScenes['015'] = Scene_015;
+        this.allScenes['016'] = Scene_016;
         //添加事件
         this.addEvent();
     }
@@ -44,22 +47,27 @@ class GameScene{
         }
         this._overScene.exit();
         this._menuScene.enter();
+        GameSound.instance().stopMusic();
     }
     //game over
     gotoOver(){
         if(this._currentScene){
             this._currentScene.exit();
         }
-        GameData.currentLevel = 0;
+        if(GameData.isWxGame){
+            WXApi.updateRankLvl();
+        }
         this._menuScene.exit();
         this._overScene.enter();
+        GameData.currentLevel = 0;
+        GameSound.instance().stopMusic();
     }
     //下一关
     private gotoNext(evt:GameEvent = null){
         let lvl = GameData.currentLevel;
         lvl++;
         GameData.currentLevel = lvl;
-        GameData.currentLevel = 12;
+        GameData.currentLevel = 27;
 
         Game.instance().gameView.guideView.show();
         this._menuScene.exit();
@@ -70,6 +78,7 @@ class GameScene{
     }
     //开始当前关卡
     private startGame(evt:GameEvent = null){
+        GameSound.instance().playMusic();
         let config = GameData.getCurrentSceneData();
         this._currentScene = new this.allScenes[config.levelType]();
         this._currentScene.enter();

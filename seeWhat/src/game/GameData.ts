@@ -1,6 +1,9 @@
 class GameData{
     constructor(){}
 
+    //主要用来测试和区分 微信小游戏 必须为true
+    public static isWxGame:boolean = true;
+    public static wxUserInfo:any;
     public static currentLevel:number = 0;
     public static config = [];
     public static getCurrentSceneData(){

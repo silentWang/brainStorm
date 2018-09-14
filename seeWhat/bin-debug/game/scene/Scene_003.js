@@ -14,9 +14,9 @@ var Scene_003 = (function (_super) {
     function Scene_003() {
         var _this = _super.call(this) || this;
         //数值部分
-        _this.angleSpeed1 = 0.05;
+        _this.angleSpeed1 = 0.06;
         _this.angleSpeed2 = 0.06;
-        _this.angleSpeed3 = 0.065;
+        _this.angleSpeed3 = 0.07;
         _this.angleSpeed4 = 0.08;
         _this.speedDir = 1;
         _this.isTouching = false;
@@ -76,6 +76,8 @@ var Scene_003 = (function (_super) {
         var arrowspr1 = SpriteUtil.createText('🐙', 50, 0xff0000);
         var arrow1 = Matter.Bodies.circle(100, 300, arrowspr1.width / 2, {
             label: 'Body_enemy',
+            friction: 0,
+            frictionAir: 0,
             render: {
                 sprite: arrowspr1
             }
@@ -83,6 +85,8 @@ var Scene_003 = (function (_super) {
         var arrowspr2 = SpriteUtil.createText('🐙', 50, 0xff0000);
         var arrow2 = Matter.Bodies.circle(SpriteUtil.stageWidth - 100, 400, arrowspr2.width / 2, {
             label: 'Body_enemy',
+            friction: 0,
+            frictionAir: 0,
             render: {
                 sprite: arrowspr2
             }
@@ -130,6 +134,20 @@ var Scene_003 = (function (_super) {
         playerSpr.addEventListener(egret.TouchEvent.TOUCH_END, function (evt) {
             _this.isTouching = false;
         }, this);
+        //运动起来 旋转起来
+        Matter.Body.setAngularVelocity(this.enemies[0][0], 0.1);
+        Matter.Body.setAngularVelocity(this.enemies[0][0], this.angleSpeed1);
+        Matter.Body.setAngularVelocity(this.enemies[1][0], -this.angleSpeed1);
+        Matter.Body.setAngularVelocity(this.enemies[2][0], -this.angleSpeed1);
+        Matter.Body.setAngularVelocity(this.enemies[3][0], this.angleSpeed1);
+        Matter.Body.setAngularVelocity(this.enemies[4][0], -this.angleSpeed2);
+        Matter.Body.setAngularVelocity(this.enemies[5][0], this.angleSpeed2);
+        Matter.Body.setAngularVelocity(this.enemies[6][0], -this.angleSpeed3);
+        Matter.Body.setAngularVelocity(this.enemies[7][0], this.angleSpeed4);
+        Matter.Body.setAngularVelocity(this.enemies[8][0], -this.angleSpeed4);
+        Matter.Body.setAngularVelocity(this.enemies[9][0], this.angleSpeed4);
+        Matter.Body.setVelocity(this.enemies[10], { x: this.speedDir * 5, y: 0 });
+        Matter.Body.setVelocity(this.enemies[11], { x: -this.speedDir * 5, y: 0 });
     };
     //bdfore update
     Scene_003.prototype.beforeUpdateHandle = function (evt) {
@@ -137,22 +155,14 @@ var Scene_003 = (function (_super) {
             return;
         if (this.enemies[10].position.x > SpriteUtil.stageWidth) {
             this.speedDir = -1;
+            Matter.Body.setVelocity(this.enemies[10], { x: this.speedDir * 5, y: 0 });
+            Matter.Body.setVelocity(this.enemies[11], { x: -this.speedDir * 5, y: 0 });
         }
         if (this.enemies[10].position.x < 0) {
             this.speedDir = 1;
+            Matter.Body.setVelocity(this.enemies[10], { x: this.speedDir * 5, y: 0 });
+            Matter.Body.setVelocity(this.enemies[11], { x: -this.speedDir * 5, y: 0 });
         }
-        Matter.Body.setVelocity(this.enemies[10], { x: this.speedDir * 5, y: 0 });
-        Matter.Body.setVelocity(this.enemies[11], { x: -this.speedDir * 5, y: 0 });
-        Matter.Body.rotate(this.enemies[0][0], 0.05, null);
-        Matter.Body.rotate(this.enemies[1][0], -0.05, null);
-        Matter.Body.rotate(this.enemies[2][0], -0.05, null);
-        Matter.Body.rotate(this.enemies[3][0], 0.05, null);
-        Matter.Body.rotate(this.enemies[4][0], -this.angleSpeed2, null);
-        Matter.Body.rotate(this.enemies[5][0], this.angleSpeed2, null);
-        Matter.Body.rotate(this.enemies[6][0], -this.angleSpeed3, null);
-        Matter.Body.rotate(this.enemies[7][0], this.angleSpeed4, null);
-        Matter.Body.rotate(this.enemies[8][0], -this.angleSpeed4, null);
-        Matter.Body.rotate(this.enemies[9][0], this.angleSpeed4, null);
     };
     //collisionStart
     Scene_003.prototype.collisionHandle = function (evt) {
@@ -213,6 +223,8 @@ var Scene_003 = (function (_super) {
         spr.anchorOffsetX = spr.width / 2 - radius - radius / 2;
         var enemy = Matter.Body.create({
             parts: stack1.bodies,
+            friction: 0,
+            frictionAir: 0,
             render: {
                 sprite: spr
             },
@@ -225,6 +237,7 @@ var Scene_003 = (function (_super) {
             pointB: { x: enemy.position.x, y: enemy.position.y },
             bodyA: enemy,
             stiffness: 1,
+            friction: 0,
             length: 0
         });
         return [enemy, constaint1];

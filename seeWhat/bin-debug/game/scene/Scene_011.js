@@ -27,6 +27,7 @@ var Scene_011 = (function (_super) {
             var text = void 0;
             if (i == rand) {
                 text = this.createText(this.dataVo.tData);
+                this.tarTxt = text;
             }
             else {
                 text = this.createText(this.dataVo.sData);
@@ -61,6 +62,7 @@ var Scene_011 = (function (_super) {
         }
         else {
             this.timeItem.stop();
+            this.tarTxt.textColor = 0xff0000;
             EffectUtil.showResultEffect();
         }
     };

@@ -9,6 +9,8 @@ var GameData = (function () {
         vo.setData(this.config[this.currentLevel]);
         return vo;
     };
+    //主要用来测试和区分 微信小游戏 必须为true
+    GameData.isWxGame = false;
     GameData.currentLevel = 0;
     GameData.config = [];
     GameData.questions = [

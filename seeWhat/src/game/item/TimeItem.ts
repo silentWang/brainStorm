@@ -16,8 +16,10 @@ class TimeItem extends egret.Sprite{
         this.timeTxt.width = 240;
         this.timeTxt.size = 32;
         this.timeTxt.textColor = 0xff0000;
+        this.timeTxt.stroke = 1;
+        this.timeTxt.strokeColor = 0x000000;
         this.timeTxt.text = `剩余时间  ${CommonUtil.getMSTimeBySeconds(this._leftTime)}`;
-        this.y = 10;
+        this.y = 30;
         this.x = (SpriteUtil.stageWidth - 200)/2;
         this.addChild(this.timeTxt);
     }
@@ -49,7 +51,9 @@ class TimeItem extends egret.Sprite{
         this.timeTxt.text = `剩余时间  ${CommonUtil.getMSTimeBySeconds(this._leftTime)}`;
         if(this.loop){
             this.loop.call(this.callBackContext,this._leftTime);
+            return;
         }
+
         if(this._leftTime <= 0){
             if(!this.loop){
                 EffectUtil.showResultEffect();
@@ -64,6 +68,7 @@ class TimeItem extends egret.Sprite{
             this.timer.removeEventListener(egret.TimerEvent.TIMER,this.timerTick,this);
             this.timer = null;
         }
+        this._leftTime = 0;
         this.loop = null;
         this.callBackContext = null;
     }

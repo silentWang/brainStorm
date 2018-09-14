@@ -18,42 +18,14 @@ class Scene_012 extends BaseScene{
     private paths;
     private lineCount = 0;
     private init(){
-        this.lineVs = [
-                {x:150,y:270},
-                {x:540,y:270},
-                {x:350,y:520},
-                {x:360,y:180},
-                {x:470,y:640},
-                {x:300,y:660},
-                {x:280,y:850},
-                {x:570,y:840},
-                {x:500,y:980},
-                {x:230,y:1000},
-            ];
-        this.lineEs = [
-            {start:this.lineVs[0],end:this.lineVs[1]},
-            {start:this.lineVs[1],end:this.lineVs[2]},
-            {start:this.lineVs[0],end:this.lineVs[2]},
-            {start:this.lineVs[0],end:this.lineVs[3]},
-            {start:this.lineVs[3],end:this.lineVs[4]},
-            {start:this.lineVs[4],end:this.lineVs[2]},
-            {start:this.lineVs[2],end:this.lineVs[5]},
-            {start:this.lineVs[5],end:this.lineVs[6]},
-            {start:this.lineVs[6],end:this.lineVs[4]},
-            {start:this.lineVs[4],end:this.lineVs[5]},
-            {start:this.lineVs[5],end:this.lineVs[0]},
-            {start:this.lineVs[0],end:this.lineVs[6]},
-            {start:this.lineVs[6],end:this.lineVs[7]},
-            {start:this.lineVs[7],end:this.lineVs[4]},
-            {start:this.lineVs[4],end:this.lineVs[1]},
-            {start:this.lineVs[1],end:this.lineVs[7]},
-            {start:this.lineVs[7],end:this.lineVs[8]},
-            {start:this.lineVs[8],end:this.lineVs[6]},
-            {start:this.lineVs[6],end:this.lineVs[9]},
-            {start:this.lineVs[9],end:this.lineVs[8]},
-            {start:this.lineVs[8],end:this.lineVs[4]}
-        ];
-
+        this.lineVs = this.dataVo.sData;
+        let lines = this.dataVo.tData;
+        let len = lines.length;
+        this.lineEs = [];
+        for(let i = 0;i < len;i++){
+            let line = lines[i];
+            this.lineEs.push({start:this.lineVs[line[0]],end:this.lineVs[line[1]]});
+        }
 
         this.drawLines();
         this.pathShape = new egret.Shape();
@@ -63,17 +35,40 @@ class Scene_012 extends BaseScene{
         this.paths = [];
         this.timeItem = new TimeItem(this.dataVo.time);
         this.addChild(this.timeItem);
+
+        let btn = SpriteUtil.createButton("重来",140,60,0x0000ff,28);
+        btn.x = SpriteUtil.stageCenterX - btn.width/2;
+        btn.y = SpriteUtil.stageHeight - 260;
+        this.addChild(btn);
+        btn.addEventListener(egret.TouchEvent.TOUCH_TAP,()=>{
+            this.pathShape.graphics.clear();
+            this.paths = [];
+            this.lineEs = [];
+            for(let i = 0;i < len;i++){
+                let line = lines[i];
+                this.lineEs.push({start:this.lineVs[line[0]],end:this.lineVs[line[1]]});
+            }
+        },this);
+        
+        //only for looking for point
         // this.touchEnabled = true;
+        // let rect = SpriteUtil.createRect(SpriteUtil.stageWidth,SpriteUtil.stageHeight);
+        // rect.alpha = 0.01;
+        // rect.anchorOffsetX = 0;
+        // rect.anchorOffsetY = 0;
+        // this.addChild(rect);
         // this.addEventListener(egret.TouchEvent.TOUCH_TAP,this.touchHandler,this);
     }
 
     private touchHandler(evt){
-        // let point = {x:evt['stageX'],y:evt['stageY']};
-        // this.lineVs.push(point);
-        // this.drawLines();
+        let point = {x:evt['stageX'],y:evt['stageY']};
+        this.paths.push(point);
+        this.drawPath();
     }
     //点击开始连线
     private clkStart(evt){
+        if(this.timeItem.leftTime <= 0) return;
+        GameSound.instance().playSound('click');
         let ptshape = evt.target;
         let name = ptshape.name;
         let index = name.split('_')[1];
@@ -91,7 +86,7 @@ class Scene_012 extends BaseScene{
                         EffectUtil.showResultEffect(EffectUtil.PERFECT);
                     }
                     else if(leftTime >= 45){
-                        EffectUtil.showResultEffect(EffectUtil.EXCELLENT);
+                        EffectUtil.showResultEffect(EffectUtil.GREAT);
                     }
                     else{
                         EffectUtil.showResultEffect(EffectUtil.GOOD);

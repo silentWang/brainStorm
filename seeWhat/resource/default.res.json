@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "bg_png,config_json",
+			"keys": "bg_png,config_json,logo_png,apple_jpg,banana_jpg,grape_jpg,orange_jpg,peach_jpg,pear_jpg,pineapple_jpg,pomegranate_jpg,strawberry_jpg,watermelon_jpg,melon_jpg,cherry_jpg,good_mp3,great_mp3,perfect_mp3,bg_mp3,fail_mp3,readyGo_mp3,wrong_mp3,click_mp3",
 			"name": "preload"
 		}
 	],
@@ -15,6 +15,111 @@
 			"name": "config_json",
 			"type": "json",
 			"url": "config/config.json"
+		},
+		{
+			"name": "logo_png",
+			"type": "image",
+			"url": "assets/logo.png"
+		},
+		{
+			"name": "apple_jpg",
+			"type": "image",
+			"url": "assets/fruit/apple.jpg"
+		},
+		{
+			"name": "banana_jpg",
+			"type": "image",
+			"url": "assets/fruit/banana.jpg"
+		},
+		{
+			"name": "grape_jpg",
+			"type": "image",
+			"url": "assets/fruit/grape.jpg"
+		},
+		{
+			"name": "orange_jpg",
+			"type": "image",
+			"url": "assets/fruit/orange.jpg"
+		},
+		{
+			"name": "peach_jpg",
+			"type": "image",
+			"url": "assets/fruit/peach.jpg"
+		},
+		{
+			"name": "pear_jpg",
+			"type": "image",
+			"url": "assets/fruit/pear.jpg"
+		},
+		{
+			"name": "pineapple_jpg",
+			"type": "image",
+			"url": "assets/fruit/pineapple.jpg"
+		},
+		{
+			"name": "pomegranate_jpg",
+			"type": "image",
+			"url": "assets/fruit/pomegranate.jpg"
+		},
+		{
+			"name": "strawberry_jpg",
+			"type": "image",
+			"url": "assets/fruit/strawberry.jpg"
+		},
+		{
+			"name": "watermelon_jpg",
+			"type": "image",
+			"url": "assets/fruit/watermelon.jpg"
+		},
+		{
+			"name": "melon_jpg",
+			"type": "image",
+			"url": "assets/fruit/melon.jpg"
+		},
+		{
+			"name": "cherry_jpg",
+			"type": "image",
+			"url": "assets/fruit/cherry.jpg"
+		},
+		{
+			"name": "good_mp3",
+			"type": "sound",
+			"url": "assets/sound/good.mp3"
+		},
+		{
+			"name": "great_mp3",
+			"type": "sound",
+			"url": "assets/sound/great.mp3"
+		},
+		{
+			"name": "perfect_mp3",
+			"type": "sound",
+			"url": "assets/sound/perfect.mp3"
+		},
+		{
+			"name": "bg_mp3",
+			"type": "sound",
+			"url": "assets/sound/bg.mp3"
+		},
+		{
+			"name": "fail_mp3",
+			"type": "sound",
+			"url": "assets/sound/fail.mp3"
+		},
+		{
+			"name": "readyGo_mp3",
+			"type": "sound",
+			"url": "assets/sound/readyGo.mp3"
+		},
+		{
+			"name": "wrong_mp3",
+			"type": "sound",
+			"url": "assets/sound/wrong.mp3"
+		},
+		{
+			"name": "click_mp3",
+			"type": "sound",
+			"url": "assets/sound/click.mp3"
 		}
 	]
 }

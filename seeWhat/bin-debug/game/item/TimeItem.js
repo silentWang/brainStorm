@@ -24,6 +24,8 @@ var TimeItem = (function (_super) {
         this.timeTxt.width = 240;
         this.timeTxt.size = 32;
         this.timeTxt.textColor = 0xff0000;
+        this.timeTxt.stroke = 1;
+        this.timeTxt.strokeColor = 0x000000;
         this.timeTxt.text = "\u5269\u4F59\u65F6\u95F4  " + CommonUtil.getMSTimeBySeconds(this._leftTime);
         this.y = 10;
         this.x = (SpriteUtil.stageWidth - 200) / 2;
@@ -76,6 +78,7 @@ var TimeItem = (function (_super) {
             this.timer.removeEventListener(egret.TimerEvent.TIMER, this.timerTick, this);
             this.timer = null;
         }
+        this._leftTime = 0;
         this.loop = null;
         this.callBackContext = null;
     };
