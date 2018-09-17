@@ -26,6 +26,7 @@ class WXApi{
                                 Game.instance().gameScene.gotoMenu();
                             }
                         });
+                        WXApi.showShareMenu();
                     }
                     else{
                         WXApi.createUserInfoButton();
@@ -73,7 +74,13 @@ class WXApi{
     //显示转发菜单
     static showShareMenu(){
         wx.showShareMenu({"withShareTicket":false,complete:res=>{
-            console.log(res.errMsg);
+            wx.onShareAppMessage(()=>{
+                return {
+                    title:'真的！原来我与正常人相差这么大距离！',
+                    imageUrl:'resource/assets/head.png',
+                    query:''
+                }
+            });
         }});
     }
     //创建音频

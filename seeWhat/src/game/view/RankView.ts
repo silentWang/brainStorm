@@ -18,8 +18,7 @@ class RankView extends BaseView{
         },this);
 
         this.listSpr = new egret.Sprite();
-        this.listSpr.x = 120;
-        this.listSpr.y = 160;
+        this.listSpr.y = 100;
         this.addChild(this.listSpr);
 
         let txt = new egret.TextField();
@@ -39,7 +38,11 @@ class RankView extends BaseView{
             let openDatactx = platform['openDataContext'];
             openDatactx.postMessage({command:'cmd_rank'});
             let rank = openDatactx.createDisplayObject();
+            let scale = SpriteUtil.stageWidth/rank.width;
             this.listSpr.addChild(rank);
+            this.listSpr.scaleX = scale;
+            this.listSpr.scaleY = scale;
+
         },this,40);
     }
 

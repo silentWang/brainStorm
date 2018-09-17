@@ -595,7 +595,7 @@ var GameScene = (function () {
         var lvl = GameData.currentLevel;
         lvl++;
         GameData.currentLevel = lvl;
-        GameData.currentLevel = 27;
+        // GameData.currentLevel = 32;
         Game.instance().gameView.guideView.show();
         this._menuScene.exit();
         this._overScene.exit();
@@ -1077,6 +1077,7 @@ var MenuScene = (function (_super) {
     __extends(MenuScene, _super);
     function MenuScene() {
         var _this = _super.call(this) || this;
+        _this.isInitOpenDataCtx = false;
         _this.init();
         return _this;
     }
@@ -1105,6 +1106,15 @@ var MenuScene = (function (_super) {
             GameSound.instance().playSound('click');
             Game.instance().gameView.rankView.open();
         }, this);
+    };
+    MenuScene.prototype.enter = function () {
+        _super.prototype.enter.call(this);
+        if (!this.isInitOpenDataCtx) {
+            this.isInitOpenDataCtx = true;
+            var openDatactx = platform['openDataContext'];
+            //由于没有服务器 暂时使用avatarUrl 标识用户
+            openDatactx.postMessage({ command: 'cmd_openId', openId: GameData.wxUserInfo.avatarUrl });
+        }
     };
     return MenuScene;
 }(BaseScene));
@@ -1883,7 +1893,7 @@ var Scene_006 = (function (_super) {
         return _this;
     }
     Scene_006.prototype.init = function () {
-        this.timeItem = new TimeItem(5);
+        this.timeItem = new TimeItem(30);
         this.addChild(this.timeItem);
         //修身 齐家 治国 平天下
         var arr = this.dataVo.sData;
@@ -2807,6 +2817,8 @@ var Scene_012 = (function (_super) {
     function Scene_012() {
         var _this = _super.call(this) || this;
         _this.isTouching = false;
+        //
+        _this.vsArr = [];
         _this.lineCount = 0;
         _this.init();
         return _this;
@@ -2839,6 +2851,10 @@ var Scene_012 = (function (_super) {
             for (var i = 0; i < len; i++) {
                 var line = lines[i];
                 _this.lineEs.push({ start: _this.lineVs[line[0]], end: _this.lineVs[line[1]] });
+            }
+            for (var _i = 0, _a = _this.vsArr; _i < _a.length; _i++) {
+                var shape = _a[_i];
+                shape.alpha = 0.5;
             }
         }, this);
         //only for looking for point
@@ -2928,6 +2944,8 @@ var Scene_012 = (function (_super) {
             var pt = this.paths[i];
             this.pathShape.graphics.lineTo(pt.x, pt.y);
         }
+        console.clear();
+        console.table(this.paths);
     };
     //画线
     Scene_012.prototype.drawLines = function () {
@@ -2944,6 +2962,7 @@ var Scene_012 = (function (_super) {
     };
     //画点
     Scene_012.prototype.drawCircles = function () {
+        this.vsArr = [];
         for (var i = 0; i < this.lineVs.length; i++) {
             var shape = new egret.Shape();
             var point = this.lineVs[i];
@@ -2956,11 +2975,20 @@ var Scene_012 = (function (_super) {
             shape.name = 'vertex_' + i;
             shape.addEventListener(egret.TouchEvent.TOUCH_TAP, this.clkStart, this);
             shape.touchEnabled = true;
+            this.vsArr.push(shape);
         }
     };
     Scene_012.prototype.enter = function () {
         _super.prototype.enter.call(this);
-        this.timeItem.start();
+        // this.timeItem.start();
+    };
+    Scene_012.prototype.exit = function () {
+        _super.prototype.exit.call(this);
+        for (var _i = 0, _a = this.vsArr; _i < _a.length; _i++) {
+            var shape = _a[_i];
+            shape.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.clkStart, this);
+            this.removeChild(shape);
+        }
     };
     return Scene_012;
 }(BaseScene));
@@ -2979,12 +3007,14 @@ var Scene_013 = (function (_super) {
     }
     Scene_013.prototype.init = function () {
         var len = this.dataVo.sData.length;
+        var wid = (SpriteUtil.stageWidth - 100) / len;
+        var scale = wid / 100;
         for (var i = 0; i < len; i++) {
-            var btn = SpriteUtil.createButton(this.dataVo.sData[i], 160, 160, 0x000fff, 100);
-            btn.x = 60 + 220 * i;
+            var btn = SpriteUtil.createButton(this.dataVo.sData[i], 100, 100, 0x000fff, 64);
+            btn.x = 30 + i * (wid + 10);
             btn.y = SpriteUtil.stageCenterY + 100;
-            btn.scaleX = 1.2;
-            btn.scaleY = 1.2;
+            btn.scaleX = scale;
+            btn.scaleY = scale;
             this.addChild(btn);
             btn.name = 'index_' + i;
             btn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.playDoing, this);
@@ -3045,6 +3075,7 @@ var Scene_013 = (function (_super) {
     Scene_013.prototype.resultBack = function (time) {
         if (time <= 0) {
             this.isOperating = true;
+            this.timeItem.stop();
             if (this.score >= this.dataVo.score + 10) {
                 EffectUtil.showResultEffect(EffectUtil.PERFECT);
             }
@@ -3623,6 +3654,7 @@ var WXApi = (function () {
                                 Game.instance().gameScene.gotoMenu();
                             }
                         });
+                        WXApi.showShareMenu();
                     }
                     else {
                         WXApi.createUserInfoButton();
@@ -3668,7 +3700,13 @@ var WXApi = (function () {
     //显示转发菜单
     WXApi.showShareMenu = function () {
         wx.showShareMenu({ "withShareTicket": false, complete: function (res) {
-                console.log(res.errMsg);
+                wx.onShareAppMessage(function () {
+                    return {
+                        title: '真的！原来我与正常人相差这么大距离！',
+                        imageUrl: 'resource/assets/head.png',
+                        query: ''
+                    };
+                });
             } });
     };
     //创建音频
@@ -3727,13 +3765,19 @@ var LoadingUI = (function (_super) {
     LoadingUI.prototype.createView = function () {
         this.textField = new egret.TextField();
         this.addChild(this.textField);
-        this.textField.y = 300;
+        this.textField.y = 420;
         this.textField.width = 480;
         this.textField.height = 100;
         this.textField.textAlign = "center";
+        this.textField.textColor = 0x00ff00;
+        this.textField.size = 48;
+        this.textField.stroke = 2;
+        this.textField.strokeColor = 0xff0000;
+        this.textField.bold = true;
     };
     LoadingUI.prototype.onProgress = function (current, total) {
         this.textField.text = "Loading..." + current + "/" + total;
+        this.textField.x = 120;
     };
     return LoadingUI;
 }(egret.Sprite));
@@ -3811,8 +3855,7 @@ var RankView = (function (_super) {
             _this.close();
         }, this);
         this.listSpr = new egret.Sprite();
-        this.listSpr.x = 120;
-        this.listSpr.y = 160;
+        this.listSpr.y = 100;
         this.addChild(this.listSpr);
         var txt = new egret.TextField();
         txt.text = '排行榜';
@@ -3831,7 +3874,10 @@ var RankView = (function (_super) {
             var openDatactx = platform['openDataContext'];
             openDatactx.postMessage({ command: 'cmd_rank' });
             var rank = openDatactx.createDisplayObject();
+            var scale = SpriteUtil.stageWidth / rank.width;
             _this.listSpr.addChild(rank);
+            _this.listSpr.scaleX = scale;
+            _this.listSpr.scaleY = scale;
         }, this, 40);
     };
     RankView.prototype.close = function () {

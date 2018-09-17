@@ -9,7 +9,7 @@ class Scene_006 extends BaseScene{
     private picSprs:Array<egret.Sprite>;
     private isOperating:boolean = false;
     private init(){
-        this.timeItem = new TimeItem(5);
+        this.timeItem = new TimeItem(30);
         this.addChild(this.timeItem);
         //修身 齐家 治国 平天下
         let arr = this.dataVo.sData;

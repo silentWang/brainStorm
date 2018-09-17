@@ -16,6 +16,8 @@ class Scene_012 extends BaseScene{
     private lineVs;
     //
     private paths;
+    //
+    private vsArr = [];
     private lineCount = 0;
     private init(){
         this.lineVs = this.dataVo.sData;
@@ -47,6 +49,9 @@ class Scene_012 extends BaseScene{
             for(let i = 0;i < len;i++){
                 let line = lines[i];
                 this.lineEs.push({start:this.lineVs[line[0]],end:this.lineVs[line[1]]});
+            }
+            for(let shape of this.vsArr){
+                shape.alpha = 0.5;
             }
         },this);
         
@@ -137,6 +142,8 @@ class Scene_012 extends BaseScene{
             let pt = this.paths[i];
             this.pathShape.graphics.lineTo(pt.x,pt.y);
         }
+        console.clear();
+        console.table(this.paths);
     }
 
     //画线
@@ -154,6 +161,7 @@ class Scene_012 extends BaseScene{
     }
     //画点
     drawCircles(){
+        this.vsArr = [];
         for(let i = 0;i < this.lineVs.length;i++){
             let shape = new egret.Shape();
             let point = this.lineVs[i];
@@ -166,12 +174,21 @@ class Scene_012 extends BaseScene{
             shape.name = 'vertex_'+i;
             shape.addEventListener(egret.TouchEvent.TOUCH_TAP,this.clkStart,this);
             shape.touchEnabled = true;
+            this.vsArr.push(shape);
         }
     }
 
     enter(){
         super.enter();
-        this.timeItem.start();
+        // this.timeItem.start();
+    }
+
+    exit(){
+        super.exit();
+        for(let shape of this.vsArr){
+            shape.removeEventListener(egret.TouchEvent.TOUCH_TAP,this.clkStart,this);
+            this.removeChild(shape);
+        }
     }
 
 }

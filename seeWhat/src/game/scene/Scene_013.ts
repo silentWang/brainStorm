@@ -13,12 +13,14 @@ class Scene_013 extends BaseScene{
     private score = 0;
     private init(){
         let len = this.dataVo.sData.length;
+        let wid = (SpriteUtil.stageWidth - 100)/len;
+        let scale = wid/100;
         for(let i = 0;i < len;i++){
-            let btn = SpriteUtil.createButton(this.dataVo.sData[i],160,160,0x000fff,100);
-            btn.x = 60 + 220*i;
+            let btn = SpriteUtil.createButton(this.dataVo.sData[i],100,100,0x000fff,64);
+            btn.x = 30 + i*(wid+10);
             btn.y = SpriteUtil.stageCenterY + 100;
-            btn.scaleX = 1.2;
-            btn.scaleY = 1.2;
+            btn.scaleX = scale;
+            btn.scaleY = scale;
             this.addChild(btn);
             btn.name = 'index_'+i;
             btn.addEventListener(egret.TouchEvent.TOUCH_TAP,this.playDoing,this);
@@ -85,6 +87,7 @@ class Scene_013 extends BaseScene{
     private resultBack(time){
         if(time <= 0){
             this.isOperating = true;
+            this.timeItem.stop();
             if(this.score >= this.dataVo.score + 10){
                 EffectUtil.showResultEffect(EffectUtil.PERFECT);
             }

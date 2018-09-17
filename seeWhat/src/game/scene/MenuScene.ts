@@ -4,6 +4,7 @@ class MenuScene extends BaseScene{
         this.init();
     }
 
+    private isInitOpenDataCtx:boolean = false;
     private init(){
         let logo = new egret.Bitmap(RES.getRes("logo_png"));
         logo.anchorOffsetX = logo.width/2;
@@ -30,6 +31,17 @@ class MenuScene extends BaseScene{
             GameSound.instance().playSound('click');
             Game.instance().gameView.rankView.open();
         },this);
+    }
+
+    enter(){
+        super.enter();
+        if(!this.isInitOpenDataCtx){
+            this.isInitOpenDataCtx = true;
+            let openDatactx = platform['openDataContext'];
+            //由于没有服务器 暂时使用avatarUrl 标识用户
+            openDatactx.postMessage({command:'cmd_openId',openId:GameData.wxUserInfo.avatarUrl});
+
+        }
     }
 
 }
