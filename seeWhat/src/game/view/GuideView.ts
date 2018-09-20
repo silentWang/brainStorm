@@ -44,7 +44,7 @@ class GuideView extends BaseView{
     }
 
     private getDesc(){
-        let config = GameData.config[GameData.currentLevel];
+        let config = GameData.getLevelConfig();
         let arr = new Array<egret.ITextElement>();
         arr.push({text:config.title,style:{bold:true,size:40,textColor:0xFFC125}});
         arr.push({text:'\n'});

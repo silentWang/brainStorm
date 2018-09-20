@@ -30,6 +30,8 @@ class GameScene{
         this.allScenes['014'] = Scene_014;
         this.allScenes['015'] = Scene_015;
         this.allScenes['016'] = Scene_016;
+        this.allScenes['017'] = Scene_017;
+        this.allScenes['018'] = Scene_018;
         //添加事件
         this.addEvent();
     }
@@ -67,7 +69,7 @@ class GameScene{
         let lvl = GameData.currentLevel;
         lvl++;
         GameData.currentLevel = lvl;
-        // GameData.currentLevel = 32;
+        GameData.currentLevel = 38;
 
         Game.instance().gameView.guideView.show();
         this._menuScene.exit();
@@ -79,7 +81,7 @@ class GameScene{
     //开始当前关卡
     private startGame(evt:GameEvent = null){
         GameSound.instance().playMusic();
-        let config = GameData.getCurrentSceneData();
+        let config = GameData.getLevelConfig();
         this._currentScene = new this.allScenes[config.levelType]();
         this._currentScene.enter();
     }

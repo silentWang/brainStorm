@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "bg_png,config_json,logo_png,apple_jpg,banana_jpg,grape_jpg,orange_jpg,peach_jpg,pear_jpg,pineapple_jpg,pomegranate_jpg,strawberry_jpg,watermelon_jpg,melon_jpg,cherry_jpg,good_mp3,great_mp3,perfect_mp3,bg_mp3,fail_mp3,readyGo_mp3,wrong_mp3,click_mp3,head_png",
+			"keys": "bg_png,config_json,logo_png,apple_jpg,banana_jpg,grape_jpg,orange_jpg,peach_jpg,pear_jpg,pineapple_jpg,pomegranate_jpg,strawberry_jpg,watermelon_jpg,melon_jpg,cherry_jpg,good_mp3,great_mp3,perfect_mp3,bg_mp3,fail_mp3,readyGo_mp3,wrong_mp3,click_mp3,head_png,wood_png,knife_png",
 			"name": "preload"
 		}
 	],
@@ -125,6 +125,16 @@
 			"name": "head_png",
 			"type": "image",
 			"url": "assets/head.png"
+		},
+		{
+			"name": "wood_png",
+			"type": "image",
+			"url": "assets/wood.png"
+		},
+		{
+			"name": "knife_png",
+			"type": "image",
+			"url": "assets/knife.png"
 		}
 	]
 }

@@ -4,7 +4,7 @@ class DataVO{
     //关卡
     public level = 0;
     //关卡类型
-    public levelType = 0;
+    public levelType = "";
     //关卡名称
     public title = '神秘的关卡';
     //关卡描述
@@ -33,7 +33,7 @@ class DataVO{
 
     reset(){
         this.level = 0;
-        this.levelType = 0;
+        this.levelType = "";
         this.title = "神秘的关卡";
         this.desc = "能告诉我你是怎么来到这里的吗？";
         this.sData = null;

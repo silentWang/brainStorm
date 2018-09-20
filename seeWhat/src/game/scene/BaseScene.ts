@@ -1,7 +1,7 @@
 class BaseScene extends egret.DisplayObjectContainer{
     constructor(){
         super();
-        this.dataVo = GameData.getCurrentSceneData();
+        this.dataVo = GameData.getLevelConfig();
     }
     public dataVo:DataVO;
     private isShow:boolean = false;

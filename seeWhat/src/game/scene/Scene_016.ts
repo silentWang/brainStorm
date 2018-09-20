@@ -58,6 +58,7 @@ class Scene_016 extends BaseScene{
             this.player.y = this.pointArr[0].y;
             this.player.visible = true;
             this.startFly();
+            this.shape.graphics.clear();
         }
     }
 

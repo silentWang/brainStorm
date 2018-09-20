@@ -6,7 +6,7 @@ class EffectUtil{
     public static PERFECT = 3;
     
     public static showResultEffect(type = 0){
-        let str = '不可能!';
+        let str = 'you lose';
         if(type == 1){
             str = 'good';
         }
