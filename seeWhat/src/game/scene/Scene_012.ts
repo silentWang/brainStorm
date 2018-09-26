@@ -180,7 +180,7 @@ class Scene_012 extends BaseScene{
 
     enter(){
         super.enter();
-        // this.timeItem.start();
+        this.timeItem.start();
     }
 
     exit(){

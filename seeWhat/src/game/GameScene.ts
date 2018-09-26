@@ -70,12 +70,12 @@ class GameScene{
         lvl++;
         GameData.currentLevel = lvl;
         GameData.currentLevel = 38;
-
         Game.instance().gameView.guideView.show();
         this._menuScene.exit();
         this._overScene.exit();
         if(this._currentScene){
             this._currentScene.exit();
+            GameSound.instance().stopMusic();
         }
     }
     //开始当前关卡

@@ -24,11 +24,16 @@ class GameSound{
     private _sound = null;
     private _music = null;
     playMusic(){
-        this.stopMusic();
         if(this._music == null){
             this._music = WXApi.createInnerAudioContext(this.audio_url+"bg.mp3");
             this._music.loop = true;
+            this._music.onCanplay(()=>{
+                this._music.play();
+                this._music.offCanplay();
+            });
+            return;
         }
+        this.stopMusic();
         this._music.play();
     }
 
@@ -40,11 +45,12 @@ class GameSound{
 
     playSound(type){
         if(this._sound){
+            this._sound.stop();
             this._sound.destroy();
         }
         this._sound = WXApi.createInnerAudioContext(this.soundsVec[type]);
         this._sound.play();
-        this.soundsVec.loop = false;
+        this._sound.loop = false;
     }
 
 

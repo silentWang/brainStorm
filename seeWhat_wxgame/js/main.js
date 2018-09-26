@@ -498,6 +498,7 @@ var GameScene = (function () {
         this._overScene.exit();
         if (this._currentScene) {
             this._currentScene.exit();
+            GameSound.instance().stopMusic();
         }
     };
     //开始当前关卡
@@ -533,11 +534,17 @@ var GameSound = (function () {
         return this._instance;
     };
     GameSound.prototype.playMusic = function () {
-        this.stopMusic();
+        var _this = this;
         if (this._music == null) {
             this._music = WXApi.createInnerAudioContext(this.audio_url + "bg.mp3");
             this._music.loop = true;
+            this._music.onCanplay(function () {
+                _this._music.play();
+                _this._music.offCanplay();
+            });
+            return;
         }
+        this.stopMusic();
         this._music.play();
     };
     GameSound.prototype.stopMusic = function () {
@@ -547,11 +554,12 @@ var GameSound = (function () {
     };
     GameSound.prototype.playSound = function (type) {
         if (this._sound) {
+            this._sound.stop();
             this._sound.destroy();
         }
         this._sound = WXApi.createInnerAudioContext(this.soundsVec[type]);
         this._sound.play();
-        this.soundsVec.loop = false;
+        this._sound.loop = false;
     };
     GameSound._instance = null;
     return GameSound;
@@ -2979,7 +2987,7 @@ var Scene_012 = (function (_super) {
     };
     Scene_012.prototype.enter = function () {
         _super.prototype.enter.call(this);
-        // this.timeItem.start();
+        this.timeItem.start();
     };
     Scene_012.prototype.exit = function () {
         _super.prototype.exit.call(this);
@@ -3398,27 +3406,33 @@ var Scene_016 = (function (_super) {
     return Scene_016;
 }(BaseScene));
 __reflect(Scene_016.prototype, "Scene_016");
-//转盘插刀
+//笨鸟先飞
 var Scene_017 = (function (_super) {
     __extends(Scene_017, _super);
     function Scene_017() {
         var _this = _super.call(this) || this;
-        _this.knifeArr = [];
-        _this.knifeIndex = 0;
-        _this.rotateAngle = 0.05;
+        _this.wallspeed = 3;
+        _this.isCanOperate = true;
+        _this.score = 0;
+        _this.intervalId = 0;
         _this.init();
         return _this;
     }
     Scene_017.prototype.init = function () {
-        var matterContainer = new egret.Sprite();
-        this.addChild(matterContainer);
-        this.rotatePoint = new egret.Point(SpriteUtil.stageCenterX, 360);
+        var _this = this;
+        //datavo time代表出现墙的频率 单位毫秒
+        var shape = new egret.Shape();
+        shape.graphics.beginFill(0x00ff00, 0.01);
+        shape.graphics.drawRect(0, 0, SpriteUtil.stageWidth, SpriteUtil.stageHeight);
+        shape.graphics.endFill();
+        this.addChild(shape);
+        //初始画引擎部分
         this.engine = Matter.Engine.create({ enableSleeping: false }, null);
         this.runner = Matter.Runner.create(null);
         this.runner.isFixed = true;
         var render = EgretRender.create({
             engine: this.engine,
-            container: matterContainer,
+            container: this,
             options: {
                 width: SpriteUtil.stageWidth,
                 height: SpriteUtil.stageHeight,
@@ -3427,126 +3441,122 @@ var Scene_017 = (function (_super) {
         });
         Matter.Runner.run(this.runner, this.engine);
         EgretRender.run(render);
-        this.engine.world.gravity.y = 0;
-        //创建刀列
-        var len = this.dataVo.sData;
-        for (var i = 0; i < len; i++) {
-            var body = this.createKnifes();
-            this.knifeArr.push({ body: body, angle: 0, isShooted: false, point: { x: 0, y: 0 } });
-        }
-        Matter.World.add(this.engine.world, this.knifeArr[this.knifeIndex].body);
-        //木头仅仅是展示不做任何物理处理
-        var image = SpriteUtil.createImage('wood_png');
-        image.x = this.rotatePoint.x;
-        image.y = this.rotatePoint.y;
-        image.scaleX = 1.5;
-        image.scaleY = 1.5;
-        this.addChild(image);
-        this.dartSprite = image;
-        var circle = Matter.Bodies.circle(this.rotatePoint.x, this.rotatePoint.y, image.width / 2, {
-            label: 'dart',
-            frictionAir: 0,
-            restitution: 0,
-            isSensor: true,
-            collisionFilter: {
-                category: 0x0020,
-                mask: 0x0040 | 0x0010
+        this.engine.world.gravity.y = 1;
+        var bspr = SpriteUtil.createText('🐤', 100);
+        bspr.scaleX = -1;
+        var body = Matter.Bodies.circle(SpriteUtil.stageCenterX, 500, bspr.height / 2, {
+            label: 'bird',
+            render: {
+                sprite: bspr
             }
-        }, null);
-        Matter.Body.setAngularVelocity(circle, this.rotateAngle);
-        var constraint = Matter.Constraint.create({
-            pointB: { x: circle.position.x, y: circle.position.y },
-            bodyA: circle,
-            stiffness: 1,
-            damping: 0.1,
-            friction: 0,
-            restitution: 0
-        });
-        Matter.World.add(this.engine.world, [circle, constraint]);
-        //
-        egret.startTick(this.loop, this);
+        }, 0);
+        this.birdBody = body;
+        Matter.World.add(this.engine.world, body);
         Matter.Events.on(this.engine, "collisionStart", this.collisionStart.bind(this));
+        this.touchEnabled = true;
+        this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.tapMakeBirdFly, this);
+        this.intervalId = egret.setInterval(function () {
+            _this.createAWall();
+        }, this, this.dataVo.time);
+        this.beforeUpdateFun = function () {
+            if (_this.birdBody.position.y >= SpriteUtil.stageHeight) {
+                _this.birdBody.isStatic = true;
+                _this.destroy();
+                EffectUtil.showResultEffect();
+                return;
+            }
+            if (!_this.isCanOperate)
+                return;
+            if (!_this.wallArr || _this.wallArr.length == 0)
+                return;
+            for (var _i = 0, _a = _this.wallArr; _i < _a.length; _i++) {
+                var body_1 = _a[_i];
+                var body1 = body_1.body1;
+                var body2 = body_1.body2;
+                var xx = body1.position.x;
+                xx -= _this.wallspeed;
+                Matter.Body.setPosition(body1, { x: xx, y: body1.position.y });
+                Matter.Body.setPosition(body2, { x: xx, y: body2.position.y });
+            }
+        };
+        Matter.Events.on(this.engine, 'beforeUpdate', this.beforeUpdateFun);
+        this.scoreItem = new ScoreItem();
+        this.addChild(this.scoreItem);
+        this.scoreItem.setSTScore(this.score, this.dataVo.score);
+        this.createAWall();
     };
     Scene_017.prototype.collisionStart = function (evt) {
         var pairs = evt.pairs;
         for (var _i = 0, pairs_4 = pairs; _i < pairs_4.length; _i++) {
             var pair = pairs_4[_i];
-            if (pair.bodyA.label == "knife" && pair.bodyB.label == "knife") {
-                // let idx = egret.setTimeout(()=>{
-                //     EffectUtil.showResultEffect();
-                // },this,800);
-                console.log('fail');
-            }
-            else if (pair.bodyA.label == "dart" || pair.bodyB.label == "dart") {
-                console.log('again');
-                var knife = this.knifeArr[this.knifeIndex];
-                Matter.Body.setVelocity(knife.body, { x: 0, y: 0 });
-                knife.body.speed = 0;
-                knife.body.collisionFilter.category = 0x0080;
-                Matter.Body.setAngularVelocity(knife.body, this.rotateAngle);
-                Matter.Body.setMass(knife.body, 999999);
-                knife.body.restitution = 9;
-                knife.body.friction = 0;
-                knife.point = { x: knife.body.position.x, y: knife.body.position.y };
-                knife.isShooted = true;
-                this.knifeIndex++;
-                if (this.knifeIndex < this.knifeArr.length) {
-                    Matter.World.add(this.engine.world, this.knifeArr[this.knifeIndex].body);
-                }
+            if (pair.bodyA.label == "bird" || pair.bodyB.label == "bird") {
+                this.isCanOperate = false;
+                this.birdBody.isStatic = true;
+                this.destroy();
+                EffectUtil.showResultEffect();
             }
         }
     };
-    Scene_017.prototype.loop = function (timestamp) {
-        if (timestamp === void 0) { timestamp = 0; }
-        this.dartSprite.rotation += this.rotateAngle * 180 / Math.PI;
-        for (var _i = 0, _a = this.knifeArr; _i < _a.length; _i++) {
-            var knife = _a[_i];
-            if (!knife.isShooted)
-                continue;
-            knife.angle += this.rotateAngle;
-            var xx = knife.point.x - this.rotatePoint.x;
-            var yy = knife.point.y - this.rotatePoint.y;
-            var nx = xx * Math.cos(knife.angle) - yy * Math.sin(knife.angle) + this.rotatePoint.x;
-            var ny = yy * Math.cos(knife.angle) - xx * Math.sin(knife.angle) + this.rotatePoint.y;
-            Matter.Body.setPosition(knife.body, { x: nx, y: ny });
+    Scene_017.prototype.tapMakeBirdFly = function (evt) {
+        if (!this.isCanOperate)
+            return;
+        Matter.Body.setVelocity(this.birdBody, { x: 0, y: -8 });
+    };
+    //创建墙壁
+    Scene_017.prototype.createAWall = function () {
+        if (!this.wallArr) {
+            this.wallArr = [];
         }
-        return true;
-    };
-    Scene_017.prototype.fireKnife = function (evt) {
-        Matter.Body.setVelocity(this.knifeArr[this.knifeIndex].body, { x: 0, y: -50 });
-    };
-    //创建刀
-    Scene_017.prototype.createKnifes = function () {
-        var kspr = SpriteUtil.createImage('knife_png');
-        var body = Matter.Bodies.rectangle(this.rotatePoint.x, SpriteUtil.stageCenterY + 360, kspr.width, kspr.height, {
-            label: 'knife',
-            frictionAir: 0,
-            restitution: 1,
-            friction: 0,
+        var rand = this.score % 2 == 0 ? true : false;
+        var xx = SpriteUtil.stageWidth + 200;
+        var len = this.wallArr.length;
+        for (var i = len - 1; i >= 0; i--) {
+            var body1_1 = this.wallArr[i].body1;
+            var body2_1 = this.wallArr[i].body2;
+            if (body1_1.position.x <= body1_1.render.sprite.width / 2) {
+                Matter.World.remove(this.engine.world, [body1_1, body2_1], 0);
+                this.wallArr.splice(i, 1);
+                this.score++;
+                this.scoreItem.setSTScore(this.score);
+            }
+        }
+        var swid = 50 + 150 * Math.random();
+        var kspr1 = SpriteUtil.createRect(swid, 550, 0xffffff * Math.random());
+        var body1 = Matter.Bodies.rectangle(xx, 75 + 200 * Math.random(), kspr1.width, kspr1.height, {
+            label: 'wall',
+            isStatic: true,
             render: {
-                sprite: kspr
-            },
-            collisionFilter: {
-                category: 0x0040
+                sprite: kspr1
             }
         });
-        kspr.touchEnabled = true;
-        kspr.addEventListener(egret.TouchEvent.TOUCH_TAP, this.fireKnife, this);
-        return body;
+        var kspr2 = SpriteUtil.createRect(swid, 550, 0xffffff * Math.random());
+        var body2 = Matter.Bodies.rectangle(xx, SpriteUtil.stageHeight - 75 - 200 * Math.random(), kspr2.width, kspr2.height, {
+            label: 'wall',
+            isStatic: true,
+            render: {
+                sprite: kspr2
+            }
+        });
+        this.wallArr.push({ body1: body1, body2: body2 });
+        Matter.World.add(this.engine.world, [body1, body2]);
     };
-    Scene_017.prototype.exit = function () {
-        _super.prototype.exit.call(this);
-        egret.stopTick(this.loop, this);
+    Scene_017.prototype.destroy = function () {
+        egret.clearInterval(this.intervalId);
         Matter.Runner.stop(this.runner);
         EgretRender.stop();
         Matter.Engine.clear(this.engine);
-        Matter.Events.off(this.engine, 'collisionStart', this.collisionStart);
+        Matter.Events.off(this.engine, "collisionStart", this.collisionStart);
+        Matter.Events.off(this.engine, "beforeUpdate", this.beforeUpdateFun);
         Matter.World.remove(this.engine.world, this.engine.world.bodies, 0);
-        Matter.World.remove(this.engine.world, this.engine.world.constraints, 0);
+    };
+    Scene_017.prototype.exit = function () {
+        this.destroy();
+        _super.prototype.exit.call(this);
     };
     return Scene_017;
 }(BaseScene));
 __reflect(Scene_017.prototype, "Scene_017");
+//飞刀射木板
 var Scene_018 = (function (_super) {
     __extends(Scene_018, _super);
     function Scene_018() {
@@ -3562,6 +3572,7 @@ var Scene_018 = (function (_super) {
     }
     Scene_018.prototype.init = function () {
         //创建刀列
+        this.rotateAngle = this.dataVo.tData;
         this.currCount = this.dataVo.sData;
         var len = this.dataVo.sData;
         for (var i = 0; i < len; i++) {
@@ -3569,8 +3580,8 @@ var Scene_018 = (function (_super) {
             this.knifeArr.push({ sprite: sprite, angle: 0 });
         }
         //木头
-        this.rotatePoint = new egret.Point(SpriteUtil.stageCenterX, 360);
-        this.startPoint = new egret.Point(SpriteUtil.stageCenterX, 600);
+        this.rotatePoint = new egret.Point(SpriteUtil.stageCenterX, 400);
+        this.startPoint = new egret.Point(SpriteUtil.stageCenterX, 640);
         var image = SpriteUtil.createImage('wood_png');
         image.x = this.rotatePoint.x;
         image.y = this.rotatePoint.y;
@@ -3581,6 +3592,8 @@ var Scene_018 = (function (_super) {
         //
         this.createLeftTxt();
         this.showNext();
+        this.timeItem = new TimeItem(this.dataVo.time);
+        this.addChild(this.timeItem);
         egret.startTick(this.loop, this);
     };
     Scene_018.prototype.loop = function (timestamp) {
@@ -3607,10 +3620,12 @@ var Scene_018 = (function (_super) {
             var rotation = _this.dartSprite.rotation % 360;
             for (var _i = 0, _a = _this.hadKnifesArr; _i < _a.length; _i++) {
                 var knife = _a[_i];
-                if (Math.abs(knife.angle - rotation) <= 10) {
-                    egret.Tween.get(_this.curKnife.sprite).to({ y: SpriteUtil.stageHeight, rotation: 360 * 5 }, 500).call(function () {
+                //如果度数差小于12 就说明插不进去
+                if (Math.abs(knife.angle - rotation) <= 12) {
+                    egret.Tween.get(_this.curKnife.sprite).to({ y: SpriteUtil.stageHeight, rotation: 360 * (5 * Math.random() + 2) }, 500).call(function () {
                         egret.Tween.removeTweens(_this.curKnife);
                         _this.leftKnifesTxt.text = "";
+                        _this.timeItem.stop();
                         EffectUtil.showResultEffect();
                     });
                     return;
@@ -3622,9 +3637,20 @@ var Scene_018 = (function (_super) {
         }, this);
     };
     Scene_018.prototype.showNext = function () {
+        GameSound.instance().playSound('click');
         if (this.currCount <= 0) {
             this.leftKnifesTxt.text = "";
-            console.log('success!');
+            var leftTime = this.timeItem.leftTime;
+            this.timeItem.stop();
+            if (leftTime >= 2 * this.dataVo.time / 3) {
+                EffectUtil.showResultEffect(EffectUtil.PERFECT);
+            }
+            else if (leftTime >= this.dataVo.time / 3) {
+                EffectUtil.showResultEffect(EffectUtil.GREAT);
+            }
+            else {
+                EffectUtil.showResultEffect(EffectUtil.GOOD);
+            }
         }
         else {
             this.curKnife = this.knifeArr.pop();
@@ -3647,12 +3673,18 @@ var Scene_018 = (function (_super) {
         var kspr = SpriteUtil.createImage('knife_png');
         kspr.x = SpriteUtil.stageCenterX;
         kspr.y = SpriteUtil.stageCenterY + 300;
+        kspr.scaleY = 0.8;
         kspr.touchEnabled = true;
         kspr.addEventListener(egret.TouchEvent.TOUCH_TAP, this.fireKnife, this);
         return kspr;
     };
+    Scene_018.prototype.enter = function () {
+        _super.prototype.enter.call(this);
+        this.timeItem.start();
+    };
     Scene_018.prototype.exit = function () {
         _super.prototype.exit.call(this);
+        this.timeItem.stop();
         egret.stopTick(this.loop, this);
     };
     return Scene_018;

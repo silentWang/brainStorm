@@ -1,3 +1,4 @@
+//飞刀射木板
 class Scene_018 extends BaseScene{
     constructor(){
         super();
@@ -20,6 +21,7 @@ class Scene_018 extends BaseScene{
 
     private init(){
         //创建刀列
+        this.rotateAngle = this.dataVo.tData;
         this.currCount = this.dataVo.sData;
         let len = this.dataVo.sData;
         for(let i = 0;i < len;i++){
@@ -27,8 +29,8 @@ class Scene_018 extends BaseScene{
             this.knifeArr.push({sprite:sprite,angle:0});
         }
         //木头
-        this.rotatePoint = new egret.Point(SpriteUtil.stageCenterX,360);
-        this.startPoint = new egret.Point(SpriteUtil.stageCenterX,600);
+        this.rotatePoint = new egret.Point(SpriteUtil.stageCenterX,400);
+        this.startPoint = new egret.Point(SpriteUtil.stageCenterX,640);
         let image = SpriteUtil.createImage('wood_png');
         image.x = this.rotatePoint.x;
         image.y = this.rotatePoint.y;
@@ -39,6 +41,9 @@ class Scene_018 extends BaseScene{
         //
         this.createLeftTxt();
         this.showNext();
+
+        this.timeItem = new TimeItem(this.dataVo.time);
+        this.addChild(this.timeItem);
 
         egret.startTick(this.loop,this);
     }
@@ -64,10 +69,12 @@ class Scene_018 extends BaseScene{
             egret.Tween.removeTweens(this.curKnife.sprite);
             let rotation = this.dartSprite.rotation%360;
             for(let knife of this.hadKnifesArr){
-                if(Math.abs(knife.angle - rotation) <= 10){
-                    egret.Tween.get(this.curKnife.sprite).to({y:SpriteUtil.stageHeight,rotation:360*5},500).call(()=>{
+                //如果度数差小于12 就说明插不进去
+                if(Math.abs(knife.angle - rotation) <= 12){
+                    egret.Tween.get(this.curKnife.sprite).to({y:SpriteUtil.stageHeight,rotation:360*(5*Math.random()+2)},500).call(()=>{
                         egret.Tween.removeTweens(this.curKnife);
                         this.leftKnifesTxt.text = "";
+                        this.timeItem.stop();
                         EffectUtil.showResultEffect();
                     });
                     return;
@@ -80,9 +87,20 @@ class Scene_018 extends BaseScene{
     }
 
     private showNext(){
+        GameSound.instance().playSound('click');
         if(this.currCount <= 0){
             this.leftKnifesTxt.text = "";
-            console.log('success!');
+            let leftTime = this.timeItem.leftTime;
+            this.timeItem.stop();
+            if(leftTime >= 2*this.dataVo.time/3){
+                EffectUtil.showResultEffect(EffectUtil.PERFECT);
+            }
+            else if(leftTime >= this.dataVo.time/3){
+                EffectUtil.showResultEffect(EffectUtil.GREAT);
+            }
+            else{
+                EffectUtil.showResultEffect(EffectUtil.GOOD);
+            }
         }
         else{
             this.curKnife = this.knifeArr.pop();
@@ -106,13 +124,20 @@ class Scene_018 extends BaseScene{
         let kspr = SpriteUtil.createImage('knife_png');
         kspr.x = SpriteUtil.stageCenterX;
         kspr.y = SpriteUtil.stageCenterY + 300;
+        kspr.scaleY = 0.8;
         kspr.touchEnabled = true;
         kspr.addEventListener(egret.TouchEvent.TOUCH_TAP,this.fireKnife,this);
         return kspr;
     }
 
+    enter(){
+        super.enter();
+        this.timeItem.start();
+    }
+
     exit(){
         super.exit();
+        this.timeItem.stop();
         egret.stopTick(this.loop,this);
     }
 
