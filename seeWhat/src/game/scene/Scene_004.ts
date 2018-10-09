@@ -4,8 +4,8 @@ class Scene_004 extends BaseScene{
         super();
         this.init();
     }
-    private giftBoxArr:Array<egret.TextField>;
-    private giftDisplay:egret.TextField;
+    private giftBoxArr;
+    private giftDisplay;
     private giftGroup:egret.Sprite;
     private startPoint:egret.Point;
     private rotatePoint:egret.Point;
@@ -28,7 +28,7 @@ class Scene_004 extends BaseScene{
         let cols = Math.sqrt(num);
         let wid = (SpriteUtil.stageWidth - 100)/cols;
         for(let i = 0;i < num;i++){
-            let bag = SpriteUtil.createText(box,100);
+            let bag = SpriteUtil.createImage(box);
             let scale = wid/bag.width;
             bag.scaleX = scale;
             bag.scaleY = scale;
@@ -47,7 +47,9 @@ class Scene_004 extends BaseScene{
         this.rotatePoint = new egret.Point(SpriteUtil.stageCenterX,SpriteUtil.stageCenterY - 200);
         this.startPoint = new egret.Point(SpriteUtil.stageCenterX,100);
 
-        this.giftDisplay = SpriteUtil.createText(this.dataVo.tData,100);
+        this.giftDisplay = SpriteUtil.createImage(this.dataVo.tData);
+        this.giftDisplay.scaleX = wid/this.giftDisplay.width/1.5;
+        this.giftDisplay.scaleY = wid/this.giftDisplay.width/1.5;
         this.giftDisplay.x = SpriteUtil.stageCenterX;
         this.giftDisplay.y = 50;
         this.addChild(this.giftDisplay);

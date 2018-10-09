@@ -166,14 +166,17 @@ class Scene_009 extends BaseScene{
         });
         console.log(rans);
         let idx = egret.setInterval(()=>{
-            let spr = SpriteUtil.createText('🏀',60);
+            let spr = SpriteUtil.createImage('basketball');
+            let scale = 60/spr.width;
+            spr.scaleX = scale;
+            spr.scaleY = scale;
             let xx = nums%2 == 0 ? 20 : SpriteUtil.stageWidth - 20;
             let mass = rans[0] == nums ? 1 : 2;
             if(mass != 1){
                 mass = rans[1] == nums ? 3 : 2;
             }
             spr.name = `ball_${nums}`;
-            let ball = Matter.Bodies.circle(xx,0,spr.height/2,{
+            let ball = Matter.Bodies.circle(xx,0,scale*spr.height/2,{
                 restitution:0.5,
                 mass:mass,
                 label:'ball',  

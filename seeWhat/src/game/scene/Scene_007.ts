@@ -91,7 +91,6 @@ class Scene_007 extends BaseScene{
                     if(this.isOperating) return;
                     for(let spr of this.pools){
                         spr.visible = false;
-                        spr.text = '';
                     }
                     this.showSprites(this.needNums);
                 },this,1000);
@@ -112,28 +111,30 @@ class Scene_007 extends BaseScene{
 
     private getPools(index:number = 0){
         let char = this.dataVo.sData[index];
-        let spr:egret.TextField;
+        let spr;
         if(!this.pools){
             this.pools = [];
         }
         else{
             for(let item of this.pools){
-                if(!item.visible && item.text == ''){
+                if(!item.visible){
                     spr = item;
                     break;
                 }
             }
         }
         if(!spr){
-            spr = SpriteUtil.createText(char,100);
+            spr = SpriteUtil.createImage(char);
             this.pools.push(spr);
+            let scale = 100/spr.width;
+            spr.scaleX = scale;
+            spr.scaleY = scale;
             spr.addEventListener(egret.TouchEvent.TOUCH_TAP,(evt)=>{
                 if(this.isOperating) return;
                 GameSound.instance().playSound('click');
                 let spr = evt.target;
-                if(spr.name == this.dataVo.sData[0]){
+                if(spr.name == this.dataVo.tData){
                     spr.visible = false;
-                    spr.text = '';
                     this.score++;
                     this.scoreItem.setSTScore(this.score);
                 }
@@ -145,7 +146,7 @@ class Scene_007 extends BaseScene{
             },this);
         }
         else{
-            spr.text = char;
+            spr.texture = RES.getRes(`${char}_png`);
             spr.visible = true;
         }
         spr.touchEnabled = true;

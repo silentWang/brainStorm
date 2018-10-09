@@ -120,20 +120,21 @@ class Scene_006 extends BaseScene{
     //创建图片
     private createPic(arr){
         let len = arr.length;
-        let cols = Math.sqrt(len);
+        let cols = 3;//Math.sqrt(len);
         let wid = (SpriteUtil.stageWidth - 120)/cols;
         let sprite = new egret.Sprite();
         for(let i = 0;i < len;i++){
-            let item = SpriteUtil.createText(arr[i],100);
+            let item = SpriteUtil.createImage(arr[i]);
             let scale = wid/item.width;
             item.scaleX = scale;
             item.scaleY = scale;
-            item.x = wid/2+(i%cols)*(wid + 10);
-            item.y = wid/2 + (wid + 10)*Math.floor(i/cols);
+            item.x = 10+wid/2+(i%cols)*(wid + 10);
+            item.y = 10+wid/2 + (wid + 10)*Math.floor(i/cols);
+            item.touchEnabled = false;
             sprite.addChild(item);
         }
         sprite.graphics.beginFill(0x707070);
-        sprite.graphics.drawRect(0,0,(wid+10)*cols,(wid + 20)*cols);
+        sprite.graphics.drawRect(0,0,sprite.width+20,sprite.height+20);
         sprite.graphics.endFill();
         return sprite;
     }

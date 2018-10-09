@@ -142,8 +142,8 @@ class Scene_012 extends BaseScene{
             let pt = this.paths[i];
             this.pathShape.graphics.lineTo(pt.x,pt.y);
         }
-        console.clear();
-        console.table(this.paths);
+        // console.clear();
+        // console.table(this.paths);
     }
 
     //画线
@@ -187,7 +187,9 @@ class Scene_012 extends BaseScene{
         super.exit();
         for(let shape of this.vsArr){
             shape.removeEventListener(egret.TouchEvent.TOUCH_TAP,this.clkStart,this);
-            this.removeChild(shape);
+            if(shape.parent){
+                shape.parent.removeChild(shape);
+            }
         }
     }
 

@@ -1,4 +1,4 @@
-//笨鸟先飞
+//堆箱子
 class Scene_017 extends BaseScene{
     constructor(){
         super();
@@ -8,24 +8,26 @@ class Scene_017 extends BaseScene{
     private engine;
     private runner;
     private render;
-    //飞到
-    private birdBody;
-    private wallArr;
-    private wallspeed = 3;
+
+    private skyBox;
+    private boxArr;
     private isCanOperate:boolean = true;
-    private beforeUpdateFun:Function;
-    private score = 0;
+    //丢掉的箱子
+    private loseCnt = 0;
+    //已使用的箱子
+    private usedCnt = 0;
     private intervalId = 0;
 
     private init(){
-        //datavo time代表出现墙的频率 单位毫秒
+        //sdata最多丢弃箱子的数目  tdata目标堆积的箱子数目 score:箱子总数 time:单位毫秒代表箱子移动周期时间
         let shape = new egret.Shape();
         shape.graphics.beginFill(0x00ff00,0.01);
         shape.graphics.drawRect(0,0,SpriteUtil.stageWidth,SpriteUtil.stageHeight);
         shape.graphics.endFill();
         this.addChild(shape);
+        this.boxArr = [];
         //初始画引擎部分
-        this.engine = Matter.Engine.create({enableSleeping:false},null);
+        this.engine = Matter.Engine.create({enableSleeping:true},null);
         this.runner = Matter.Runner.create(null);
         this.runner.isFixed = true;
         let render = EgretRender.create({
@@ -41,136 +43,150 @@ class Scene_017 extends BaseScene{
         EgretRender.run(render);
         this.engine.world.gravity.y = 1;
 
-        let bspr = SpriteUtil.createText('🐤',100);
-        bspr.scaleX = -1;
-        let body = Matter.Bodies.circle(SpriteUtil.stageCenterX,500,bspr.height/2,{
-            label:'bird',
+        let box = SpriteUtil.createImage(this.dataVo.sData);
+        box.x = box.width/2;
+        box.y = 120;
+        this.addChild(box);
+        this.skyBox = box;
+
+        let bspr = SpriteUtil.createRect(360,200,0x000000);
+        let body = Matter.Bodies.rectangle(SpriteUtil.stageCenterX,SpriteUtil.stageHeight - 100,bspr.width,bspr.height,{
+            isStatic:true,
+            friction:2,
+            frictionStatic:2,
             render:{
                 sprite:bspr
             }
-        },0);
-        this.birdBody = body;
+        });
         Matter.World.add(this.engine.world,body);
-
-        Matter.Events.on(this.engine,"collisionStart",this.collisionStart.bind(this));
-        this.touchEnabled = true;
-        this.addEventListener(egret.TouchEvent.TOUCH_TAP,this.tapMakeBirdFly,this);
-
-        this.intervalId = egret.setInterval(()=>{
-            this.createAWall();
-        },this,this.dataVo.time);
-        
-        this.beforeUpdateFun = ()=>{
-            if(this.birdBody.position.y >= SpriteUtil.stageHeight){
-                this.birdBody.isStatic = true;
-                this.destroy();
-                EffectUtil.showResultEffect();
-                return;
-            }
-            if(!this.isCanOperate) return;
-            if(!this.wallArr || this.wallArr.length == 0) return;
-            for(let body of this.wallArr){
-                let body1 = body.body1;
-                let body2 = body.body2;
-                let xx = body1.position.x;
-                xx -= this.wallspeed;
-                Matter.Body.setPosition(body1,{x:xx,y:body1.position.y});
-                Matter.Body.setPosition(body2,{x:xx,y:body2.position.y});
-            }
-        }
-        Matter.Events.on(this.engine,'beforeUpdate',this.beforeUpdateFun);
 
         this.scoreItem = new ScoreItem();
         this.addChild(this.scoreItem);
-        this.scoreItem.setSTScore(this.score,this.dataVo.score);
+        this.refreshCnt();
 
-        this.createAWall();
-    }
-
-    private collisionStart(evt){
-        let pairs = evt.pairs;
-        for(let pair of pairs){
-            if(pair.bodyA.label == "bird" || pair.bodyB.label == "bird"){
-                this.isCanOperate = false;
-                this.checkResult();
+        this.timeItem = new TimeItem(5*60);
+        this.addChild(this.timeItem);
+        this.timeItem.x = SpriteUtil.stageWidth - 300;
+        //循环运动box
+        egret.Tween.get(this.skyBox,{loop:true}).to({x:SpriteUtil.stageWidth - this.skyBox.width/2},this.dataVo.time).to({x:this.skyBox.width/2},this.dataVo.time);
+        this.touchEnabled = true;
+        this.addEventListener(egret.TouchEvent.TOUCH_TAP,this.tapAddBox,this);
+        this.intervalId = egret.setInterval(()=>{
+            let len = this.boxArr.length;
+            for(let i = 0;i < len;i++){
+                let bdy = this.boxArr[i];
+                if(bdy.position.y > SpriteUtil.stageHeight + 2*bdy.render.sprite.width && !bdy.isStatic){
+                    bdy.speed = 0;
+                    this.loseCnt++;
+                    Matter.Body.setStatic(bdy,true);
+                }
             }
-        }
+            this.checkResult();
+        },this,100);
     }
 
-    private tapMakeBirdFly(evt){
+    private tapAddBox(evt){
         if(!this.isCanOperate) return;
-        Matter.Body.setVelocity(this.birdBody,{x:0,y:-8});
+        this.usedCnt++;
+        if(this.dataVo.score - this.loseCnt < this.usedCnt){
+            EffectUtil.showResultEffect();
+            this.isCanOperate = false;
+            return;
+        }
+        this.isCanOperate = false;
+        let idx = egret.setTimeout(()=>{
+            egret.clearTimeout(idx);
+            this.isCanOperate = true;
+        },this,500);
+
+        this.refreshCnt();
+        this.createBox();
     }
     //创建墙壁
-    private createAWall(){
-        if(!this.wallArr){
-            this.wallArr = [];
-        }
-
-        let rand = this.score%2 == 0 ? true : false;
-        let xx = SpriteUtil.stageWidth + 200;
-        let len = this.wallArr.length;
-        for(let i = len - 1;i >= 0;i--){
-            let body1 = this.wallArr[i].body1;
-            let body2 = this.wallArr[i].body2;
-            if(body1.position.x <= body1.render.sprite.width/2){
-                Matter.World.remove(this.engine.world,[body1,body2],0);
-                this.wallArr.splice(i,1);
-                this.score++;
-                this.scoreItem.setSTScore(this.score);
+    private createBox(){
+        let xx = this.skyBox.x;
+        let yy = this.skyBox.y;
+        let len = this.boxArr.length;
+        for(let i = 0;i < len;i++){
+            let bdy = this.boxArr[i];
+            if(bdy.position.y > SpriteUtil.stageHeight + bdy.render.sprite.width/2){
+                Matter.Body.setStatic(bdy,false);
+                Matter.Body.setAngle(bdy,0);
+                Matter.Body.setAngularVelocity(bdy,0);
+                Matter.Body.setVelocity(bdy,{x:0,y:0});
+                Matter.Body.setPosition(bdy,{x:xx,y:yy});
+                Matter.Body.set(bdy,'isSleeping',false);
+                return;
             }
         }
 
-        let swid = 80+120*Math.random();
-        let kspr1 = SpriteUtil.createRect(swid,550,0xffffff*Math.random());
-        let body1 = Matter.Bodies.rectangle(xx,75+200*Math.random(),kspr1.width,kspr1.height,{
-            label:'wall',
-            isStatic:true,
+        let sprite = SpriteUtil.createImage(this.dataVo.sData);
+        let body = Matter.Bodies.rectangle(xx,yy,sprite.width,sprite.height,{
+            frictionAir:0,
+            friction:1,
             render:{
-                sprite:kspr1
+                sprite:sprite
             }
         });
-        let kspr2 = SpriteUtil.createRect(swid,550,0xffffff*Math.random());
-        let body2 = Matter.Bodies.rectangle(xx,SpriteUtil.stageHeight - 75 - 200*Math.random(),kspr2.width,kspr2.height,{
-            label:'wall',
-            isStatic:true,
-            render:{
-                sprite:kspr2
-            }
-        });
-        this.wallArr.push({body1:body1,body2:body2});
-        Matter.World.add(this.engine.world,[body1,body2]);
+        Matter.World.add(this.engine.world,body);
+        this.boxArr.push(body);
     }
 
     private checkResult(){
-        this.birdBody.isStatic = true;
-        this.destroy();
-        if(this.scoreItem.isCanPass()){
-            let mid = this.score - this.dataVo.score;
-            if(mid >= 15){
+        this.refreshCnt();
+        if(this.usedCnt < this.dataVo.tData) return;
+        let cnt = 0;
+        for(let bdy of this.boxArr){
+            if(!bdy.isStatic && bdy.position.y <= SpriteUtil.stageHeight - 80 && bdy.isSleeping){
+                cnt++;
+            }
+        }
+        if(cnt >= this.dataVo.tData){
+            this.isCanOperate = false;
+            let time = this.timeItem.leftTime;
+            this.destroy();
+            if(time >= 1.5*60){
                 EffectUtil.showResultEffect(EffectUtil.PERFECT);
             }
-            else if(mid >= 10){
+            else if(time >= 2.5*60){
                 EffectUtil.showResultEffect(EffectUtil.GREAT);
             }
             else{
                 EffectUtil.showResultEffect(EffectUtil.GOOD);
             }
         }
-        else{
+        else if(this.dataVo.score - this.loseCnt < this.dataVo.tData){
+            this.isCanOperate = false;
+            this.destroy();
             EffectUtil.showResultEffect();
         }
     }
 
+    private refreshCnt(){
+        let str = `剩余 ${this.dataVo.score - this.usedCnt}  目标 ${this.dataVo.tData}`;
+        this.scoreItem.setCustomText(str);
+    }
+
     private destroy(){
-        this.isCanOperate = false;
+        this.timeItem.stop();
         egret.clearInterval(this.intervalId);
+        egret.Tween.removeTweens(this.skyBox);
+        this.isCanOperate = false;
         Matter.Runner.stop(this.runner);
         EgretRender.stop();
         Matter.Engine.clear(this.engine);
-        Matter.Events.off(this.engine,"collisionStart",this.collisionStart);
-        Matter.Events.off(this.engine,"beforeUpdate",this.beforeUpdateFun);
         Matter.World.remove(this.engine.world,this.engine.world.bodies,0);
+    }
+
+    enter(){
+        super.enter();
+        this.timeItem.start((time)=>{
+            if(time < 0){
+                this.destroy();
+                this.timeItem.stop();
+                EffectUtil.showResultEffect();
+            }
+        },this);
     }
 
     exit(){

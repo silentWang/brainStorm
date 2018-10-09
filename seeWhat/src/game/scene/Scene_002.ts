@@ -24,23 +24,29 @@ class Scene_002 extends BaseScene{
         });
         
         this.group = new egret.Sprite();
-        this.group.x = 5;
-        this.group.y = 200;
         let len = arr.length;
-        let size = columns == 10 ? wid - 20 : wid - 40;
         for(let i = 0;i < len;i++){
-            let text = this.createText(arr[i],size,wid);
-            text.x = (wid+5)*(i%columns);
-            text.y = (wid+5)*Math.floor(i/columns);
-            this.group.addChild(text);
+            let img = SpriteUtil.createImage(arr[i],true);
+            img.anchorOffsetX = 0;
+            img.anchorOffsetY = 0;
+            img.scaleX = wid/img.width;
+            img.scaleY = wid/img.height;
+            img.name = arr[i];
+            img.x = (wid + 2)*(i%columns);
+            img.y = (wid + 2)*Math.floor(i/columns);
+            this.group.addChild(img);
+            img.addEventListener(egret.TouchEvent.TOUCH_TAP,this.clkHandler,this);
         }
+
         this.addChild(this.group);
+        this.group.x = SpriteUtil.stageCenterX - this.group.width/2;
+        this.group.y = 200;
 
         this.timeItem = new TimeItem(this.dataVo.time);
         this.addChild(this.timeItem);
     }
 
-    private textClk(evt){
+    private clkHandler(evt){
         if(this.timeItem && this.timeItem.leftTime <= 0) return;
         GameSound.instance().playSound('click');
         if(!this.currentSelect){
@@ -52,7 +58,7 @@ class Scene_002 extends BaseScene{
             this.currentSelect = null;
         }
         else{
-            if(this.currentSelect.text == evt.target.text){
+            if(this.currentSelect.name == evt.target.name){
                 this.group.removeChild(this.currentSelect);
                 this.group.removeChild(evt.target);
                 this.currentSelect = null;
@@ -79,25 +85,6 @@ class Scene_002 extends BaseScene{
         }
     }
 
-    private createText(name:string,size = 60,width = 0){
-        let text = new egret.TextField();
-        text.size = size;
-        text.text = name;
-        text.textColor = 0x0000ff;
-        text.stroke = 0.5;
-        text.strokeColor = 0x000000;
-        text.width = width;
-        text.height = width;
-        text.background = true;
-        text.backgroundColor = 0x00C5CD;
-        text.textAlign = 'center';
-        text.verticalAlign = 'middle';
-        text.bold = true;
-        text.touchEnabled = true;
-        text.addEventListener(egret.TouchEvent.TOUCH_TAP,this.textClk,this);
-        return text;
-    }
-
     enter(){
         super.enter();
         this.timeItem.start();
@@ -107,8 +94,8 @@ class Scene_002 extends BaseScene{
         super.exit();
         while(this.numChildren > 1){
             let child = this.getChildAt(this.numChildren - 1);
-            if(child instanceof egret.TextField){
-                child.removeEventListener(egret.TouchEvent.TOUCH_TAP,this.textClk,this);
+            if(child.hasEventListener(egret.TouchEvent.TOUCH_TAP)){
+                child.removeEventListener(egret.TouchEvent.TOUCH_TAP,this.clkHandler,this);
             }
             this.removeChild(child);
         }

@@ -7,17 +7,17 @@ class Scene_013 extends BaseScene{
 
     private nameArr = ["阿诺","爱因斯坦","牛顿","作者","憨豆","贝克汉姆","范冰冰","成龙","吴京"];
     private nameTxt:egret.TextField;
-    private enemySpr:egret.TextField;
+    private enemySpr;
     private currWinIndex = 0;
     private isOperating:boolean = false;
     private score = 0;
     private init(){
         let len = this.dataVo.sData.length;
         let wid = (SpriteUtil.stageWidth - 100)/len;
-        let scale = wid/100;
         for(let i = 0;i < len;i++){
-            let btn = SpriteUtil.createButton(this.dataVo.sData[i],100,100,0x000fff,64);
-            btn.x = 30 + i*(wid+10);
+            let btn = SpriteUtil.createImage(this.dataVo.sData[i],true);
+            let scale = wid/btn.width;
+            btn.x = 30 + i*(wid+10) + scale*64/2;
             btn.y = SpriteUtil.stageCenterY + 100;
             btn.scaleX = scale;
             btn.scaleY = scale;
@@ -26,9 +26,9 @@ class Scene_013 extends BaseScene{
             btn.addEventListener(egret.TouchEvent.TOUCH_TAP,this.playDoing,this);
         }
 
-        this.enemySpr = SpriteUtil.createText(this.dataVo.sData[0],100);
-        this.enemySpr.scaleX = 3;
-        this.enemySpr.scaleY = 3;
+        this.enemySpr = SpriteUtil.createImage(this.dataVo.sData[0]);
+        this.enemySpr.scaleX = 4;
+        this.enemySpr.scaleY = 4;
         this.enemySpr.x = SpriteUtil.stageCenterX;
         this.enemySpr.y = SpriteUtil.stageCenterY - 200;
         this.addChild(this.enemySpr);
@@ -58,7 +58,7 @@ class Scene_013 extends BaseScene{
         let str = this.nameArr[Math.floor(this.nameArr.length * Math.random())];
         this.nameTxt.text = str;
         this.nameTxt.x = SpriteUtil.stageCenterX - this.nameTxt.width;
-        this.enemySpr.text = this.dataVo.sData[index];
+        this.enemySpr.texture = RES.getRes(`${this.dataVo.sData[index]}_png`);
         this.currWinIndex = index > 0 ? (index - 1)%len : len - 1;
     }
 

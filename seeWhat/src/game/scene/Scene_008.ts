@@ -7,8 +7,8 @@ class Scene_008 extends BaseScene{
 
     private passArr:Array<any>;
     private animalsArr= CommonUtil.allAnimals.concat();
-    private animalSpr:egret.TextField;
-    private emojiSpr:egret.TextField;
+    private animalSpr;
+    private emojiSpr;
     private needCount = 0;
     private isOperating:boolean = false;
     private init(){
@@ -19,15 +19,15 @@ class Scene_008 extends BaseScene{
             return 0;
         });
 
-        this.animalSpr = SpriteUtil.createText(this.animalsArr[this.needCount],100);
+        this.animalSpr = SpriteUtil.createImage(this.animalsArr[this.needCount]);
         this.animalSpr.y = SpriteUtil.stageCenterY - 100;
-        this.animalSpr.scaleX = 2;
-        this.animalSpr.scaleY = 2;
+        this.animalSpr.scaleX = 3;
+        this.animalSpr.scaleY = 3;
         this.addChild(this.animalSpr);
 
-        this.emojiSpr = SpriteUtil.createText('😭',100);
-        this.emojiSpr.scaleX = 3;
-        this.emojiSpr.scaleY = 3;
+        this.emojiSpr = SpriteUtil.createImage('emoji01');
+        this.emojiSpr.scaleX = 4;
+        this.emojiSpr.scaleY = 4;
         this.emojiSpr.visible = false;
         this.addChild(this.emojiSpr);
         EffectUtil.breath(this.emojiSpr);
@@ -39,7 +39,8 @@ class Scene_008 extends BaseScene{
         let animal = this.animalsArr[this.needCount];
         let emoji = this.dataVo.sData[Math.floor(this.dataVo.sData.length * Math.random())];
         this.passArr.push({animal:animal,emoji:emoji});
-        this.animalSpr.text = animal;
+        this.animalSpr.texture = RES.getRes(`${animal}_png`);
+        this.animalSpr.name = animal;
         let pos = this.getRandomPos();
         this.animalSpr.x = pos[0];
         this.animalSpr.y = pos[1];
@@ -51,7 +52,7 @@ class Scene_008 extends BaseScene{
                 
                 this.emojiSpr.x = this.animalSpr.x;
                 this.emojiSpr.y = this.animalSpr.y;
-                this.emojiSpr.text = emoji;
+                this.emojiSpr.texture = RES.getRes(`${emoji}_png`);
                 this.emojiSpr.visible = true;
 
                 let xid = egret.setTimeout(()=>{
@@ -90,16 +91,18 @@ class Scene_008 extends BaseScene{
         this.removeChild(this.emojiSpr);
 
         this.dataVo.tData = this.passArr[Math.floor(this.passArr.length * Math.random())].emoji;
-        console.log(this.passArr);
-
-        let askstr = `谜题:找出所有发出表情${this.dataVo.tData}的动物`
+        let emoji = SpriteUtil.createImage(this.dataVo.tData);
+        let askstr = `谜题:找出所有发出表情       的动物`;
         let text = SpriteUtil.createText(askstr,36,0x0000FF);
         text.x = SpriteUtil.stageCenterX;
         text.y = 150;
+        emoji.x = text.x + text.measuredWidth - text.width/2 - text.measuredWidth*4/15;
+        emoji.y = text.y;
+        this.addChild(emoji);
         this.addChild(text);
 
         for(let i = 0;i < this.animalsArr.length;i++){
-            let spr = SpriteUtil.createText(this.animalsArr[i],100);
+            let spr = SpriteUtil.createImage(this.animalsArr[i]);
             spr.x = 100 + (i%5)*125;
             spr.y = 250 + 125*Math.floor(i/5);
             spr.touchEnabled = true;
@@ -115,14 +118,14 @@ class Scene_008 extends BaseScene{
     private selectClk(evt){
         if(this.isOperating) return;
         GameSound.instance().playSound('click');
-        let text = evt.target;
+        let sprite = evt.target;
         let isFind = false;
         let len = this.passArr.length;
         for(let i = len - 1;i >= 0;i--){
             let obj = this.passArr[i];
-            if(obj.emoji == this.dataVo.tData && obj.animal == text.text){
-                text.alpha = 0.5;
-                text.touchEnabled = false;
+            if(obj.emoji == this.dataVo.tData && obj.animal == sprite.name){
+                sprite.alpha = 0.5;
+                sprite.touchEnabled = false;
                 isFind = true;
                 this.passArr.splice(i,1);
             }

@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "bg_png,config_json,logo_png,apple_jpg,banana_jpg,grape_jpg,orange_jpg,peach_jpg,pear_jpg,pineapple_jpg,pomegranate_jpg,strawberry_jpg,watermelon_jpg,melon_jpg,cherry_jpg,good_mp3,great_mp3,perfect_mp3,bg_mp3,fail_mp3,readyGo_mp3,wrong_mp3,click_mp3,head_png,wood_png,knife_png",
+			"keys": "bg_png,config_json,logo_png,good_mp3,great_mp3,perfect_mp3,bg_mp3,fail_mp3,readyGo_mp3,wrong_mp3,click_mp3,head_png,ant_png,butterfly_png,cat_png,chicken_png,cow_png,dog_png,dragon_png,dragonfly_png,duck_png,eagle_png,elephant_png,frog_png,goat_png,horse_png,lizard_png,monkey_png,panda_png,penguin_png,pork_png,rabbit_png,rat_png,snake_png,squab_png,tiger_png,tortoise_png,fruit1_png,fruit10_png,fruit2_png,fruit3_png,fruit4_png,fruit5_png,fruit6_png,fruit7_png,fruit8_png,fruit9_png,bag_png,basketball_png,bride_png,china_png,cure_png,diver_png,down_png,egg_png,emperor_png,feather_png,fire_png,flower01_png,flower02_png,flower03_png,flower04_png,flower05_png,football_png,god_png,house_png,land_png,lufeihat_png,magicHat_png,officer_png,repair_png,river_png,sea_png,sky_png,stick_png,string_png,together_png,vintage_png,emoji01_png,emoji02_png,emoji03_png,emoji04_png,emoji05_png,emoji06_png,emoji07_png,emoji08_png,emoji09_png,emoji10_png,emoji11_png,emoji12_png,emoji13_png,emoji14_png,emoji15_png,emoji16_png,emoji17_png,emoji18_png,emoji19_png,emoji20_png,earth_png,insect_png,lawn_png,mountain_png,mushrooms_png,night_png,rain_png,rainbow_png,snail_png,tree_png,sigh_png,female_png,male_png,leaf_png,body_png,equal_png,paper_png,rock_png,scissors_png,welldone_png,worm_png,fruit12_png,fruit11_png,box_png,crystal_png",
 			"name": "preload"
 		}
 	],
@@ -20,66 +20,6 @@
 			"name": "logo_png",
 			"type": "image",
 			"url": "assets/logo.png"
-		},
-		{
-			"name": "apple_jpg",
-			"type": "image",
-			"url": "assets/fruit/apple.jpg"
-		},
-		{
-			"name": "banana_jpg",
-			"type": "image",
-			"url": "assets/fruit/banana.jpg"
-		},
-		{
-			"name": "grape_jpg",
-			"type": "image",
-			"url": "assets/fruit/grape.jpg"
-		},
-		{
-			"name": "orange_jpg",
-			"type": "image",
-			"url": "assets/fruit/orange.jpg"
-		},
-		{
-			"name": "peach_jpg",
-			"type": "image",
-			"url": "assets/fruit/peach.jpg"
-		},
-		{
-			"name": "pear_jpg",
-			"type": "image",
-			"url": "assets/fruit/pear.jpg"
-		},
-		{
-			"name": "pineapple_jpg",
-			"type": "image",
-			"url": "assets/fruit/pineapple.jpg"
-		},
-		{
-			"name": "pomegranate_jpg",
-			"type": "image",
-			"url": "assets/fruit/pomegranate.jpg"
-		},
-		{
-			"name": "strawberry_jpg",
-			"type": "image",
-			"url": "assets/fruit/strawberry.jpg"
-		},
-		{
-			"name": "watermelon_jpg",
-			"type": "image",
-			"url": "assets/fruit/watermelon.jpg"
-		},
-		{
-			"name": "melon_jpg",
-			"type": "image",
-			"url": "assets/fruit/melon.jpg"
-		},
-		{
-			"name": "cherry_jpg",
-			"type": "image",
-			"url": "assets/fruit/cherry.jpg"
 		},
 		{
 			"name": "good_mp3",
@@ -127,14 +67,559 @@
 			"url": "assets/head.png"
 		},
 		{
-			"name": "wood_png",
+			"name": "ant_png",
 			"type": "image",
-			"url": "assets/wood.png"
+			"url": "assets/animals/ant.png"
 		},
 		{
-			"name": "knife_png",
+			"name": "butterfly_png",
 			"type": "image",
-			"url": "assets/knife.png"
+			"url": "assets/animals/butterfly.png"
+		},
+		{
+			"name": "cat_png",
+			"type": "image",
+			"url": "assets/animals/cat.png"
+		},
+		{
+			"name": "chicken_png",
+			"type": "image",
+			"url": "assets/animals/chicken.png"
+		},
+		{
+			"name": "cow_png",
+			"type": "image",
+			"url": "assets/animals/cow.png"
+		},
+		{
+			"name": "dog_png",
+			"type": "image",
+			"url": "assets/animals/dog.png"
+		},
+		{
+			"name": "dragon_png",
+			"type": "image",
+			"url": "assets/animals/dragon.png"
+		},
+		{
+			"name": "dragonfly_png",
+			"type": "image",
+			"url": "assets/animals/dragonfly.png"
+		},
+		{
+			"name": "duck_png",
+			"type": "image",
+			"url": "assets/animals/duck.png"
+		},
+		{
+			"name": "eagle_png",
+			"type": "image",
+			"url": "assets/animals/eagle.png"
+		},
+		{
+			"name": "elephant_png",
+			"type": "image",
+			"url": "assets/animals/elephant.png"
+		},
+		{
+			"name": "frog_png",
+			"type": "image",
+			"url": "assets/animals/frog.png"
+		},
+		{
+			"name": "goat_png",
+			"type": "image",
+			"url": "assets/animals/goat.png"
+		},
+		{
+			"name": "horse_png",
+			"type": "image",
+			"url": "assets/animals/horse.png"
+		},
+		{
+			"name": "lizard_png",
+			"type": "image",
+			"url": "assets/animals/lizard.png"
+		},
+		{
+			"name": "monkey_png",
+			"type": "image",
+			"url": "assets/animals/monkey.png"
+		},
+		{
+			"name": "panda_png",
+			"type": "image",
+			"url": "assets/animals/panda.png"
+		},
+		{
+			"name": "penguin_png",
+			"type": "image",
+			"url": "assets/animals/penguin.png"
+		},
+		{
+			"name": "pork_png",
+			"type": "image",
+			"url": "assets/animals/pork.png"
+		},
+		{
+			"name": "rabbit_png",
+			"type": "image",
+			"url": "assets/animals/rabbit.png"
+		},
+		{
+			"name": "rat_png",
+			"type": "image",
+			"url": "assets/animals/rat.png"
+		},
+		{
+			"name": "snake_png",
+			"type": "image",
+			"url": "assets/animals/snake.png"
+		},
+		{
+			"name": "squab_png",
+			"type": "image",
+			"url": "assets/animals/squab.png"
+		},
+		{
+			"name": "tiger_png",
+			"type": "image",
+			"url": "assets/animals/tiger.png"
+		},
+		{
+			"name": "tortoise_png",
+			"type": "image",
+			"url": "assets/animals/tortoise.png"
+		},
+		{
+			"name": "fruit1_png",
+			"type": "image",
+			"url": "assets/fruit/fruit1.png"
+		},
+		{
+			"name": "fruit10_png",
+			"type": "image",
+			"url": "assets/fruit/fruit10.png"
+		},
+		{
+			"name": "fruit2_png",
+			"type": "image",
+			"url": "assets/fruit/fruit2.png"
+		},
+		{
+			"name": "fruit3_png",
+			"type": "image",
+			"url": "assets/fruit/fruit3.png"
+		},
+		{
+			"name": "fruit4_png",
+			"type": "image",
+			"url": "assets/fruit/fruit4.png"
+		},
+		{
+			"name": "fruit5_png",
+			"type": "image",
+			"url": "assets/fruit/fruit5.png"
+		},
+		{
+			"name": "fruit6_png",
+			"type": "image",
+			"url": "assets/fruit/fruit6.png"
+		},
+		{
+			"name": "fruit7_png",
+			"type": "image",
+			"url": "assets/fruit/fruit7.png"
+		},
+		{
+			"name": "fruit8_png",
+			"type": "image",
+			"url": "assets/fruit/fruit8.png"
+		},
+		{
+			"name": "fruit9_png",
+			"type": "image",
+			"url": "assets/fruit/fruit9.png"
+		},
+		{
+			"name": "bag_png",
+			"type": "image",
+			"url": "assets/other/bag.png"
+		},
+		{
+			"name": "basketball_png",
+			"type": "image",
+			"url": "assets/other/basketball.png"
+		},
+		{
+			"name": "bride_png",
+			"type": "image",
+			"url": "assets/other/bride.png"
+		},
+		{
+			"name": "china_png",
+			"type": "image",
+			"url": "assets/other/china.png"
+		},
+		{
+			"name": "cure_png",
+			"type": "image",
+			"url": "assets/other/cure.png"
+		},
+		{
+			"name": "diver_png",
+			"type": "image",
+			"url": "assets/other/diver.png"
+		},
+		{
+			"name": "down_png",
+			"type": "image",
+			"url": "assets/other/down.png"
+		},
+		{
+			"name": "egg_png",
+			"type": "image",
+			"url": "assets/other/egg.png"
+		},
+		{
+			"name": "emperor_png",
+			"type": "image",
+			"url": "assets/other/emperor.png"
+		},
+		{
+			"name": "feather_png",
+			"type": "image",
+			"url": "assets/other/feather.png"
+		},
+		{
+			"name": "fire_png",
+			"type": "image",
+			"url": "assets/other/fire.png"
+		},
+		{
+			"name": "flower01_png",
+			"type": "image",
+			"url": "assets/other/flower01.png"
+		},
+		{
+			"name": "flower02_png",
+			"type": "image",
+			"url": "assets/other/flower02.png"
+		},
+		{
+			"name": "flower03_png",
+			"type": "image",
+			"url": "assets/other/flower03.png"
+		},
+		{
+			"name": "flower04_png",
+			"type": "image",
+			"url": "assets/other/flower04.png"
+		},
+		{
+			"name": "flower05_png",
+			"type": "image",
+			"url": "assets/other/flower05.png"
+		},
+		{
+			"name": "football_png",
+			"type": "image",
+			"url": "assets/other/football.png"
+		},
+		{
+			"name": "god_png",
+			"type": "image",
+			"url": "assets/other/god.png"
+		},
+		{
+			"name": "house_png",
+			"type": "image",
+			"url": "assets/other/house.png"
+		},
+		{
+			"name": "land_png",
+			"type": "image",
+			"url": "assets/other/land.png"
+		},
+		{
+			"name": "lufeihat_png",
+			"type": "image",
+			"url": "assets/other/lufeihat.png"
+		},
+		{
+			"name": "magicHat_png",
+			"type": "image",
+			"url": "assets/other/magicHat.png"
+		},
+		{
+			"name": "officer_png",
+			"type": "image",
+			"url": "assets/other/officer.png"
+		},
+		{
+			"name": "repair_png",
+			"type": "image",
+			"url": "assets/other/repair.png"
+		},
+		{
+			"name": "river_png",
+			"type": "image",
+			"url": "assets/other/river.png"
+		},
+		{
+			"name": "sea_png",
+			"type": "image",
+			"url": "assets/other/sea.png"
+		},
+		{
+			"name": "sky_png",
+			"type": "image",
+			"url": "assets/other/sky.png"
+		},
+		{
+			"name": "stick_png",
+			"type": "image",
+			"url": "assets/other/stick.png"
+		},
+		{
+			"name": "string_png",
+			"type": "image",
+			"url": "assets/other/string.png"
+		},
+		{
+			"name": "together_png",
+			"type": "image",
+			"url": "assets/other/together.png"
+		},
+		{
+			"name": "vintage_png",
+			"type": "image",
+			"url": "assets/other/vintage.png"
+		},
+		{
+			"name": "emoji01_png",
+			"type": "image",
+			"url": "assets/emoji/emoji01.png"
+		},
+		{
+			"name": "emoji02_png",
+			"type": "image",
+			"url": "assets/emoji/emoji02.png"
+		},
+		{
+			"name": "emoji03_png",
+			"type": "image",
+			"url": "assets/emoji/emoji03.png"
+		},
+		{
+			"name": "emoji04_png",
+			"type": "image",
+			"url": "assets/emoji/emoji04.png"
+		},
+		{
+			"name": "emoji05_png",
+			"type": "image",
+			"url": "assets/emoji/emoji05.png"
+		},
+		{
+			"name": "emoji06_png",
+			"type": "image",
+			"url": "assets/emoji/emoji06.png"
+		},
+		{
+			"name": "emoji07_png",
+			"type": "image",
+			"url": "assets/emoji/emoji07.png"
+		},
+		{
+			"name": "emoji08_png",
+			"type": "image",
+			"url": "assets/emoji/emoji08.png"
+		},
+		{
+			"name": "emoji09_png",
+			"type": "image",
+			"url": "assets/emoji/emoji09.png"
+		},
+		{
+			"name": "emoji10_png",
+			"type": "image",
+			"url": "assets/emoji/emoji10.png"
+		},
+		{
+			"name": "emoji11_png",
+			"type": "image",
+			"url": "assets/emoji/emoji11.png"
+		},
+		{
+			"name": "emoji12_png",
+			"type": "image",
+			"url": "assets/emoji/emoji12.png"
+		},
+		{
+			"name": "emoji13_png",
+			"type": "image",
+			"url": "assets/emoji/emoji13.png"
+		},
+		{
+			"name": "emoji14_png",
+			"type": "image",
+			"url": "assets/emoji/emoji14.png"
+		},
+		{
+			"name": "emoji15_png",
+			"type": "image",
+			"url": "assets/emoji/emoji15.png"
+		},
+		{
+			"name": "emoji16_png",
+			"type": "image",
+			"url": "assets/emoji/emoji16.png"
+		},
+		{
+			"name": "emoji17_png",
+			"type": "image",
+			"url": "assets/emoji/emoji17.png"
+		},
+		{
+			"name": "emoji18_png",
+			"type": "image",
+			"url": "assets/emoji/emoji18.png"
+		},
+		{
+			"name": "emoji19_png",
+			"type": "image",
+			"url": "assets/emoji/emoji19.png"
+		},
+		{
+			"name": "emoji20_png",
+			"type": "image",
+			"url": "assets/emoji/emoji20.png"
+		},
+		{
+			"name": "earth_png",
+			"type": "image",
+			"url": "assets/other/earth.png"
+		},
+		{
+			"name": "insect_png",
+			"type": "image",
+			"url": "assets/other/insect.png"
+		},
+		{
+			"name": "lawn_png",
+			"type": "image",
+			"url": "assets/other/lawn.png"
+		},
+		{
+			"name": "mountain_png",
+			"type": "image",
+			"url": "assets/other/mountain.png"
+		},
+		{
+			"name": "mushrooms_png",
+			"type": "image",
+			"url": "assets/other/mushrooms.png"
+		},
+		{
+			"name": "night_png",
+			"type": "image",
+			"url": "assets/other/night.png"
+		},
+		{
+			"name": "rain_png",
+			"type": "image",
+			"url": "assets/other/rain.png"
+		},
+		{
+			"name": "rainbow_png",
+			"type": "image",
+			"url": "assets/other/rainbow.png"
+		},
+		{
+			"name": "snail_png",
+			"type": "image",
+			"url": "assets/other/snail.png"
+		},
+		{
+			"name": "tree_png",
+			"type": "image",
+			"url": "assets/other/tree.png"
+		},
+		{
+			"name": "sigh_png",
+			"type": "image",
+			"url": "assets/emoji/sigh.png"
+		},
+		{
+			"name": "female_png",
+			"type": "image",
+			"url": "assets/emoji/female.png"
+		},
+		{
+			"name": "male_png",
+			"type": "image",
+			"url": "assets/emoji/male.png"
+		},
+		{
+			"name": "leaf_png",
+			"type": "image",
+			"url": "assets/other/leaf.png"
+		},
+		{
+			"name": "body_png",
+			"type": "image",
+			"url": "assets/other/body.png"
+		},
+		{
+			"name": "equal_png",
+			"type": "image",
+			"url": "assets/emoji/equal.png"
+		},
+		{
+			"name": "paper_png",
+			"type": "image",
+			"url": "assets/emoji/paper.png"
+		},
+		{
+			"name": "rock_png",
+			"type": "image",
+			"url": "assets/emoji/rock.png"
+		},
+		{
+			"name": "scissors_png",
+			"type": "image",
+			"url": "assets/emoji/scissors.png"
+		},
+		{
+			"name": "welldone_png",
+			"type": "image",
+			"url": "assets/emoji/welldone.png"
+		},
+		{
+			"name": "worm_png",
+			"type": "image",
+			"url": "assets/animals/worm.png"
+		},
+		{
+			"name": "fruit12_png",
+			"type": "image",
+			"url": "assets/fruit/fruit12.png"
+		},
+		{
+			"name": "fruit11_png",
+			"type": "image",
+			"url": "assets/fruit/fruit11.png"
+		},
+		{
+			"name": "box_png",
+			"type": "image",
+			"url": "assets/other/box.png"
+		},
+		{
+			"name": "crystal_png",
+			"type": "image",
+			"url": "assets/other/crystal.png"
 		}
 	]
 }

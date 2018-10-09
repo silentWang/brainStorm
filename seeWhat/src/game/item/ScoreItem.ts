@@ -6,6 +6,7 @@ class ScoreItem extends egret.Sprite{
 
     private score = 0;
     private tarScore = 0;
+    private tarLose = 0;
     private scoreTxt:egret.TextField;
     private init(){
         this.scoreTxt = new egret.TextField();
@@ -18,6 +19,7 @@ class ScoreItem extends egret.Sprite{
         // this.scoreTxt.bold = true;
         this.addChild(this.scoreTxt);
         this.y = 30;
+        this.x = 30;
     }
     //目标分和当前分
     public setSTScore(score,tarScore?){
@@ -27,10 +29,17 @@ class ScoreItem extends egret.Sprite{
         }
         this.scoreTxt.text = `分数 ${this.score}  目标 ${this.tarScore}`;
     }
-    //分数
-    public setScore(score){
+    //目标损失和当前损失
+    public setSTLose(score,tarLose?){
         this.score = score;
-        this.scoreTxt.text = `分数 ${score}`;
+        if(tarLose){
+            this.tarLose = tarLose;
+        }
+        this.scoreTxt.text = `已用 ${this.score}  总数 ${this.tarLose}`;
+    }
+    //自定义模式
+    public setCustomText(str = ''){
+        this.scoreTxt.text = str;
     }
     //是否达成目标分
     public isCanPass(){

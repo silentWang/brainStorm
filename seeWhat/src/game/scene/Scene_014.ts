@@ -20,7 +20,7 @@ class Scene_014 extends BaseScene{
     }
     //选择水果
     private createFruit(){
-        let arr = ['apple_jpg','banana_jpg','cherry_jpg','grape_jpg','melon_jpg','orange_jpg','peach_jpg','pear_jpg','pineapple_jpg','pomegranate_jpg','strawberry_jpg','watermelon_jpg'];
+        let arr = ['fruit1_png','fruit2_png','fruit3_png','fruit4_png','fruit5_png','fruit6_png','fruit7_png','fruit8_png','fruit9_png','fruit10_png','fruit11_png','fruit12_png'];
         let len = arr.length;
         this.beforeContainer = new egret.Sprite();
         this.addChild(this.beforeContainer);
@@ -28,8 +28,8 @@ class Scene_014 extends BaseScene{
             let xx = 25 + 225*(i%3);
             let yy = 150 + 225*Math.floor(i/3);
             let bit = new egret.Bitmap(RES.getRes(arr[i]));
-            bit.width = 220;
-            bit.height = 220;
+            bit.width = 200;
+            bit.height = 200;
             bit.x = xx;
             bit.y = yy;
             bit.name = arr[i];
@@ -68,6 +68,8 @@ class Scene_014 extends BaseScene{
         this.addChild(this.picContainer);
 
         let bitmap = new egret.Bitmap(RES.getRes(res));
+        bitmap.width = 640;
+        bitmap.height = 640;
         let arr = [];
         for(let i = 0;i < 16;i++){
             arr.push(i);

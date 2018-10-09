@@ -69,7 +69,8 @@ class GameScene{
         let lvl = GameData.currentLevel;
         lvl++;
         GameData.currentLevel = lvl;
-        GameData.currentLevel = 38;
+        //only test
+        GameData.currentLevel = 42;
         Game.instance().gameView.guideView.show();
         this._menuScene.exit();
         this._overScene.exit();

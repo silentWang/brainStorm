@@ -31,11 +31,11 @@ class Scene_018 extends BaseScene{
         //木头
         this.rotatePoint = new egret.Point(SpriteUtil.stageCenterX,400);
         this.startPoint = new egret.Point(SpriteUtil.stageCenterX,640);
-        let image = SpriteUtil.createImage('wood_png');
+        let image = SpriteUtil.createImage('earth');
         image.x = this.rotatePoint.x;
         image.y = this.rotatePoint.y;
-        image.scaleX = 1.5;
-        image.scaleY = 1.5;
+        image.scaleX = 450/80;
+        image.scaleY = 450/80;
         this.addChild(image);
         this.dartSprite = image;
         //
@@ -71,7 +71,7 @@ class Scene_018 extends BaseScene{
             for(let knife of this.hadKnifesArr){
                 //如果度数差小于12 就说明插不进去
                 if(Math.abs(knife.angle - rotation) <= 12){
-                    egret.Tween.get(this.curKnife.sprite).to({y:SpriteUtil.stageHeight,rotation:360*(5*Math.random()+2)},500).call(()=>{
+                    egret.Tween.get(this.curKnife.sprite).to({y:SpriteUtil.stageHeight,rotation:360*(2*Math.random()+2)},3000).call(()=>{
                         egret.Tween.removeTweens(this.curKnife);
                         this.leftKnifesTxt.text = "";
                         this.timeItem.stop();
@@ -121,10 +121,11 @@ class Scene_018 extends BaseScene{
     }
     //创建刀
     private createKnifes(){
-        let kspr = SpriteUtil.createImage('knife_png');
+        let kspr = SpriteUtil.createImage('tree');
         kspr.x = SpriteUtil.stageCenterX;
-        kspr.y = SpriteUtil.stageCenterY + 300;
-        kspr.scaleY = 0.8;
+        kspr.y = SpriteUtil.stageCenterY + 330;
+        kspr.scaleX = 0.8;
+        kspr.scaleY = -1;
         kspr.touchEnabled = true;
         kspr.addEventListener(egret.TouchEvent.TOUCH_TAP,this.fireKnife,this);
         return kspr;

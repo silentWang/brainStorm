@@ -63,10 +63,22 @@ class SpriteUtil{
         return text;
     }
     //创建bitmap
-    static createImage(src:string){
-        let bitmap = new egret.Bitmap(RES.getRes(src));
+    static createImage(name:string,isBackground = false,backgroundColor = 0x1E90FF){
+        let bitmap = new egret.Bitmap(RES.getRes(`${name}_png`));
+        if(isBackground){
+            let sprite = new egret.Sprite();
+            sprite.graphics.beginFill(backgroundColor);
+            sprite.graphics.drawRect(0,0,bitmap.width,bitmap.height);
+            sprite.graphics.endFill();
+            sprite.addChild(bitmap);
+            sprite.anchorOffsetX = sprite.width/2;
+            sprite.anchorOffsetY = sprite.height/2;
+            sprite.touchEnabled = true;
+            return sprite;
+        }
         bitmap.anchorOffsetX = bitmap.width/2;
         bitmap.anchorOffsetY = bitmap.height/2;
+        bitmap.touchEnabled = true;
         return bitmap;
     }
     //create a button

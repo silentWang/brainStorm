@@ -40,8 +40,11 @@ class Scene_005 extends BaseScene{
         this.recycleArr = [];
         this.initAllItem();
 
-        let plySpr = SpriteUtil.createText('🙉',100);
-        this.player = Matter.Bodies.circle(SpriteUtil.stageCenterX,SpriteUtil.stageCenterY,plySpr.height/2,{
+        let plySpr = SpriteUtil.createImage('monkey');
+        let scale = 100/plySpr.width;
+        plySpr.scaleX = scale;
+        plySpr.scaleY = scale;
+        this.player = Matter.Bodies.circle(SpriteUtil.stageCenterX,SpriteUtil.stageCenterY,scale*(plySpr.height - 10)/2,{
             isStatic:true,
             collisionFilter:{
                 category:this.playerCategory
@@ -82,8 +85,8 @@ class Scene_005 extends BaseScene{
     private initAllItem(){
         this.recycleArr = [];
         this.fruitArr = [];
-        let arr1 = ['🍏','🍐','🍑','🍒','🍓','🍅','🍇','🍈','🍉','🍊','🍋','🍌','🍍'];
-        let arr2 = ['💩','🍖','🍗','🍬','🍔','🍕','🍩','🍡','⚽','🍭','🍟','💣','🔋'];
+        let arr1 = this.dataVo.sData;
+        let arr2 = this.dataVo.tData;
         let len1 = arr1.length;
         let len2 = arr2.length;
         let index = 0;
@@ -218,9 +221,9 @@ class Scene_005 extends BaseScene{
     }
 
     //create fruit
-    private createItem(cstr:string,name:string,sx:number = 0,sy:number = 0){
-        let item = SpriteUtil.createText(cstr,50);
-        let itemBody = Matter.Bodies.circle(sx,sy,item.height/2,{
+    private createItem(srs:string,name:string,sx:number = 0,sy:number = 0){
+        let item = SpriteUtil.createImage(srs);
+        let itemBody = Matter.Bodies.circle(sx,sy,(item.height - 20)/2,{
             name:name,
             frictionAir:0,
             collisionFilter:{

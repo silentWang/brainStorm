@@ -70,8 +70,11 @@ class Scene_003 extends BaseScene{
         Matter.World.add(world,enemy10);
         this.enemies = [enemy1,enemy2,enemy3,enemy4,enemy5,enemy6,enemy7,enemy8,enemy9,enemy10];
         //飞镖
-        let arrowspr1 = SpriteUtil.createText('🐙',50,0xff0000);
-        let arrow1 = Matter.Bodies.circle(100,300,arrowspr1.width/2,{
+        let arrowspr1 = SpriteUtil.createImage('insect');
+        let scale = 50/arrowspr1.width;
+        arrowspr1.scaleX = scale;
+        arrowspr1.scaleY = scale;
+        let arrow1 = Matter.Bodies.circle(100,300,scale*arrowspr1.width/2,{
             label:'Body_enemy',
             friction:0,
             frictionAir:0,
@@ -79,8 +82,10 @@ class Scene_003 extends BaseScene{
                 sprite:arrowspr1
             }
         },0);
-        let arrowspr2 = SpriteUtil.createText('🐙',50,0xff0000);
-        let arrow2 = Matter.Bodies.circle(SpriteUtil.stageWidth - 100,400,arrowspr2.width/2,{
+        let arrowspr2 = SpriteUtil.createImage('insect');
+        arrowspr2.scaleX = scale;
+        arrowspr2.scaleY = scale;
+        let arrow2 = Matter.Bodies.circle(SpriteUtil.stageWidth - 100,400,scale*arrowspr2.width/2,{
             label:'Body_enemy',
             friction:0,
             frictionAir:0,
