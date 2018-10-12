@@ -1,4 +1,4 @@
-//人性的游戏
+//色子游戏
 class Scene_010 extends BaseScene{
     constructor(){
         super();

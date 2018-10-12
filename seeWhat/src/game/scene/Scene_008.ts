@@ -9,15 +9,33 @@ class Scene_008 extends BaseScene{
     private animalsArr= CommonUtil.allAnimals.concat();
     private animalSpr;
     private emojiSpr;
+    private listSpr;
     private needCount = 0;
     private isOperating:boolean = false;
     private init(){
-        this.passArr = [];
+        this.listSpr = new egret.Sprite();
+        this.listSpr.x = 100;
+        this.listSpr.y = 250;
+        this.listSpr.visible = false;
+        this.addChild(this.listSpr);
+        for(let i = 0;i < this.animalsArr.length;i++){
+            let spr = SpriteUtil.createImage(this.animalsArr[i]);
+            spr.x = (i%5)*125;
+            spr.y = 125*Math.floor(i/5);
+            spr.touchEnabled = true;
+            spr.name = this.animalsArr[i];
+            spr.addEventListener(egret.TouchEvent.TOUCH_TAP,this.selectClk,this);
+            this.listSpr.addChild(spr);
+        }
+
         this.animalsArr.sort((a,b)=>{
             if(Math.random() > 0.5) return 1;
             if(Math.random() < 0.5) return -1;
             return 0;
         });
+        this.passArr = [];
+
+
 
         this.animalSpr = SpriteUtil.createImage(this.animalsArr[this.needCount]);
         this.animalSpr.y = SpriteUtil.stageCenterY - 100;
@@ -100,16 +118,7 @@ class Scene_008 extends BaseScene{
         emoji.y = text.y;
         this.addChild(emoji);
         this.addChild(text);
-
-        for(let i = 0;i < this.animalsArr.length;i++){
-            let spr = SpriteUtil.createImage(this.animalsArr[i]);
-            spr.x = 100 + (i%5)*125;
-            spr.y = 250 + 125*Math.floor(i/5);
-            spr.touchEnabled = true;
-            spr.addEventListener(egret.TouchEvent.TOUCH_TAP,this.selectClk,this);
-            this.addChild(spr);
-        }
-
+        this.listSpr.visible = true;
         this.timeItem = new TimeItem(this.dataVo.time);
         this.addChild(this.timeItem);
         this.timeItem.start();

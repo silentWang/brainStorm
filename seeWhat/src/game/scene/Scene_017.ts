@@ -75,10 +75,14 @@ class Scene_017 extends BaseScene{
             let len = this.boxArr.length;
             for(let i = 0;i < len;i++){
                 let bdy = this.boxArr[i];
-                if(bdy.position.y > SpriteUtil.stageHeight + 2*bdy.render.sprite.width && !bdy.isStatic){
+                if(bdy.position.y > SpriteUtil.stageHeight + 2*bdy.render.sprite.width && !bdy.isStatic && !bdy.isSensor){
                     bdy.speed = 0;
                     this.loseCnt++;
                     Matter.Body.setStatic(bdy,true);
+                    bdy.isSensor = true;
+                }
+                else{
+                    bdy.isSensor = false;
                 }
             }
             this.checkResult();
@@ -88,11 +92,6 @@ class Scene_017 extends BaseScene{
     private tapAddBox(evt){
         if(!this.isCanOperate) return;
         this.usedCnt++;
-        if(this.dataVo.score - this.loseCnt < this.usedCnt){
-            EffectUtil.showResultEffect();
-            this.isCanOperate = false;
-            return;
-        }
         this.isCanOperate = false;
         let idx = egret.setTimeout(()=>{
             egret.clearTimeout(idx);
@@ -116,6 +115,7 @@ class Scene_017 extends BaseScene{
                 Matter.Body.setVelocity(bdy,{x:0,y:0});
                 Matter.Body.setPosition(bdy,{x:xx,y:yy});
                 Matter.Body.set(bdy,'isSleeping',false);
+                bdy.isSensor = false;
                 return;
             }
         }
@@ -124,6 +124,8 @@ class Scene_017 extends BaseScene{
         let body = Matter.Bodies.rectangle(xx,yy,sprite.width,sprite.height,{
             frictionAir:0,
             friction:1,
+            isSensor:false,
+            mass:5,
             render:{
                 sprite:sprite
             }
@@ -155,10 +157,13 @@ class Scene_017 extends BaseScene{
                 EffectUtil.showResultEffect(EffectUtil.GOOD);
             }
         }
-        else if(this.dataVo.score - this.loseCnt < this.dataVo.tData){
-            this.isCanOperate = false;
-            this.destroy();
-            EffectUtil.showResultEffect();
+        else{
+            let leftcnt = this.dataVo.score - this.usedCnt;
+            if(leftcnt + this.usedCnt - this.loseCnt < this.dataVo.tData){
+                this.isCanOperate = false;
+                this.destroy();
+                EffectUtil.showResultEffect();
+            }
         }
     }
 

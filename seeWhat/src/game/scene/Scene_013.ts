@@ -5,13 +5,14 @@ class Scene_013 extends BaseScene{
         this.init();
     }
 
-    private nameArr = ["阿诺","爱因斯坦","牛顿","作者","憨豆","贝克汉姆","范冰冰","成龙","吴京"];
+    private nameArr = ["阿诺","爱因斯坦","牛顿","作者","憨豆","贝克汉姆","范冰冰","成龙","吴京","成龙"];
     private nameTxt:egret.TextField;
     private enemySpr;
     private currWinIndex = 0;
     private isOperating:boolean = false;
     private score = 0;
     private init(){
+        //sdata 规则物品  tdata 相应规则
         let len = this.dataVo.sData.length;
         let wid = (SpriteUtil.stageWidth - 100)/len;
         for(let i = 0;i < len;i++){
@@ -59,7 +60,12 @@ class Scene_013 extends BaseScene{
         this.nameTxt.text = str;
         this.nameTxt.x = SpriteUtil.stageCenterX - this.nameTxt.width;
         this.enemySpr.texture = RES.getRes(`${this.dataVo.sData[index]}_png`);
-        this.currWinIndex = index > 0 ? (index - 1)%len : len - 1;
+        if(!this.dataVo.tData || !this.dataVo.tData.length){
+            this.currWinIndex = index > 0 ? (index - 1)%len : len - 1;
+        }
+        else{
+            this.currWinIndex = this.dataVo.tData[index];
+        }
     }
 
     private playDoing(evt){

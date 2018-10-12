@@ -138,7 +138,7 @@ class Scene_005 extends BaseScene{
                     this.scoreItem.setSTScore(this.score);
                     if(this.scoreItem.isCanPass()){
                         this.destroy();
-                        EffectUtil.showResultEffect(EffectUtil.GOOD);
+                        EffectUtil.showResultEffect(EffectUtil.PERFECT);
                     }
                 }
                 else if(pair.bodyB.name == 'enemy'){
@@ -153,7 +153,7 @@ class Scene_005 extends BaseScene{
                     this.scoreItem.setSTScore(this.score);
                     if(this.scoreItem.isCanPass()){
                         this.destroy();
-                        EffectUtil.showResultEffect(EffectUtil.GOOD);
+                        EffectUtil.showResultEffect(EffectUtil.PERFECT);
                     }
                 }
                 else if(pair.bodyA.name == 'enemy'){
@@ -196,7 +196,13 @@ class Scene_005 extends BaseScene{
         if(len <= 0){
             if(this.recycleArr.length == 0){
                 this.destroy();
-                EventCenter.instance().dispatchEvent(new GameEvent(GameEvent.GOTO_NEXT));
+                if(this.scoreItem.isCanPass()){
+                    this.destroy();
+                    EffectUtil.showResultEffect(EffectUtil.PERFECT);
+                }
+                else{
+                    EffectUtil.showResultEffect();
+                }
                 return false;
             }
             return true;

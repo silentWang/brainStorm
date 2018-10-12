@@ -70,7 +70,7 @@ class GameScene{
         lvl++;
         GameData.currentLevel = lvl;
         //only test
-        GameData.currentLevel = 42;
+        GameData.currentLevel = 41;
         Game.instance().gameView.guideView.show();
         this._menuScene.exit();
         this._overScene.exit();

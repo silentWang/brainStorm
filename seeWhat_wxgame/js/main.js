@@ -494,7 +494,7 @@ var GameScene = (function () {
         lvl++;
         GameData.currentLevel = lvl;
         //only test
-        GameData.currentLevel = 42;
+        GameData.currentLevel = 41;
         Game.instance().gameView.guideView.show();
         this._menuScene.exit();
         this._overScene.exit();
@@ -1004,17 +1004,23 @@ var MenuScene = (function (_super) {
         logo.x = SpriteUtil.stageCenterX;
         logo.y = 120;
         this.addChild(logo);
-        var btn = SpriteUtil.createButton('开始');
-        btn.x = SpriteUtil.stageCenterX - btn.width / 2;
+        var btn = SpriteUtil.createImage('social');
+        btn.x = SpriteUtil.stageCenterX;
         btn.y = SpriteUtil.stageCenterY;
+        btn.scaleX = 2.2;
+        btn.scaleY = 2.2;
         this.addChild(btn);
         btn.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
             GameSound.instance().playSound('click');
             EventCenter.instance().dispatchEvent(new GameEvent(GameEvent.GOTO_NEXT));
         }, this);
-        var rankbtn = SpriteUtil.createText('排行榜', 40, 0xEEB422);
-        rankbtn.x = SpriteUtil.stageCenterX;
-        rankbtn.y = btn.y + 200;
+        //呼吸
+        egret.Tween.get(btn, { loop: true }).to({ scaleX: 2.4, scaleY: 2.4 }, 1500).to({ scaleX: 2.2, scaleY: 2.2 }, 1500);
+        var rankbtn = SpriteUtil.createImage('rank');
+        rankbtn.x = SpriteUtil.stageCenterX - 100;
+        rankbtn.y = btn.y + 250;
+        rankbtn.scaleX = 1.5;
+        rankbtn.scaleY = 1.5;
         this.addChild(rankbtn);
         rankbtn.touchEnabled = true;
         rankbtn.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
@@ -1023,6 +1029,18 @@ var MenuScene = (function (_super) {
             GameSound.instance().playSound('click');
             Game.instance().gameView.rankView.open();
         }, this);
+        var sharebtn = SpriteUtil.createImage('share');
+        sharebtn.x = SpriteUtil.stageCenterX + 100;
+        sharebtn.y = btn.y + 250;
+        sharebtn.scaleX = 1.5;
+        sharebtn.scaleY = 1.5;
+        this.addChild(sharebtn);
+        sharebtn.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+            if (!GameData.isWxGame)
+                return;
+            WXApi.shareAppMessage();
+        }, this);
+        this.gameClubBtn = WXApi.createGameClubButton();
     };
     MenuScene.prototype.enter = function () {
         _super.prototype.enter.call(this);
@@ -1032,6 +1050,11 @@ var MenuScene = (function (_super) {
             //由于没有服务器 暂时使用avatarUrl 标识用户
             openDatactx.postMessage({ command: 'cmd_openId', openId: GameData.wxUserInfo.avatarUrl });
         }
+        this.gameClubBtn.show();
+    };
+    MenuScene.prototype.exit = function () {
+        _super.prototype.exit.call(this);
+        this.gameClubBtn.hide();
     };
     return MenuScene;
 }(BaseScene));
@@ -1845,7 +1868,7 @@ var Scene_005 = (function (_super) {
                     this.scoreItem.setSTScore(this.score);
                     if (this.scoreItem.isCanPass()) {
                         this.destroy();
-                        EffectUtil.showResultEffect(EffectUtil.GOOD);
+                        EffectUtil.showResultEffect(EffectUtil.PERFECT);
                     }
                 }
                 else if (pair.bodyB.name == 'enemy') {
@@ -1860,7 +1883,7 @@ var Scene_005 = (function (_super) {
                     this.scoreItem.setSTScore(this.score);
                     if (this.scoreItem.isCanPass()) {
                         this.destroy();
-                        EffectUtil.showResultEffect(EffectUtil.GOOD);
+                        EffectUtil.showResultEffect(EffectUtil.PERFECT);
                     }
                 }
                 else if (pair.bodyA.name == 'enemy') {
@@ -1902,7 +1925,13 @@ var Scene_005 = (function (_super) {
         if (len <= 0) {
             if (this.recycleArr.length == 0) {
                 this.destroy();
-                EventCenter.instance().dispatchEvent(new GameEvent(GameEvent.GOTO_NEXT));
+                if (this.scoreItem.isCanPass()) {
+                    this.destroy();
+                    EffectUtil.showResultEffect(EffectUtil.PERFECT);
+                }
+                else {
+                    EffectUtil.showResultEffect();
+                }
                 return false;
             }
             return true;
@@ -2219,7 +2248,20 @@ var Scene_008 = (function (_super) {
         return _this;
     }
     Scene_008.prototype.init = function () {
-        this.passArr = [];
+        this.listSpr = new egret.Sprite();
+        this.listSpr.x = 100;
+        this.listSpr.y = 250;
+        this.listSpr.visible = false;
+        this.addChild(this.listSpr);
+        for (var i = 0; i < this.animalsArr.length; i++) {
+            var spr = SpriteUtil.createImage(this.animalsArr[i]);
+            spr.x = (i % 5) * 125;
+            spr.y = 125 * Math.floor(i / 5);
+            spr.touchEnabled = true;
+            spr.name = this.animalsArr[i];
+            spr.addEventListener(egret.TouchEvent.TOUCH_TAP, this.selectClk, this);
+            this.listSpr.addChild(spr);
+        }
         this.animalsArr.sort(function (a, b) {
             if (Math.random() > 0.5)
                 return 1;
@@ -2227,6 +2269,7 @@ var Scene_008 = (function (_super) {
                 return -1;
             return 0;
         });
+        this.passArr = [];
         this.animalSpr = SpriteUtil.createImage(this.animalsArr[this.needCount]);
         this.animalSpr.y = SpriteUtil.stageCenterY - 100;
         this.animalSpr.scaleX = 3;
@@ -2303,14 +2346,7 @@ var Scene_008 = (function (_super) {
         emoji.y = text.y;
         this.addChild(emoji);
         this.addChild(text);
-        for (var i = 0; i < this.animalsArr.length; i++) {
-            var spr = SpriteUtil.createImage(this.animalsArr[i]);
-            spr.x = 100 + (i % 5) * 125;
-            spr.y = 250 + 125 * Math.floor(i / 5);
-            spr.touchEnabled = true;
-            spr.addEventListener(egret.TouchEvent.TOUCH_TAP, this.selectClk, this);
-            this.addChild(spr);
-        }
+        this.listSpr.visible = true;
         this.timeItem = new TimeItem(this.dataVo.time);
         this.addChild(this.timeItem);
         this.timeItem.start();
@@ -2643,7 +2679,7 @@ var Scene_009 = (function (_super) {
     return Scene_009;
 }(BaseScene));
 __reflect(Scene_009.prototype, "Scene_009");
-//人性的游戏
+//色子游戏
 var Scene_010 = (function (_super) {
     __extends(Scene_010, _super);
     function Scene_010() {
@@ -3022,7 +3058,7 @@ var Scene_013 = (function (_super) {
     __extends(Scene_013, _super);
     function Scene_013() {
         var _this = _super.call(this) || this;
-        _this.nameArr = ["阿诺", "爱因斯坦", "牛顿", "作者", "憨豆", "贝克汉姆", "范冰冰", "成龙", "吴京"];
+        _this.nameArr = ["阿诺", "爱因斯坦", "牛顿", "作者", "憨豆", "贝克汉姆", "范冰冰", "成龙", "吴京", "成龙"];
         _this.currWinIndex = 0;
         _this.isOperating = false;
         _this.score = 0;
@@ -3030,6 +3066,7 @@ var Scene_013 = (function (_super) {
         return _this;
     }
     Scene_013.prototype.init = function () {
+        //sdata 规则物品  tdata 相应规则
         var len = this.dataVo.sData.length;
         var wid = (SpriteUtil.stageWidth - 100) / len;
         for (var i = 0; i < len; i++) {
@@ -3073,7 +3110,12 @@ var Scene_013 = (function (_super) {
         this.nameTxt.text = str;
         this.nameTxt.x = SpriteUtil.stageCenterX - this.nameTxt.width;
         this.enemySpr.texture = RES.getRes(this.dataVo.sData[index] + "_png");
-        this.currWinIndex = index > 0 ? (index - 1) % len : len - 1;
+        if (!this.dataVo.tData || !this.dataVo.tData.length) {
+            this.currWinIndex = index > 0 ? (index - 1) % len : len - 1;
+        }
+        else {
+            this.currWinIndex = this.dataVo.tData[index];
+        }
     };
     Scene_013.prototype.playDoing = function (evt) {
         if (this.isOperating)
@@ -3349,78 +3391,171 @@ var Scene_015 = (function (_super) {
     return Scene_015;
 }(BaseScene));
 __reflect(Scene_015.prototype, "Scene_015");
+//flappy bird
 var Scene_016 = (function (_super) {
     __extends(Scene_016, _super);
     function Scene_016() {
         var _this = _super.call(this) || this;
-        _this.pointArr = [];
-        _this.isBegin = false;
+        _this.wallspeed = 3;
+        _this.isCanOperate = true;
+        _this.score = 0;
+        _this.intervalId = 0;
         _this.init();
         return _this;
     }
     Scene_016.prototype.init = function () {
-        this.shape = new egret.Shape();
-        this.addChild(this.shape);
+        var _this = this;
+        //datavo time代表出现墙的频率 单位毫秒
         var shape = new egret.Shape();
-        shape.graphics.beginFill(0xff0000, 0.001);
+        shape.graphics.beginFill(0x00ff00, 0.01);
         shape.graphics.drawRect(0, 0, SpriteUtil.stageWidth, SpriteUtil.stageHeight);
         shape.graphics.endFill();
         this.addChild(shape);
-        this.touchEnabled = true;
-        this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.touchHandler, this);
-        this.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.touchHandler, this);
-        this.addEventListener(egret.TouchEvent.TOUCH_END, this.touchHandler, this);
-        this.player = SpriteUtil.createText(this.dataVo.sData, 48);
-        this.addChild(this.player);
-        this.player.visible = false;
-    };
-    Scene_016.prototype.touchHandler = function (evt) {
-        if (evt.type == egret.TouchEvent.TOUCH_BEGIN) {
-            this.isBegin = true;
-        }
-        else if (evt.type == egret.TouchEvent.TOUCH_MOVE) {
-            if (this.isBegin) {
-                var point = { x: evt['stageX'], y: evt['stageY'] };
-                this.shape.graphics.lineStyle(10, 0xff0000, 1);
-                this.shape.graphics.lineTo(point.x, point.y);
-                if (!this.lastPoint) {
-                    this.pointArr.push(point);
-                }
-                else {
-                    var mx = this.lastPoint.x - point.x;
-                    var my = this.lastPoint.y - point.y;
-                    var mid = Math.sqrt(mx * mx + my * my);
-                    if (mid > 10) {
-                        this.pointArr.push(point);
-                    }
-                }
-                this.lastPoint = point;
+        //初始画引擎部分
+        this.engine = Matter.Engine.create({ enableSleeping: false }, null);
+        this.runner = Matter.Runner.create(null);
+        this.runner.isFixed = true;
+        var render = EgretRender.create({
+            engine: this.engine,
+            container: this,
+            options: {
+                width: SpriteUtil.stageWidth,
+                height: SpriteUtil.stageHeight,
+                wireframes: true
             }
-        }
-        else if (evt.type == egret.TouchEvent.TOUCH_END) {
-            this.isBegin = false;
-            console.log(this.pointArr);
-            this.player.x = this.pointArr[0].x;
-            this.player.y = this.pointArr[0].y;
-            this.player.visible = true;
-            this.startFly();
-            this.shape.graphics.clear();
-        }
-    };
-    Scene_016.prototype.startFly = function () {
-        var _this = this;
-        var index = 1;
-        var len = this.pointArr.length;
-        var idx = egret.setInterval(function () {
-            if (index >= len) {
-                egret.clearInterval(idx);
+        });
+        Matter.Runner.run(this.runner, this.engine);
+        EgretRender.run(render);
+        this.engine.world.gravity.y = 1;
+        var bspr = SpriteUtil.createImage(this.dataVo.tData);
+        var body = Matter.Bodies.circle(SpriteUtil.stageCenterX, 500, bspr.height / 2, {
+            label: 'bird',
+            render: {
+                sprite: bspr
+            }
+        }, 0);
+        this.birdBody = body;
+        Matter.World.add(this.engine.world, body);
+        Matter.Events.on(this.engine, "collisionStart", this.collisionStart.bind(this));
+        this.touchEnabled = true;
+        this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.tapMakeBirdFly, this);
+        this.intervalId = egret.setInterval(function () {
+            _this.createAWall();
+        }, this, this.dataVo.time);
+        this.beforeUpdateFun = function () {
+            if (_this.birdBody.position.y >= SpriteUtil.stageHeight) {
+                _this.birdBody.isStatic = true;
+                _this.destroy();
+                _this.checkResult();
                 return;
             }
-            var point = _this.pointArr[index];
-            _this.player.x = point.x;
-            _this.player.y = point.y;
-            index++;
-        }, this, 40);
+            if (!_this.isCanOperate)
+                return;
+            if (!_this.wallArr || _this.wallArr.length == 0)
+                return;
+            for (var _i = 0, _a = _this.wallArr; _i < _a.length; _i++) {
+                var body_1 = _a[_i];
+                var body1 = body_1.body1;
+                var body2 = body_1.body2;
+                var xx = body1.position.x;
+                xx -= _this.wallspeed;
+                Matter.Body.setPosition(body1, { x: xx, y: body1.position.y });
+                Matter.Body.setPosition(body2, { x: xx, y: body2.position.y });
+            }
+        };
+        Matter.Events.on(this.engine, 'beforeUpdate', this.beforeUpdateFun);
+        this.scoreItem = new ScoreItem();
+        this.addChild(this.scoreItem);
+        this.scoreItem.setSTScore(this.score, this.dataVo.score);
+        this.createAWall();
+    };
+    Scene_016.prototype.collisionStart = function (evt) {
+        var pairs = evt.pairs;
+        for (var _i = 0, pairs_4 = pairs; _i < pairs_4.length; _i++) {
+            var pair = pairs_4[_i];
+            if (pair.bodyA.label == "bird" || pair.bodyB.label == "bird") {
+                this.isCanOperate = false;
+                this.checkResult();
+            }
+        }
+    };
+    Scene_016.prototype.tapMakeBirdFly = function (evt) {
+        if (!this.isCanOperate)
+            return;
+        Matter.Body.setVelocity(this.birdBody, { x: 0, y: -8 });
+    };
+    //创建墙壁
+    Scene_016.prototype.createAWall = function () {
+        if (!this.wallArr) {
+            this.wallArr = [];
+        }
+        var rand = this.score % 2 == 0 ? true : false;
+        var xx = SpriteUtil.stageWidth + 200;
+        var len = this.wallArr.length;
+        for (var i = len - 1; i >= 0; i--) {
+            var body1_1 = this.wallArr[i].body1;
+            var body2_1 = this.wallArr[i].body2;
+            if (body1_1.position.x <= -body1_1.render.sprite.width) {
+                Matter.World.remove(this.engine.world, [body1_1, body2_1], 0);
+                this.removeChild(body1_1.render.sprite);
+                this.removeChild(body2_1.render.sprite);
+                this.wallArr.splice(i, 1);
+                this.score++;
+                this.scoreItem.setSTScore(this.score);
+            }
+        }
+        var swid = 80 + 120 * Math.random();
+        var kspr1 = SpriteUtil.createRect(swid, 550, 0xffffff * Math.random());
+        var body1 = Matter.Bodies.rectangle(xx, 75 + 200 * Math.random(), kspr1.width, kspr1.height, {
+            label: 'wall',
+            isStatic: true,
+            render: {
+                sprite: kspr1
+            }
+        });
+        var kspr2 = SpriteUtil.createRect(swid, 550, 0xffffff * Math.random());
+        var body2 = Matter.Bodies.rectangle(xx, SpriteUtil.stageHeight - 75 - 200 * Math.random(), kspr2.width, kspr2.height, {
+            label: 'wall',
+            isStatic: true,
+            render: {
+                sprite: kspr2
+            }
+        });
+        this.wallArr.push({ body1: body1, body2: body2 });
+        Matter.World.add(this.engine.world, [body1, body2]);
+    };
+    Scene_016.prototype.checkResult = function () {
+        this.birdBody.isStatic = true;
+        this.destroy();
+        if (this.scoreItem.isCanPass()) {
+            var mid = this.score - this.dataVo.score;
+            if (mid >= 15) {
+                EffectUtil.showResultEffect(EffectUtil.PERFECT);
+            }
+            else if (mid >= 10) {
+                EffectUtil.showResultEffect(EffectUtil.GREAT);
+            }
+            else {
+                EffectUtil.showResultEffect(EffectUtil.GOOD);
+            }
+        }
+        else {
+            EffectUtil.showResultEffect();
+        }
+    };
+    Scene_016.prototype.destroy = function () {
+        this.isCanOperate = false;
+        egret.clearInterval(this.intervalId);
+        Matter.Runner.stop(this.runner);
+        EgretRender.stop();
+        Matter.Engine.clear(this.engine);
+        Matter.Events.off(this.engine, "collisionStart", this.collisionStart);
+        Matter.Events.off(this.engine, "beforeUpdate", this.beforeUpdateFun);
+        Matter.World.remove(this.engine.world, this.engine.world.bodies, 0);
+    };
+    Scene_016.prototype.exit = function () {
+        this.destroy();
+        _super.prototype.exit.call(this);
     };
     return Scene_016;
 }(BaseScene));
@@ -3493,10 +3628,14 @@ var Scene_017 = (function (_super) {
             var len = _this.boxArr.length;
             for (var i = 0; i < len; i++) {
                 var bdy = _this.boxArr[i];
-                if (bdy.position.y > SpriteUtil.stageHeight + 2 * bdy.render.sprite.width && !bdy.isStatic) {
+                if (bdy.position.y > SpriteUtil.stageHeight + 2 * bdy.render.sprite.width && !bdy.isStatic && !bdy.isSensor) {
                     bdy.speed = 0;
                     _this.loseCnt++;
                     Matter.Body.setStatic(bdy, true);
+                    bdy.isSensor = true;
+                }
+                else {
+                    bdy.isSensor = false;
                 }
             }
             _this.checkResult();
@@ -3507,11 +3646,6 @@ var Scene_017 = (function (_super) {
         if (!this.isCanOperate)
             return;
         this.usedCnt++;
-        if (this.dataVo.score - this.loseCnt < this.usedCnt) {
-            EffectUtil.showResultEffect();
-            this.isCanOperate = false;
-            return;
-        }
         this.isCanOperate = false;
         var idx = egret.setTimeout(function () {
             egret.clearTimeout(idx);
@@ -3534,6 +3668,7 @@ var Scene_017 = (function (_super) {
                 Matter.Body.setVelocity(bdy, { x: 0, y: 0 });
                 Matter.Body.setPosition(bdy, { x: xx, y: yy });
                 Matter.Body.set(bdy, 'isSleeping', false);
+                bdy.isSensor = false;
                 return;
             }
         }
@@ -3541,6 +3676,8 @@ var Scene_017 = (function (_super) {
         var body = Matter.Bodies.rectangle(xx, yy, sprite.width, sprite.height, {
             frictionAir: 0,
             friction: 1,
+            isSensor: false,
+            mass: 5,
             render: {
                 sprite: sprite
             }
@@ -3573,10 +3710,13 @@ var Scene_017 = (function (_super) {
                 EffectUtil.showResultEffect(EffectUtil.GOOD);
             }
         }
-        else if (this.dataVo.score - this.loseCnt < this.dataVo.tData) {
-            this.isCanOperate = false;
-            this.destroy();
-            EffectUtil.showResultEffect();
+        else {
+            var leftcnt = this.dataVo.score - this.usedCnt;
+            if (leftcnt + this.usedCnt - this.loseCnt < this.dataVo.tData) {
+                this.isCanOperate = false;
+                this.destroy();
+                EffectUtil.showResultEffect();
+            }
         }
     };
     Scene_017.prototype.refreshCnt = function () {
@@ -4042,9 +4182,9 @@ var WXApi = (function () {
                 width: 120,
                 height: 50,
                 backgroundColor: '#0000ff',
-                color: '#00ff00',
+                color: '#ffff00',
                 textAlign: 'center',
-                fontSize: 40,
+                fontSize: 48,
                 opacity: 1,
                 borderRadius: 10,
             }
@@ -4071,11 +4211,32 @@ var WXApi = (function () {
                 });
             } });
     };
+    //主动转发
+    WXApi.shareAppMessage = function () {
+        wx.shareAppMessage({
+            title: "有人@你，请你帮忙过了这一关！",
+            imageUrl: 'resource/assets/head.png',
+            query: ''
+        });
+    };
     //创建音频
     WXApi.createInnerAudioContext = function (url) {
         var audio = wx.createInnerAudioContext();
         audio.src = url;
         return audio;
+    };
+    //游戏圈
+    WXApi.createGameClubButton = function () {
+        var btn = wx.createGameClubButton({
+            icon: 'green',
+            style: {
+                left: 10,
+                top: 10,
+                width: 40,
+                height: 40
+            }
+        });
+        return btn;
     };
     //set user level
     //排行榜数据更新

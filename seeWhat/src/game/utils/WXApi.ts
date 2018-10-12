@@ -10,6 +10,7 @@ declare namespace wx {
     let setUserCloudStorage:Function;//用户缓存
     let getSystemInfoSync:Function;//
     let createInnerAudioContext:Function;//创建音频context
+    let createGameClubButton:Function;//创建游戏圈按钮
 }
 
 class WXApi{
@@ -53,9 +54,9 @@ class WXApi{
                 width: 120,
                 height: 50,
                 backgroundColor: '#0000ff',
-                color: '#00ff00',
+                color: '#ffff00',
                 textAlign: 'center',
-                fontSize: 40,
+                fontSize: 48,
                 opacity: 1,
                 borderRadius: 10,
             }
@@ -83,11 +84,32 @@ class WXApi{
             });
         }});
     }
+    //主动转发
+    static shareAppMessage(){
+        wx.shareAppMessage({
+            title:"有人@你，请你帮忙过了这一关！",
+            imageUrl:'resource/assets/head.png',
+            query:''
+        });
+    }
     //创建音频
     static createInnerAudioContext(url:string){
         let audio = wx.createInnerAudioContext();
         audio.src = url;
         return audio;
+    }
+    //游戏圈
+    static createGameClubButton(){
+        let btn = wx.createGameClubButton({
+            icon: 'green',
+            style: {
+                left: 10,
+                top: 10,
+                width: 40,
+                height: 40
+            }
+        });
+        return btn;
     }
     //set user level
     //排行榜数据更新

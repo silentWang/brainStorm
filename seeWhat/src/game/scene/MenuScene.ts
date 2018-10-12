@@ -5,6 +5,7 @@ class MenuScene extends BaseScene{
     }
 
     private isInitOpenDataCtx:boolean = false;
+    private gameClubBtn;
     private init(){
         let logo = new egret.Bitmap(RES.getRes("logo_png"));
         logo.anchorOffsetX = logo.width/2;
@@ -12,18 +13,24 @@ class MenuScene extends BaseScene{
         logo.y = 120;
         this.addChild(logo);
 
-        let btn = SpriteUtil.createButton('开始');
-        btn.x = SpriteUtil.stageCenterX - btn.width/2;
+        let btn = SpriteUtil.createImage('social');
+        btn.x = SpriteUtil.stageCenterX;
         btn.y = SpriteUtil.stageCenterY;
+        btn.scaleX = 2.2;
+        btn.scaleY = 2.2;
         this.addChild(btn);
         btn.addEventListener(egret.TouchEvent.TOUCH_TAP,()=>{
             GameSound.instance().playSound('click');
             EventCenter.instance().dispatchEvent(new GameEvent(GameEvent.GOTO_NEXT));
         },this);
+        //呼吸
+        egret.Tween.get(btn,{loop:true}).to({scaleX:2.4,scaleY:2.4},1500).to({scaleX:2.2,scaleY:2.2},1500);
 
-        let rankbtn = SpriteUtil.createText('排行榜',40,0xEEB422);
-        rankbtn.x = SpriteUtil.stageCenterX;
-        rankbtn.y = btn.y + 200;
+        let rankbtn = SpriteUtil.createImage('rank');
+        rankbtn.x = SpriteUtil.stageCenterX - 100;
+        rankbtn.y = btn.y + 250;
+        rankbtn.scaleX = 1.5;
+        rankbtn.scaleY = 1.5;
         this.addChild(rankbtn);
         rankbtn.touchEnabled = true;
         rankbtn.addEventListener(egret.TouchEvent.TOUCH_TAP,()=>{
@@ -31,6 +38,19 @@ class MenuScene extends BaseScene{
             GameSound.instance().playSound('click');
             Game.instance().gameView.rankView.open();
         },this);
+
+        let sharebtn = SpriteUtil.createImage('share');
+        sharebtn.x = SpriteUtil.stageCenterX + 100;
+        sharebtn.y = btn.y + 250;
+        sharebtn.scaleX = 1.5;
+        sharebtn.scaleY = 1.5;
+        this.addChild(sharebtn);
+        sharebtn.addEventListener(egret.TouchEvent.TOUCH_TAP,()=>{ 
+            if(!GameData.isWxGame) return;
+            WXApi.shareAppMessage();
+        },this);
+
+        this.gameClubBtn = WXApi.createGameClubButton();
     }
 
     enter(){
@@ -40,8 +60,12 @@ class MenuScene extends BaseScene{
             let openDatactx = platform['openDataContext'];
             //由于没有服务器 暂时使用avatarUrl 标识用户
             openDatactx.postMessage({command:'cmd_openId',openId:GameData.wxUserInfo.avatarUrl});
-
         }
+        this.gameClubBtn.show();
+    }
+    exit(){
+        super.exit();
+        this.gameClubBtn.hide();
     }
 
 }
