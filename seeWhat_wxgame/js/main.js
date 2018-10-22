@@ -95,168 +95,177 @@ var BaseView = (function (_super) {
     return BaseView;
 }(egret.Sprite));
 __reflect(BaseView.prototype, "BaseView");
-//看图 然后从图中找到这几张图
-var Scene_006 = (function (_super) {
-    __extends(Scene_006, _super);
-    function Scene_006() {
+//打小白鼠
+var Scene_007 = (function (_super) {
+    __extends(Scene_007, _super);
+    function Scene_007() {
         var _this = _super.call(this) || this;
+        _this.needNums = 0;
+        _this.score = 0;
         _this.isOperating = false;
         _this.init();
         return _this;
     }
-    Scene_006.prototype.init = function () {
-        this.timeItem = new TimeItem(30);
+    Scene_007.prototype.init = function () {
+        //时间和分数
+        this.timeItem = new TimeItem(this.dataVo.time);
         this.addChild(this.timeItem);
-        //修身 齐家 治国 平天下
-        var arr = this.dataVo.sData;
-        this.tarSprite = this.createPic(arr);
-        this.tarSprite.x = SpriteUtil.stageCenterX - this.tarSprite.width / 2;
-        this.tarSprite.y = SpriteUtil.stageCenterY - this.tarSprite.height / 2 - 100;
-        this.tarSprite.name = 'target_1';
-        this.addChild(this.tarSprite);
-        this.picSprs = [];
-        //创建其他图形
-        this.createRandomPic(arr, 2, 3);
-        this.createRandomPic(arr, 3, 4);
-        this.createRandomPic(arr, 2, 4);
-        this.createRandomPic(arr, 3, 5);
-        this.createRandomPic(arr, 5, 6);
-        this.createRandomPic(arr, 4, 7);
-        this.createRandomPic(arr, 5, 8);
-        this.createRandomPic(arr, 6, 7);
-        //这里的tdata代表展示图片的数量
-        var num = this.dataVo.tData;
-        var snum = this.dataVo.sData.length;
-        if (num == 16 && snum == 9) {
-            this.createRandomPic(arr, 1, 4);
-            this.createRandomPic(arr, 2, 6);
-            this.createRandomPic(arr, 0, 6);
-            this.createRandomPic(arr, 7, 3);
-            this.createRandomPic(arr, 5, 2);
-            this.createRandomPic(arr, 7, 4);
-            this.createRandomPic(arr, 0, 7);
-        }
-        else if (num == 16 && snum == 16) {
-            this.createRandomPic(arr, 9, 12);
-            this.createRandomPic(arr, 10, 14);
-            this.createRandomPic(arr, 8, 15);
-            this.createRandomPic(arr, 6, 11);
-            this.createRandomPic(arr, 7, 13);
-            this.createRandomPic(arr, 3, 12);
-            this.createRandomPic(arr, 4, 10);
+        this.scoreItem = new ScoreItem();
+        this.scoreItem.x = 50;
+        this.scoreItem.setSTScore(this.score, this.dataVo.score);
+        this.addChild(this.scoreItem);
+        this.timeItem.x = SpriteUtil.stageWidth - 300;
+        this.needNums = 1;
+        this.pointsArr = [];
+        for (var i = 0; i < 40; i++) {
+            var point = new egret.Point();
+            point.x = 90 + 140 * (i % 5);
+            point.y = 120 + 120 * Math.floor(i / 5);
+            this.pointsArr.push(point);
         }
     };
-    Scene_006.prototype.startGame = function () {
-        this.picSprs.push(this.tarSprite);
-        this.tarSprite.touchEnabled = true;
-        this.tarSprite.addEventListener(egret.TouchEvent.TOUCH_TAP, this.selectClk, this);
-        this.picSprs.sort(function (a, b) { return Math.random() > 0.5 ? 1 : -1; });
-        var num = this.dataVo.tData;
-        var cols = Math.sqrt(num);
-        var scale = (SpriteUtil.stageWidth - 50) / (this.tarSprite.width * cols);
-        var wid = scale * this.tarSprite.width;
-        var sprite = new egret.Sprite();
-        for (var i = 0; i < this.picSprs.length; i++) {
-            var xx = (i % cols) * (wid + 10);
-            var yy = 100 + (wid + 20) * Math.floor(i / cols);
-            this.picSprs[i].x = xx;
-            this.picSprs[i].y = yy;
-            sprite.addChild(this.picSprs[i]);
-            this.picSprs[i].scaleX = scale;
-            this.picSprs[i].scaleY = scale;
-        }
-        this.addChild(sprite);
-        sprite.x = SpriteUtil.stageCenterX - sprite.width / 2;
-        sprite.y = 100;
-    };
-    Scene_006.prototype.createRandomPic = function (sarr, index1, index2) {
-        if (sarr === void 0) { sarr = []; }
-        if (index1 === void 0) { index1 = 0; }
-        if (index2 === void 0) { index2 = 0; }
-        var arr = sarr.concat();
-        var temp = arr[index1];
-        arr[index1] = arr[index2];
-        arr[index2] = temp;
-        var spr = this.createPic(arr);
-        spr.addEventListener(egret.TouchEvent.TOUCH_TAP, this.selectClk, this);
-        spr.name = 'mistake';
-        spr.touchEnabled = true;
-        this.picSprs.push(spr);
-    };
-    Scene_006.prototype.selectClk = function (evt) {
-        if (this.isOperating)
-            return;
-        this.isOperating = true;
-        GameSound.instance().playSound('click');
-        var name = evt.target.name;
-        if (name == 'mistake') {
+    Scene_007.prototype.loop = function (time) {
+        if (time <= 0) {
+            this.isOperating = true;
             this.timeItem.stop();
-            EffectUtil.showResultEffect();
-            return;
-        }
-        if (!name || name.search('target_') < 0)
-            return;
-        var idx = parseInt(name.split('_')[1]);
-        var spr = evt.target;
-        spr.touchEnabled = false;
-        spr.parent.setChildIndex(spr, spr.parent.numChildren - 1);
-        var leftTime = this.timeItem.leftTime;
-        this.timeItem.stop();
-        egret.Tween.get(spr).to({ x: SpriteUtil.stageCenterX - spr.width * 0.5 / 2, y: 200, scaleX: 0.5, scaleY: 0.5 }, 800).call(function () {
-            if (leftTime >= 30) {
-                EffectUtil.showResultEffect(EffectUtil.PERFECT);
-            }
-            else if (leftTime >= 15) {
-                EffectUtil.showResultEffect(EffectUtil.GREAT);
+            if (this.scoreItem.isCanPass()) {
+                var score = this.score - this.dataVo.score;
+                if (score >= 10) {
+                    EffectUtil.showResultEffect(EffectUtil.PERFECT);
+                }
+                else if (score >= 5) {
+                    EffectUtil.showResultEffect(EffectUtil.GREAT);
+                }
+                else {
+                    EffectUtil.showResultEffect(EffectUtil.GOOD);
+                }
             }
             else {
-                EffectUtil.showResultEffect(EffectUtil.GOOD);
+                EffectUtil.showResultEffect();
             }
-        });
-    };
-    //创建图片
-    Scene_006.prototype.createPic = function (arr) {
-        var len = arr.length;
-        var cols = 3; //Math.sqrt(len);
-        var wid = (SpriteUtil.stageWidth - 120) / cols;
-        var sprite = new egret.Sprite();
-        for (var i = 0; i < len; i++) {
-            var item = SpriteUtil.createImage(arr[i]);
-            var scale = wid / item.width;
-            item.scaleX = scale;
-            item.scaleY = scale;
-            item.x = 10 + wid / 2 + (i % cols) * (wid + 10);
-            item.y = 10 + wid / 2 + (wid + 10) * Math.floor(i / cols);
-            item.touchEnabled = false;
-            sprite.addChild(item);
+            return;
         }
-        sprite.graphics.beginFill(0x707070);
-        sprite.graphics.drawRect(0, 0, sprite.width + 20, sprite.height + 20);
-        sprite.graphics.endFill();
-        return sprite;
+        if (time <= 8) {
+            this.needNums = 30;
+        }
+        else if (time <= 10) {
+            this.needNums = 20;
+        }
+        else if (time <= 20) {
+            this.needNums = 15;
+        }
+        else if (time <= 25) {
+            this.needNums = 10;
+        }
+        else {
+            this.needNums = 5;
+        }
     };
-    Scene_006.prototype.enter = function () {
+    Scene_007.prototype.showSprites = function (nums) {
+        var _this = this;
+        var num = 0;
+        var randnum = Math.floor(nums * Math.random());
+        var arr = this.getRandomPoints(nums);
+        var idx = egret.setInterval(function () {
+            if (_this.isOperating) {
+                egret.clearInterval(idx);
+                return;
+            }
+            var index = Math.floor(_this.dataVo.sData.length * Math.random());
+            if (num == randnum) {
+                index = 0;
+            }
+            var spr = _this.getPools(index);
+            spr.x = _this.pointsArr[arr[num]].x;
+            spr.y = _this.pointsArr[arr[num]].y;
+            num++;
+            if (num >= nums) {
+                egret.clearInterval(idx);
+                var xid_1 = egret.setTimeout(function () {
+                    egret.clearTimeout(xid_1);
+                    if (_this.isOperating)
+                        return;
+                    for (var _i = 0, _a = _this.pools; _i < _a.length; _i++) {
+                        var spr_1 = _a[_i];
+                        spr_1.visible = false;
+                    }
+                    _this.showSprites(_this.needNums);
+                }, _this, 1000);
+            }
+        }, this, 100);
+    };
+    //这个随机不同的逻辑写的不太好
+    Scene_007.prototype.getRandomPoints = function (nums) {
+        var arr = [];
+        while (arr.length < nums) {
+            var index = Math.floor(40 * Math.random());
+            if (arr.indexOf(index) < 0) {
+                arr.push(index);
+            }
+        }
+        return arr;
+    };
+    Scene_007.prototype.getPools = function (index) {
+        var _this = this;
+        if (index === void 0) { index = 0; }
+        var char = this.dataVo.sData[index];
+        var spr;
+        if (!this.pools) {
+            this.pools = [];
+        }
+        else {
+            for (var _i = 0, _a = this.pools; _i < _a.length; _i++) {
+                var item = _a[_i];
+                if (!item.visible) {
+                    spr = item;
+                    break;
+                }
+            }
+        }
+        if (!spr) {
+            spr = SpriteUtil.createImage(char);
+            this.pools.push(spr);
+            var scale = 100 / spr.width;
+            spr.scaleX = scale;
+            spr.scaleY = scale;
+            spr.addEventListener(egret.TouchEvent.TOUCH_TAP, function (evt) {
+                if (_this.isOperating)
+                    return;
+                GameSound.instance().playSound('click');
+                var spr = evt.target;
+                if (spr.name == _this.dataVo.tData) {
+                    spr.visible = false;
+                    _this.score++;
+                    _this.scoreItem.setSTScore(_this.score);
+                }
+                else {
+                    _this.timeItem.stop();
+                    _this.isOperating = true;
+                    EffectUtil.showResultEffect();
+                }
+            }, this);
+        }
+        else {
+            spr.texture = RES.getRes(char + "_png");
+            spr.visible = true;
+        }
+        spr.touchEnabled = true;
+        spr.name = char;
+        this.addChild(spr);
+        return spr;
+    };
+    Scene_007.prototype.enter = function () {
         _super.prototype.enter.call(this);
         this.timeItem.start(this.loop, this);
+        this.showSprites(this.needNums);
     };
-    Scene_006.prototype.exit = function () {
+    Scene_007.prototype.exit = function () {
         _super.prototype.exit.call(this);
         this.timeItem.stop();
-        for (var _i = 0, _a = this.picSprs; _i < _a.length; _i++) {
-            var pic = _a[_i];
-            pic.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.selectClk, this);
-        }
     };
-    Scene_006.prototype.loop = function (time) {
-        if (time <= 0) {
-            this.startGame();
-            this.timeItem.stop();
-            this.timeItem.restart(this.dataVo.time);
-        }
-    };
-    return Scene_006;
+    return Scene_007;
 }(BaseScene));
-__reflect(Scene_006.prototype, "Scene_006");
+__reflect(Scene_007.prototype, "Scene_007");
 //////////////////////////////////////////////////////////////////////////////////////
 //
 //  Copyright (c) 2014-present, Egret Technology.
@@ -426,6 +435,7 @@ var GameData = (function () {
     //主要用来测试和区分 微信小游戏 必须为true
     GameData.isWxGame = true;
     GameData.currentLevel = 0;
+    GameData.reviveCard = 3;
     return GameData;
 }());
 __reflect(GameData.prototype, "GameData");
@@ -457,6 +467,8 @@ var GameScene = (function () {
         this.allScenes['016'] = Scene_016;
         this.allScenes['017'] = Scene_017;
         this.allScenes['018'] = Scene_018;
+        this.allScenes['019'] = Scene_019;
+        this.allScenes['020'] = Scene_020;
         //添加事件
         this.addEvent();
     };
@@ -494,7 +506,7 @@ var GameScene = (function () {
         lvl++;
         GameData.currentLevel = lvl;
         //only test
-        GameData.currentLevel = 41;
+        // GameData.currentLevel = 48;
         Game.instance().gameView.guideView.show();
         this._menuScene.exit();
         this._overScene.exit();
@@ -574,6 +586,7 @@ var GameView = (function () {
     GameView.prototype.init = function () {
         this._guideView = new GuideView();
         this._rankView = new RankView();
+        this._tipsView = new TipsView();
     };
     Object.defineProperty(GameView.prototype, "guideView", {
         get: function () {
@@ -585,6 +598,13 @@ var GameView = (function () {
     Object.defineProperty(GameView.prototype, "rankView", {
         get: function () {
             return this._rankView;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(GameView.prototype, "tipsView", {
+        get: function () {
+            return this._tipsView;
         },
         enumerable: true,
         configurable: true
@@ -1014,8 +1034,7 @@ var MenuScene = (function (_super) {
             GameSound.instance().playSound('click');
             EventCenter.instance().dispatchEvent(new GameEvent(GameEvent.GOTO_NEXT));
         }, this);
-        //呼吸
-        egret.Tween.get(btn, { loop: true }).to({ scaleX: 2.4, scaleY: 2.4 }, 1500).to({ scaleX: 2.2, scaleY: 2.2 }, 1500);
+        this.startBtn = btn;
         var rankbtn = SpriteUtil.createImage('rank');
         rankbtn.x = SpriteUtil.stageCenterX - 100;
         rankbtn.y = btn.y + 250;
@@ -1051,10 +1070,14 @@ var MenuScene = (function (_super) {
             openDatactx.postMessage({ command: 'cmd_openId', openId: GameData.wxUserInfo.avatarUrl });
         }
         this.gameClubBtn.show();
+        egret.Tween.get(this.startBtn, { loop: true }).to({ scaleX: 2.4, scaleY: 2.4 }, 1500).to({ scaleX: 2.2, scaleY: 2.2 }, 1500);
     };
     MenuScene.prototype.exit = function () {
         _super.prototype.exit.call(this);
         this.gameClubBtn.hide();
+        egret.Tween.removeTweens(this.startBtn);
+        this.startBtn.scaleX = 2.2;
+        this.startBtn.scaleY = 2.2;
     };
     return MenuScene;
 }(BaseScene));
@@ -1070,7 +1093,7 @@ var OverScene = (function (_super) {
         var text = new egret.TextField();
         text.name = 'target_text';
         text.textAlign = 'center';
-        text.text = 'Game\nOver';
+        text.text = 'Game Over';
         text.size = 120;
         text.textColor = 0xFF0000;
         text.stroke = 1;
@@ -1079,6 +1102,7 @@ var OverScene = (function (_super) {
         text.width = SpriteUtil.stageWidth;
         text.y = SpriteUtil.stageHeight / 2 - 200;
         this.addChild(text);
+        text.scaleY = 2;
         var btn = SpriteUtil.createButton('回主页');
         btn.x = SpriteUtil.stageCenterX - btn.width / 2;
         btn.y = SpriteUtil.stageCenterY + 100;
@@ -1563,6 +1587,10 @@ var Scene_003 = (function (_super) {
     Scene_003.prototype.exit = function () {
         Matter.World.remove(this.engine.world, this.engine.world.bodies, 0);
         Matter.World.remove(this.engine.world, this.engine.world.constraints, 0);
+        Matter.Runner.stop(this.runner);
+        EgretRender.stop();
+        Matter.Engine.clear(this.engine);
+        Matter.Events.off(this.engine, 'collisionStart', this.collisionHandle);
         while (this.numChildren > 1) {
             var child = this.getChildAt(this.numChildren - 1);
             this.removeChild(child);
@@ -1633,7 +1661,7 @@ var Scene_004 = (function (_super) {
             this.maxTimes = 30;
         }
         else {
-            this.intervalTime = 150;
+            this.intervalTime = 170;
             this.maxTimes = 60;
         }
         this.playDrop();
@@ -1993,6 +2021,168 @@ var Scene_005 = (function (_super) {
     return Scene_005;
 }(BaseScene));
 __reflect(Scene_005.prototype, "Scene_005");
+//看图 然后从图中找到这几张图
+var Scene_006 = (function (_super) {
+    __extends(Scene_006, _super);
+    function Scene_006() {
+        var _this = _super.call(this) || this;
+        _this.isOperating = false;
+        _this.init();
+        return _this;
+    }
+    Scene_006.prototype.init = function () {
+        this.timeItem = new TimeItem(30);
+        this.addChild(this.timeItem);
+        //修身 齐家 治国 平天下
+        var arr = this.dataVo.sData;
+        this.tarSprite = this.createPic(arr);
+        this.tarSprite.x = SpriteUtil.stageCenterX - this.tarSprite.width / 2;
+        this.tarSprite.y = SpriteUtil.stageCenterY - this.tarSprite.height / 2 - 100;
+        this.tarSprite.name = 'target_1';
+        this.addChild(this.tarSprite);
+        this.picSprs = [];
+        //创建其他图形
+        this.createRandomPic(arr, 2, 3);
+        this.createRandomPic(arr, 3, 4);
+        this.createRandomPic(arr, 2, 4);
+        this.createRandomPic(arr, 3, 5);
+        this.createRandomPic(arr, 5, 6);
+        this.createRandomPic(arr, 4, 7);
+        this.createRandomPic(arr, 5, 8);
+        this.createRandomPic(arr, 6, 7);
+        //这里的tdata代表展示图片的数量
+        var num = this.dataVo.tData;
+        var snum = this.dataVo.sData.length;
+        if (num == 16 && snum == 9) {
+            this.createRandomPic(arr, 1, 4);
+            this.createRandomPic(arr, 2, 6);
+            this.createRandomPic(arr, 0, 6);
+            this.createRandomPic(arr, 7, 3);
+            this.createRandomPic(arr, 5, 2);
+            this.createRandomPic(arr, 7, 4);
+            this.createRandomPic(arr, 0, 7);
+        }
+        else if (num == 16 && snum == 16) {
+            this.createRandomPic(arr, 9, 12);
+            this.createRandomPic(arr, 10, 14);
+            this.createRandomPic(arr, 8, 15);
+            this.createRandomPic(arr, 6, 11);
+            this.createRandomPic(arr, 7, 13);
+            this.createRandomPic(arr, 3, 12);
+            this.createRandomPic(arr, 4, 10);
+        }
+    };
+    Scene_006.prototype.startGame = function () {
+        this.picSprs.push(this.tarSprite);
+        this.tarSprite.touchEnabled = true;
+        this.tarSprite.addEventListener(egret.TouchEvent.TOUCH_TAP, this.selectClk, this);
+        this.picSprs.sort(function (a, b) { return Math.random() > 0.5 ? 1 : -1; });
+        var num = this.dataVo.tData;
+        var cols = Math.sqrt(num);
+        var scale = (SpriteUtil.stageWidth - 50) / (this.tarSprite.width * cols);
+        var wid = scale * this.tarSprite.width;
+        var sprite = new egret.Sprite();
+        for (var i = 0; i < this.picSprs.length; i++) {
+            var xx = (i % cols) * (wid + 10);
+            var yy = 100 + (wid + 20) * Math.floor(i / cols);
+            this.picSprs[i].x = xx;
+            this.picSprs[i].y = yy;
+            sprite.addChild(this.picSprs[i]);
+            this.picSprs[i].scaleX = scale;
+            this.picSprs[i].scaleY = scale;
+        }
+        this.addChild(sprite);
+        sprite.x = SpriteUtil.stageCenterX - sprite.width / 2;
+        sprite.y = 100;
+    };
+    Scene_006.prototype.createRandomPic = function (sarr, index1, index2) {
+        if (sarr === void 0) { sarr = []; }
+        if (index1 === void 0) { index1 = 0; }
+        if (index2 === void 0) { index2 = 0; }
+        var arr = sarr.concat();
+        var temp = arr[index1];
+        arr[index1] = arr[index2];
+        arr[index2] = temp;
+        var spr = this.createPic(arr);
+        spr.addEventListener(egret.TouchEvent.TOUCH_TAP, this.selectClk, this);
+        spr.name = 'mistake';
+        spr.touchEnabled = true;
+        this.picSprs.push(spr);
+    };
+    Scene_006.prototype.selectClk = function (evt) {
+        if (this.isOperating)
+            return;
+        this.isOperating = true;
+        GameSound.instance().playSound('click');
+        var name = evt.target.name;
+        if (name == 'mistake') {
+            this.timeItem.stop();
+            EffectUtil.showResultEffect();
+            return;
+        }
+        if (!name || name.search('target_') < 0)
+            return;
+        var idx = parseInt(name.split('_')[1]);
+        var spr = evt.target;
+        spr.touchEnabled = false;
+        spr.parent.setChildIndex(spr, spr.parent.numChildren - 1);
+        var leftTime = this.timeItem.leftTime;
+        this.timeItem.stop();
+        egret.Tween.get(spr).to({ x: SpriteUtil.stageCenterX - spr.width * 0.5 / 2, y: 200, scaleX: 0.5, scaleY: 0.5 }, 800).call(function () {
+            if (leftTime >= 30) {
+                EffectUtil.showResultEffect(EffectUtil.PERFECT);
+            }
+            else if (leftTime >= 15) {
+                EffectUtil.showResultEffect(EffectUtil.GREAT);
+            }
+            else {
+                EffectUtil.showResultEffect(EffectUtil.GOOD);
+            }
+        });
+    };
+    //创建图片
+    Scene_006.prototype.createPic = function (arr) {
+        var len = arr.length;
+        var cols = 3; //Math.sqrt(len);
+        var wid = (SpriteUtil.stageWidth - 120) / cols;
+        var sprite = new egret.Sprite();
+        for (var i = 0; i < len; i++) {
+            var item = SpriteUtil.createImage(arr[i]);
+            var scale = wid / item.width;
+            item.scaleX = scale;
+            item.scaleY = scale;
+            item.x = 10 + wid / 2 + (i % cols) * (wid + 10);
+            item.y = 10 + wid / 2 + (wid + 10) * Math.floor(i / cols);
+            item.touchEnabled = false;
+            sprite.addChild(item);
+        }
+        sprite.graphics.beginFill(0x707070);
+        sprite.graphics.drawRect(0, 0, sprite.width + 20, sprite.height + 20);
+        sprite.graphics.endFill();
+        return sprite;
+    };
+    Scene_006.prototype.enter = function () {
+        _super.prototype.enter.call(this);
+        this.timeItem.start(this.loop, this);
+    };
+    Scene_006.prototype.exit = function () {
+        _super.prototype.exit.call(this);
+        this.timeItem.stop();
+        for (var _i = 0, _a = this.picSprs; _i < _a.length; _i++) {
+            var pic = _a[_i];
+            pic.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.selectClk, this);
+        }
+    };
+    Scene_006.prototype.loop = function (time) {
+        if (time <= 0) {
+            this.startGame();
+            this.timeItem.stop();
+            this.timeItem.restart(this.dataVo.time);
+        }
+    };
+    return Scene_006;
+}(BaseScene));
+__reflect(Scene_006.prototype, "Scene_006");
 /**
  * 框架分三层 bottom,middle,top
  * 可直接通过gamestage添加新层
@@ -2065,177 +2255,6 @@ var Game = (function () {
     return Game;
 }());
 __reflect(Game.prototype, "Game");
-//打小白鼠
-var Scene_007 = (function (_super) {
-    __extends(Scene_007, _super);
-    function Scene_007() {
-        var _this = _super.call(this) || this;
-        _this.needNums = 0;
-        _this.score = 0;
-        _this.isOperating = false;
-        _this.init();
-        return _this;
-    }
-    Scene_007.prototype.init = function () {
-        //时间和分数
-        this.timeItem = new TimeItem(this.dataVo.time);
-        this.addChild(this.timeItem);
-        this.scoreItem = new ScoreItem();
-        this.scoreItem.x = 50;
-        this.scoreItem.setSTScore(this.score, this.dataVo.score);
-        this.addChild(this.scoreItem);
-        this.timeItem.x = SpriteUtil.stageWidth - 300;
-        this.needNums = 1;
-        this.pointsArr = [];
-        for (var i = 0; i < 40; i++) {
-            var point = new egret.Point();
-            point.x = 90 + 140 * (i % 5);
-            point.y = 120 + 120 * Math.floor(i / 5);
-            this.pointsArr.push(point);
-        }
-    };
-    Scene_007.prototype.loop = function (time) {
-        if (time <= 0) {
-            this.isOperating = true;
-            this.timeItem.stop();
-            if (this.scoreItem.isCanPass()) {
-                var score = this.score - this.dataVo.score;
-                if (score >= 10) {
-                    EffectUtil.showResultEffect(EffectUtil.PERFECT);
-                }
-                else if (score >= 5) {
-                    EffectUtil.showResultEffect(EffectUtil.GREAT);
-                }
-                else {
-                    EffectUtil.showResultEffect(EffectUtil.GOOD);
-                }
-            }
-            else {
-                EffectUtil.showResultEffect();
-            }
-            return;
-        }
-        if (time <= 8) {
-            this.needNums = 30;
-        }
-        else if (time <= 10) {
-            this.needNums = 20;
-        }
-        else if (time <= 20) {
-            this.needNums = 15;
-        }
-        else if (time <= 25) {
-            this.needNums = 10;
-        }
-        else {
-            this.needNums = 5;
-        }
-    };
-    Scene_007.prototype.showSprites = function (nums) {
-        var _this = this;
-        var num = 0;
-        var randnum = Math.floor(nums * Math.random());
-        var arr = this.getRandomPoints(nums);
-        var idx = egret.setInterval(function () {
-            if (_this.isOperating) {
-                egret.clearInterval(idx);
-                return;
-            }
-            var index = Math.floor(_this.dataVo.sData.length * Math.random());
-            if (num == randnum) {
-                index = 0;
-            }
-            var spr = _this.getPools(index);
-            spr.x = _this.pointsArr[arr[num]].x;
-            spr.y = _this.pointsArr[arr[num]].y;
-            num++;
-            if (num >= nums) {
-                egret.clearInterval(idx);
-                var xid_1 = egret.setTimeout(function () {
-                    egret.clearTimeout(xid_1);
-                    if (_this.isOperating)
-                        return;
-                    for (var _i = 0, _a = _this.pools; _i < _a.length; _i++) {
-                        var spr_1 = _a[_i];
-                        spr_1.visible = false;
-                    }
-                    _this.showSprites(_this.needNums);
-                }, _this, 1000);
-            }
-        }, this, 100);
-    };
-    //这个随机不同的逻辑写的不太好
-    Scene_007.prototype.getRandomPoints = function (nums) {
-        var arr = [];
-        while (arr.length < nums) {
-            var index = Math.floor(40 * Math.random());
-            if (arr.indexOf(index) < 0) {
-                arr.push(index);
-            }
-        }
-        return arr;
-    };
-    Scene_007.prototype.getPools = function (index) {
-        var _this = this;
-        if (index === void 0) { index = 0; }
-        var char = this.dataVo.sData[index];
-        var spr;
-        if (!this.pools) {
-            this.pools = [];
-        }
-        else {
-            for (var _i = 0, _a = this.pools; _i < _a.length; _i++) {
-                var item = _a[_i];
-                if (!item.visible) {
-                    spr = item;
-                    break;
-                }
-            }
-        }
-        if (!spr) {
-            spr = SpriteUtil.createImage(char);
-            this.pools.push(spr);
-            var scale = 100 / spr.width;
-            spr.scaleX = scale;
-            spr.scaleY = scale;
-            spr.addEventListener(egret.TouchEvent.TOUCH_TAP, function (evt) {
-                if (_this.isOperating)
-                    return;
-                GameSound.instance().playSound('click');
-                var spr = evt.target;
-                if (spr.name == _this.dataVo.tData) {
-                    spr.visible = false;
-                    _this.score++;
-                    _this.scoreItem.setSTScore(_this.score);
-                }
-                else {
-                    _this.timeItem.stop();
-                    _this.isOperating = true;
-                    EffectUtil.showResultEffect();
-                }
-            }, this);
-        }
-        else {
-            spr.texture = RES.getRes(char + "_png");
-            spr.visible = true;
-        }
-        spr.touchEnabled = true;
-        spr.name = char;
-        this.addChild(spr);
-        return spr;
-    };
-    Scene_007.prototype.enter = function () {
-        _super.prototype.enter.call(this);
-        this.timeItem.start(this.loop, this);
-        this.showSprites(this.needNums);
-    };
-    Scene_007.prototype.exit = function () {
-        _super.prototype.exit.call(this);
-        this.timeItem.stop();
-    };
-    return Scene_007;
-}(BaseScene));
-__reflect(Scene_007.prototype, "Scene_007");
 //摸瞎 指星星的 
 var Scene_008 = (function (_super) {
     __extends(Scene_008, _super);
@@ -2687,17 +2706,15 @@ var Scene_010 = (function (_super) {
         //items 列条目
         _this.items = [];
         _this.curIndex = 0;
-        _this.isOperating = false;
+        _this.isCanOperate = true;
         _this.init();
         return _this;
     }
     Scene_010.prototype.init = function () {
         var config = GameData.getConfig("scene" + this.dataVo.levelType);
         this.items = config['items'];
-        this.toolsArr = this.dataVo.sData.split('、');
-        this.summingUpData = [];
         this.questionTxt = new egret.TextField();
-        this.questionTxt.size = 36;
+        this.questionTxt.size = 30;
         this.questionTxt.width = SpriteUtil.stageWidth - 120;
         this.questionTxt.textColor = 0xEE00EE;
         this.questionTxt.stroke = 2;
@@ -2709,16 +2726,15 @@ var Scene_010 = (function (_super) {
         this.questionTxt.anchorOffsetX = this.questionTxt.width / 2;
         this.questionTxt.anchorOffsetY = this.questionTxt.height / 2;
         this.questionTxt.x = SpriteUtil.stageCenterX;
-        this.questionTxt.y = 200;
+        this.questionTxt.y = 120;
         this.questionTxt.text = "麻烦透露下您的性别";
         this.addChild(this.questionTxt);
         this.btnsArr = [];
-        var len = this.toolsArr.length;
         var sprite = new egret.Sprite();
-        for (var i = 0; i < len; i++) {
-            var btn = this.createText('选项');
-            btn.x = 150 * (i % 4);
-            btn.y = Math.floor(i / 4) * 120;
+        for (var i = 0; i < 10; i++) {
+            var btn = this.createText('');
+            btn.x = 280 * (i % 2);
+            btn.y = Math.floor(i / 2) * 80;
             sprite.addChild(btn);
             this.btnsArr.push(btn);
             btn.name = "btn_" + i;
@@ -2728,29 +2744,41 @@ var Scene_010 = (function (_super) {
         sprite.x = SpriteUtil.stageCenterX - sprite.width / 2;
         sprite.y = 480;
         this.addChild(sprite);
+        this.optionSpr = sprite;
         this.timeItem = new TimeItem(this.dataVo.time);
         this.addChild(this.timeItem);
     };
     Scene_010.prototype.clkSwitch = function (evt) {
-        if (this.isOperating)
+        var _this = this;
+        if (!this.isCanOperate)
             return;
+        if (this.curIndex >= this.items.length - 1) {
+            Game.instance().gameScene.gotoMenu();
+            return;
+        }
         var target = evt.target;
         var name = target.name;
         if (!name || name.search('btn_') < 0)
             return;
         var idx = name.split('_')[1];
-        this.curIndex++;
-        if (this.curIndex >= this.items.length) {
-            console.log('结论');
+        var answer = this.items[this.curIndex].answer;
+        this.isCanOperate = false;
+        if (idx == answer) {
+            EffectUtil.showTextAndBack('✓', function () {
+                _this.curIndex++;
+                _this.nextItem();
+                _this.isCanOperate = true;
+            });
         }
         else {
-            this.nextItem();
+            this.timeItem.stop();
+            EffectUtil.showResultEffect();
         }
     };
     Scene_010.prototype.nextItem = function () {
-        var question = this.items[this.curIndex];
-        this.questionTxt.text = "\u261B " + question;
-        var ops = this.toolsArr;
+        var item = this.items[this.curIndex];
+        var ops = item.options;
+        this.questionTxt.text = "\u261B " + item.question;
         var len = this.btnsArr.length;
         for (var i = 0; i < len; i++) {
             if (ops[i]) {
@@ -2761,20 +2789,21 @@ var Scene_010 = (function (_super) {
                 this.btnsArr[i].visible = false;
             }
         }
+        this.optionSpr.y = this.questionTxt.y + this.questionTxt.height + 40;
     };
     Scene_010.prototype.createText = function (str) {
         if (str === void 0) { str = ""; }
         var text = new egret.TextField();
-        text.size = 36;
+        text.size = 32;
         text.text = str;
         text.textColor = 0x551A8B;
         text.textAlign = 'center';
         text.verticalAlign = 'middle';
-        text.width = 120;
-        text.height = 80;
+        text.width = 200;
+        text.height = 60;
         text.bold = true;
         text.background = true;
-        text.backgroundColor = 0x00ffff;
+        text.backgroundColor = 0x00E5EE;
         return text;
     };
     Scene_010.prototype.enter = function () {
@@ -3396,7 +3425,6 @@ var Scene_016 = (function (_super) {
     __extends(Scene_016, _super);
     function Scene_016() {
         var _this = _super.call(this) || this;
-        _this.wallspeed = 3;
         _this.isCanOperate = true;
         _this.score = 0;
         _this.intervalId = 0;
@@ -3405,7 +3433,7 @@ var Scene_016 = (function (_super) {
     }
     Scene_016.prototype.init = function () {
         var _this = this;
-        //datavo time代表出现墙的频率 单位毫秒
+        //datavo time代表出现墙的频率 单位毫秒   sdata表示player皮肤  tdata 速度
         var shape = new egret.Shape();
         shape.graphics.beginFill(0x00ff00, 0.01);
         shape.graphics.drawRect(0, 0, SpriteUtil.stageWidth, SpriteUtil.stageHeight);
@@ -3427,13 +3455,13 @@ var Scene_016 = (function (_super) {
         Matter.Runner.run(this.runner, this.engine);
         EgretRender.run(render);
         this.engine.world.gravity.y = 1;
-        var bspr = SpriteUtil.createImage(this.dataVo.tData);
-        var body = Matter.Bodies.circle(SpriteUtil.stageCenterX, 500, bspr.height / 2, {
+        var bspr = SpriteUtil.createImage(this.dataVo.sData);
+        var body = Matter.Bodies.rectangle(SpriteUtil.stageCenterX, 500, bspr.width - 20, bspr.height - 20, {
             label: 'bird',
             render: {
                 sprite: bspr
             }
-        }, 0);
+        });
         this.birdBody = body;
         Matter.World.add(this.engine.world, body);
         Matter.Events.on(this.engine, "collisionStart", this.collisionStart.bind(this));
@@ -3458,7 +3486,7 @@ var Scene_016 = (function (_super) {
                 var body1 = body_1.body1;
                 var body2 = body_1.body2;
                 var xx = body1.position.x;
-                xx -= _this.wallspeed;
+                xx -= _this.dataVo.tData;
                 Matter.Body.setPosition(body1, { x: xx, y: body1.position.y });
                 Matter.Body.setPosition(body2, { x: xx, y: body2.position.y });
             }
@@ -3482,6 +3510,7 @@ var Scene_016 = (function (_super) {
     Scene_016.prototype.tapMakeBirdFly = function (evt) {
         if (!this.isCanOperate)
             return;
+        GameSound.instance().playSound('click');
         Matter.Body.setVelocity(this.birdBody, { x: 0, y: -8 });
     };
     //创建墙壁
@@ -3604,8 +3633,10 @@ var Scene_017 = (function (_super) {
         box.y = 120;
         this.addChild(box);
         this.skyBox = box;
-        var bspr = SpriteUtil.createRect(360, 200, 0x000000);
-        var body = Matter.Bodies.rectangle(SpriteUtil.stageCenterX, SpriteUtil.stageHeight - 100, bspr.width, bspr.height, {
+        var brbc = '以热爱祖国为荣  以危害祖国为耻\n以服务人民为荣  以背离人民为耻\n以崇尚科学为荣  以愚昧无知为耻\n以辛勤劳动为荣  以好逸恶劳为耻\n以团结互助为荣  以损人利己为耻\n以诚实守信为荣  以见利忘义为耻\n以遵纪守法为荣  以违法乱纪为耻\n以艰苦奋斗为荣  以骄奢淫逸为耻';
+        // let bspr = SpriteUtil.createRect(360,200,0x000000);
+        var bspr = SpriteUtil.createText(brbc, 30, 0x00ff00, true);
+        var body = Matter.Bodies.rectangle(SpriteUtil.stageCenterX, SpriteUtil.stageHeight - bspr.height / 2, bspr.width, bspr.height, {
             isStatic: true,
             friction: 2,
             frictionStatic: 2,
@@ -3628,14 +3659,10 @@ var Scene_017 = (function (_super) {
             var len = _this.boxArr.length;
             for (var i = 0; i < len; i++) {
                 var bdy = _this.boxArr[i];
-                if (bdy.position.y > SpriteUtil.stageHeight + 2 * bdy.render.sprite.width && !bdy.isStatic && !bdy.isSensor) {
-                    bdy.speed = 0;
+                if (bdy.position.y > SpriteUtil.stageHeight + 2 * bdy.render.sprite.width && !bdy.isStatic) {
                     _this.loseCnt++;
                     Matter.Body.setStatic(bdy, true);
-                    bdy.isSensor = true;
-                }
-                else {
-                    bdy.isSensor = false;
+                    Matter.Body.setPosition(bdy, { x: -(200 + 800 * Math.random()), y: bdy.position.y });
                 }
             }
             _this.checkResult();
@@ -3645,8 +3672,14 @@ var Scene_017 = (function (_super) {
         var _this = this;
         if (!this.isCanOperate)
             return;
+        GameSound.instance().playSound('click');
         this.usedCnt++;
         this.isCanOperate = false;
+        if (this.usedCnt > this.dataVo.score) {
+            EffectUtil.showResultEffect();
+            return;
+        }
+        GameSound.instance().playSound('click');
         var idx = egret.setTimeout(function () {
             egret.clearTimeout(idx);
             _this.isCanOperate = true;
@@ -3661,22 +3694,20 @@ var Scene_017 = (function (_super) {
         var len = this.boxArr.length;
         for (var i = 0; i < len; i++) {
             var bdy = this.boxArr[i];
-            if (bdy.position.y > SpriteUtil.stageHeight + bdy.render.sprite.width / 2) {
+            if (bdy.position.y > SpriteUtil.stageHeight + bdy.render.sprite.width / 2 && bdy.position.x < -200) {
                 Matter.Body.setStatic(bdy, false);
                 Matter.Body.setAngle(bdy, 0);
                 Matter.Body.setAngularVelocity(bdy, 0);
                 Matter.Body.setVelocity(bdy, { x: 0, y: 0 });
                 Matter.Body.setPosition(bdy, { x: xx, y: yy });
                 Matter.Body.set(bdy, 'isSleeping', false);
-                bdy.isSensor = false;
                 return;
             }
         }
         var sprite = SpriteUtil.createImage(this.dataVo.sData);
         var body = Matter.Bodies.rectangle(xx, yy, sprite.width, sprite.height, {
-            frictionAir: 0,
+            frictionAir: 0.001,
             friction: 1,
-            isSensor: false,
             mass: 5,
             render: {
                 sprite: sprite
@@ -3809,6 +3840,7 @@ var Scene_018 = (function (_super) {
     };
     Scene_018.prototype.fireKnife = function (evt) {
         var _this = this;
+        GameSound.instance().playSound('click');
         this.curKnife.sprite.touchEnabled = false;
         egret.Tween.get(this.curKnife.sprite).to({ y: this.startPoint.y }, 200, egret.Ease.cubicIn).call(function () {
             egret.Tween.removeTweens(_this.curKnife.sprite);
@@ -3886,6 +3918,594 @@ var Scene_018 = (function (_super) {
     return Scene_018;
 }(BaseScene));
 __reflect(Scene_018.prototype, "Scene_018");
+//移动箱子消除
+var Scene_019 = (function (_super) {
+    __extends(Scene_019, _super);
+    function Scene_019() {
+        var _this = _super.call(this) || this;
+        _this.allBoxDataArr = [];
+        _this.curSelectIndex = -1;
+        _this.isCanOperate = true;
+        _this.stepNums = 0;
+        //列 行
+        _this.ROWS = 10;
+        _this.COLUMNS = 8;
+        _this.init();
+        return _this;
+    }
+    Scene_019.prototype.init = function () {
+        var _this = this;
+        //游戏共8*10个格子  
+        //算法思想 a、首先记录交换的两个箱子的index ->> b、交换index ->> c、对每一个index查找与其相邻的横竖格子是否有相同类型的箱子 
+        // ->> d、有则保存到一个临时数组 ->> e、如果临时数组长度大于3则可消除 ->> f、记录消除后这些箱子上方需要下落的箱子的索引 ->> 回到c直到查找的数组为空 则停止
+        var arr = [];
+        var sprite = new egret.Sprite();
+        for (var i = 0; i < this.COLUMNS * this.ROWS; i++) {
+            var img = SpriteUtil.createImage('box');
+            img.anchorOffsetX = 0;
+            img.anchorOffsetY = 0;
+            img.touchEnabled = false;
+            var shape = new egret.Shape();
+            shape.graphics.lineStyle(2, 0x0000ff, 1);
+            shape.graphics.moveTo(0, 0);
+            shape.graphics.lineTo(img.width, 0);
+            shape.graphics.lineTo(img.width, img.height);
+            shape.graphics.lineTo(0, img.height);
+            shape.graphics.lineTo(0, 0);
+            shape.visible = false;
+            var spr = new egret.Sprite();
+            spr.name = this.dataVo.sData[0] + '_' + i;
+            spr.x = (img.width + 2) * (i % this.COLUMNS);
+            spr.y = (img.width + 2) * Math.floor(i / this.COLUMNS);
+            spr.addChild(img);
+            spr.addChild(shape);
+            sprite.addChild(spr);
+            spr.touchEnabled = true;
+            spr.addEventListener(egret.TouchEvent.TOUCH_TAP, this.tapExchange, this);
+            arr.push({ index: i, box: spr });
+        }
+        sprite.x = SpriteUtil.stageCenterX - sprite.width / 2;
+        sprite.y = 200;
+        this.addChild(sprite);
+        this.allBoxDataArr = arr;
+        var rect = SpriteUtil.createRect(SpriteUtil.stageWidth, SpriteUtil.stageHeight - sprite.height - sprite.y, 0x000000);
+        rect.anchorOffsetX = 0;
+        rect.anchorOffsetY = 0;
+        rect.y = sprite.y + sprite.height;
+        this.addChild(rect);
+        var btn = SpriteUtil.createButton("重置", 160, 80, 0x0000ff, 36);
+        btn.x = SpriteUtil.stageCenterX - btn.width / 2;
+        btn.y = SpriteUtil.stageHeight - 200;
+        this.addChild(btn);
+        btn.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+            if (!_this.isCanOperate)
+                return;
+            _this.createList();
+        }, this);
+        this.scoreItem = new ScoreItem();
+        this.addChild(this.scoreItem);
+        this.createList();
+    };
+    Scene_019.prototype.createList = function () {
+        for (var _i = 0, _a = this.allBoxDataArr; _i < _a.length; _i++) {
+            var bda = _a[_i];
+            bda.box.visible = false;
+        }
+        for (var i = 0; i < this.dataVo.sData.length; i++) {
+            var config = this.dataVo.sData[i];
+            var box = this.allBoxDataArr[config.index].box;
+            box.getChildAt(0).texture = RES.getRes(config.box + "_png");
+            box.visible = true;
+            box.name = config.box + "_" + config.index;
+        }
+        this.stepNums = this.dataVo.tData;
+        this.scoreItem.setCustomText("\u5269\u4F59\u6B65\u6570  " + this.stepNums);
+    };
+    Scene_019.prototype.tapExchange = function (evt) {
+        if (!this.isCanOperate)
+            return;
+        GameSound.instance().playSound('click');
+        var spr = evt.target;
+        var index = spr.name.split('_')[1];
+        spr.getChildAt(1).visible = true;
+        if (this.curSelectIndex == -1) {
+            this.curSelectIndex = index;
+            return;
+        }
+        if (this.curSelectIndex == index) {
+            return;
+        }
+        if (this.isNextTo(this.curSelectIndex, index)) {
+            this.isCanOperate = false;
+            this.stepNums--;
+            this.scoreItem.setCustomText("\u5269\u4F59\u6B65\u6570  " + this.stepNums);
+            this.exchangeBox(this.curSelectIndex, index);
+            this.refreshPos([this.curSelectIndex, index]);
+        }
+        else {
+            var box = this.allBoxDataArr[this.curSelectIndex].box;
+            box.getChildAt(1).visible = false;
+            this.curSelectIndex = index;
+        }
+    };
+    //消除需要横向和纵向
+    Scene_019.prototype.checkResult = function (indexArr) {
+        // this.isCanOperate = true;
+        // this.curSelectIndex = -1;
+        // return;
+        var arr = [];
+        for (var i = 0; i < indexArr.length; i++) {
+            var arr1 = this.getClearRowNums(indexArr[i]);
+            var arr2 = this.getClearColNums(indexArr[i]);
+            if (arr1.length >= 3) {
+                arr = arr.concat(arr1);
+            }
+            if (arr2.length >= 3) {
+                arr = arr.concat(arr2);
+            }
+        }
+        if (arr.length == 0) {
+            if (this.isCanPass()) {
+                EffectUtil.showResultEffect(EffectUtil.PERFECT);
+            }
+            else if (this.stepNums <= 0) {
+                this.isCanOperate = false;
+                EffectUtil.showResultEffect();
+            }
+            else {
+                this.isCanOperate = true;
+                this.curSelectIndex = -1;
+            }
+            return;
+        }
+        //同时移除
+        for (var _i = 0, arr_1 = arr; _i < arr_1.length; _i++) {
+            var index = arr_1[_i];
+            this.allBoxDataArr[index].box.visible = false;
+        }
+        //刷新所有位置
+        this.refreshAll(arr);
+    };
+    //行
+    Scene_019.prototype.getClearRowNums = function (index) {
+        var row = Math.floor(index / this.COLUMNS);
+        var tindex = index % this.COLUMNS;
+        var box = this.allBoxDataArr[index].box;
+        var type = box.name.split('_')[0];
+        var arr = [];
+        for (var i = tindex; i >= 0; i--) {
+            var sindex = i + row * this.COLUMNS;
+            var sbox = this.allBoxDataArr[sindex].box;
+            if (sbox.name.split('_')[0] == type && sbox.visible) {
+                arr.push(sindex);
+            }
+            else {
+                break;
+            }
+        }
+        for (var i = tindex + 1; i < this.COLUMNS; i++) {
+            var sindex = i + row * this.COLUMNS;
+            var tbox = this.allBoxDataArr[sindex].box;
+            if (tbox.name.split('_')[0] == type && tbox.visible) {
+                arr.push(sindex);
+            }
+            else {
+                break;
+            }
+        }
+        return arr;
+    };
+    //列
+    Scene_019.prototype.getClearColNums = function (index) {
+        var rows = Math.floor(index / this.COLUMNS);
+        var cols = index % this.COLUMNS;
+        var box = this.allBoxDataArr[index].box;
+        var type = box.name.split('_')[0];
+        var arr = [];
+        for (var i = rows; i >= 0; i--) {
+            var sindex = i * this.COLUMNS + cols;
+            var sbox = this.allBoxDataArr[sindex].box;
+            if (sbox.name.split('_')[0] == type && sbox.visible) {
+                arr.push(sindex);
+            }
+            else {
+                break;
+            }
+        }
+        for (var i = rows + 1; i < 10; i++) {
+            var sindex = i * this.COLUMNS + cols;
+            var tbox = this.allBoxDataArr[sindex].box;
+            if (tbox.name.split('_')[0] == type && tbox.visible) {
+                arr.push(sindex);
+            }
+            else {
+                break;
+            }
+        }
+        return arr;
+    };
+    //判断两个index是否是左右上下相邻的
+    Scene_019.prototype.isNextTo = function (index1, index2) {
+        if (Math.abs(index1 - index2) == 1)
+            return true;
+        if (Math.abs(index1 - index2) == this.COLUMNS)
+            return true;
+        return false;
+    };
+    //是否全部消除
+    Scene_019.prototype.isCanPass = function () {
+        for (var _i = 0, _a = this.allBoxDataArr; _i < _a.length; _i++) {
+            var boxData = _a[_i];
+            if (boxData.box.visible) {
+                return false;
+            }
+        }
+        return true;
+    };
+    //交换两个箱子  注意index也要交换
+    Scene_019.prototype.exchangeBox = function (index1, index2) {
+        var index = this.allBoxDataArr[index1].index;
+        this.allBoxDataArr[index1].index = this.allBoxDataArr[index2].index;
+        this.allBoxDataArr[index2].index = index;
+        var boxData = this.allBoxDataArr[index1];
+        this.allBoxDataArr[index1] = this.allBoxDataArr[index2];
+        this.allBoxDataArr[index2] = boxData;
+    };
+    //刷新位置
+    Scene_019.prototype.refreshPos = function (arr) {
+        var _this = this;
+        var _loop_1 = function (i) {
+            var box = this_1.allBoxDataArr[arr[i]].box;
+            var index = this_1.allBoxDataArr[arr[i]].index;
+            var name_1 = box.name;
+            box.name = name_1.split('_')[0] + '_' + index;
+            box.getChildAt(1).visible = false;
+            egret.Tween.get(box).to({ x: (box.getChildAt(0).width + 2) * (index % this_1.COLUMNS), y: (box.getChildAt(0).width + 2) * Math.floor(index / this_1.COLUMNS) }, 250).call(function () {
+                egret.Tween.removeTweens(box);
+                if (i == arr.length - 1) {
+                    var idx_2 = egret.setTimeout(function () {
+                        egret.clearTimeout(idx_2);
+                        _this.checkResult(arr);
+                    }, _this, 500);
+                }
+            }, this_1);
+        };
+        var this_1 = this;
+        for (var i = 0; i < arr.length; i++) {
+            _loop_1(i);
+        }
+    };
+    //更新所有位置 visible=false的直接删除  从下向上排列
+    Scene_019.prototype.refreshAll = function (arr) {
+        var _this = this;
+        var len = this.allBoxDataArr.length;
+        for (var i = len - 1; i >= 0; i--) {
+            var box = this.allBoxDataArr[i].box;
+            if (!box.visible) {
+                var rows = Math.floor(i / this.COLUMNS);
+                var cols = i % this.COLUMNS;
+                for (var j = rows - 1; j >= 0; j--) {
+                    if (this.allBoxDataArr[j * this.COLUMNS + cols].box.visible) {
+                        this.exchangeBox(j * this.COLUMNS + cols, i);
+                        arr.push(j * this.COLUMNS + cols);
+                        break;
+                    }
+                }
+            }
+        }
+        len = this.allBoxDataArr.length;
+        var _loop_2 = function (i) {
+            var box = this_2.allBoxDataArr[i].box;
+            var index = this_2.allBoxDataArr[i].index;
+            var name_2 = box.name;
+            box.name = name_2.split('_')[0] + '_' + index;
+            egret.Tween.get(box).to({ x: (box.getChildAt(0).width + 2) * (index % this_2.COLUMNS), y: (box.getChildAt(0).width + 2) * Math.floor(index / this_2.COLUMNS) }, 250).call(function () {
+                egret.Tween.removeTweens(box);
+                if (i == 0 && arr.length > 0) {
+                    var idx_3 = egret.setTimeout(function () {
+                        egret.clearTimeout(idx_3);
+                        _this.checkResult(arr);
+                    }, _this, 300);
+                }
+            }, this_2);
+        };
+        var this_2 = this;
+        for (var i = len - 1; i >= 0; i--) {
+            _loop_2(i);
+        }
+    };
+    return Scene_019;
+}(BaseScene));
+__reflect(Scene_019.prototype, "Scene_019");
+//点击次数
+var Scene_020 = (function (_super) {
+    __extends(Scene_020, _super);
+    function Scene_020() {
+        var _this = _super.call(this) || this;
+        //二维数组 存储三个palyer的路径
+        _this.roadAllArr = [];
+        //三个player 对应的阶段
+        _this.leftIndex = 0;
+        _this.rightIndex = 0;
+        _this.ownIndex = 0;
+        _this.diceArr = [];
+        _this.isRunning = false;
+        _this.intervalId = 0;
+        _this.isCanOperate = true;
+        _this.init();
+        return _this;
+    }
+    Scene_020.prototype.init = function () {
+        var shape = new egret.Shape();
+        shape.graphics.beginFill(0x000000, 0.1);
+        shape.graphics.lineStyle(30, 0x8B7765);
+        shape.graphics.drawRect(0, 0, 250, 250);
+        shape.anchorOffsetX = shape.width / 2;
+        shape.anchorOffsetY = shape.height / 2;
+        shape.x = SpriteUtil.stageCenterX + 15;
+        shape.y = SpriteUtil.stageCenterY - 100;
+        this.addChild(shape);
+        var lspr = this.createLeftCastle();
+        lspr.x = 115;
+        lspr.y = SpriteUtil.stageCenterY - 110;
+        this.addChild(lspr);
+        var rspr = this.createRightCastle();
+        rspr.x = SpriteUtil.stageCenterX + 130;
+        rspr.y = lspr.y;
+        this.addChild(rspr);
+        var mspr = this.createMiddleCastle();
+        mspr.x = SpriteUtil.stageCenterX;
+        mspr.y = lspr.y + 120;
+        this.addChild(mspr);
+        var kp1 = SpriteUtil.createText(this.dataVo.sData[4], 60, 0x00ff00, true);
+        kp1.x = shape.x - shape.width / 2;
+        kp1.y = shape.y - shape.height / 2;
+        this.addChild(kp1);
+        var kp2 = SpriteUtil.createText(this.dataVo.sData[5], 60, 0x00ff00, true);
+        kp2.x = shape.x - 15;
+        kp2.y = shape.y - shape.height / 2;
+        this.addChild(kp2);
+        var kp3 = SpriteUtil.createText(this.dataVo.sData[6], 60, 0x00ff00, true);
+        kp3.x = shape.x + shape.width / 2 - 30;
+        kp3.y = shape.y - shape.height / 2;
+        this.addChild(kp3);
+        var kp4 = SpriteUtil.createText(this.dataVo.sData[7], 60, 0x00ff00, true);
+        kp4.x = shape.x + shape.width / 2 - 30;
+        kp4.y = shape.y + shape.height / 2 - 30;
+        this.addChild(kp4);
+        var kp5 = SpriteUtil.createText(this.dataVo.sData[8], 60, 0x00ff00, true);
+        kp5.x = shape.x - shape.width / 2;
+        kp5.y = shape.y + shape.height / 2 - 30;
+        this.addChild(kp5);
+        var kp6 = SpriteUtil.createText(this.dataVo.sData[9], 60, 0x00ff00, true);
+        kp6.x = shape.x - 15;
+        kp6.y = shape.y - 10;
+        this.addChild(kp6);
+        var kp7 = SpriteUtil.createText(this.dataVo.sData[10], 60, 0x00ff00, true);
+        kp7.x = shape.x - 15;
+        kp7.y = SpriteUtil.stageCenterY - shape.height / 2 - 200;
+        this.addChild(kp7);
+        var kp8 = SpriteUtil.createText(this.dataVo.sData[11], 60, 0x00ff00, true);
+        kp8.x = shape.x - 15;
+        kp8.y = SpriteUtil.stageCenterY - shape.height / 2 - 300;
+        this.addChild(kp8);
+        var pyramid = SpriteUtil.createImage('pyramid');
+        pyramid.x = SpriteUtil.stageCenterX;
+        pyramid.y = SpriteUtil.stageCenterY - shape.height / 2 - 400;
+        this.addChild(pyramid);
+        var pshp = SpriteUtil.createRect(30, 400, 0xFFD7000);
+        pshp.anchorOffsetY = 0;
+        pshp.x = shape.x - 15;
+        pshp.y = pyramid.y + 20;
+        this.addChildAt(pshp, 1);
+        this.roadAllArr[0] = this.storagePoint(lspr);
+        this.roadAllArr[1] = this.storagePoint(mspr);
+        this.roadAllArr[2] = this.storagePoint(rspr);
+        this.roadAllArr[0] = this.roadAllArr[0].concat([{ x: kp5.x, y: kp5.y }, { x: kp4.x, y: kp4.y }, { x: kp3.x, y: kp3.y }, { x: kp2.x, y: kp2.y }, { x: kp1.x, y: kp1.y }]);
+        this.roadAllArr[1] = this.roadAllArr[1].concat([{ x: kp4.x, y: kp4.y }, { x: kp3.x, y: kp3.y }, { x: kp2.x, y: kp2.y }, { x: kp1.x, y: kp1.y }, { x: kp5.x, y: kp5.y }]);
+        this.roadAllArr[2] = this.roadAllArr[2].concat([{ x: kp3.x, y: kp3.y }, { x: kp2.x, y: kp2.y }, { x: kp1.x, y: kp1.y }, { x: kp5.x, y: kp5.y }, { x: kp4.x, y: kp4.y }]);
+        for (var i = 0; i < 3; i++) {
+            this.roadAllArr[i] = this.roadAllArr[i].concat([{ x: kp6.x, y: kp6.y }, { x: kp7.x, y: kp7.y }, { x: kp8.x, y: kp8.y }, { x: pyramid.x, y: pyramid.y }]);
+        }
+        this.leftPlayer = SpriteUtil.createImage('emoji11');
+        this.leftPlayer.x = this.roadAllArr[0][0].x;
+        this.leftPlayer.y = this.roadAllArr[0][0].y;
+        this.addChild(this.leftPlayer);
+        EffectUtil.breath(this.leftPlayer, 0.2);
+        this.ownPlayer = SpriteUtil.createImage('emoji16');
+        this.ownPlayer.x = this.roadAllArr[1][0].x;
+        this.ownPlayer.y = this.roadAllArr[1][0].y;
+        this.addChild(this.ownPlayer);
+        EffectUtil.breath(this.ownPlayer, 0.2);
+        this.rightPlayer = SpriteUtil.createImage('emoji19');
+        this.rightPlayer.x = this.roadAllArr[2][0].x;
+        this.rightPlayer.y = this.roadAllArr[2][0].y;
+        this.addChild(this.rightPlayer);
+        EffectUtil.breath(this.rightPlayer, 0.2);
+        var dice1 = SpriteUtil.createImage('dice1');
+        dice1.x = SpriteUtil.stageCenterX - 100;
+        dice1.y = SpriteUtil.stageCenterY + 500;
+        this.addChild(dice1);
+        var dice2 = SpriteUtil.createImage('dice2');
+        dice2.x = SpriteUtil.stageCenterX;
+        dice2.y = SpriteUtil.stageCenterY + 500;
+        this.addChild(dice2);
+        var dice3 = SpriteUtil.createImage('dice3');
+        dice3.x = SpriteUtil.stageCenterX + 100;
+        dice3.y = SpriteUtil.stageCenterY + 500;
+        this.addChild(dice3);
+        this.diceArr = [dice1, dice2, dice3];
+        dice1.addEventListener(egret.TouchEvent.TOUCH_TAP, this.diceTap, this);
+        dice2.addEventListener(egret.TouchEvent.TOUCH_TAP, this.diceTap, this);
+        dice3.addEventListener(egret.TouchEvent.TOUCH_TAP, this.diceTap, this);
+    };
+    Scene_020.prototype.diceTap = function () {
+        if (!this.isCanOperate)
+            return;
+        this.isRunning = !this.isRunning;
+        if (this.isRunning) {
+            this.startDices();
+        }
+        else {
+            egret.clearInterval(this.intervalId);
+            this.isCanOperate = false;
+            var cnt = 0;
+            for (var _i = 0, _a = this.diceArr; _i < _a.length; _i++) {
+                var dice = _a[_i];
+                cnt += parseInt(dice.name);
+            }
+            if (cnt % 3 == 1) {
+                this.leftIndex++;
+                this.movePlayer(0, this.leftIndex);
+            }
+            else if (cnt % 3 == 2) {
+                this.ownIndex++;
+                this.movePlayer(1, this.ownIndex);
+            }
+            else if (cnt % 3 == 0) {
+                this.rightIndex++;
+                this.movePlayer(2, this.rightIndex);
+            }
+        }
+    };
+    Scene_020.prototype.startDices = function () {
+        var _this = this;
+        this.intervalId = egret.setInterval(function () {
+            for (var _i = 0, _a = _this.diceArr; _i < _a.length; _i++) {
+                var dice = _a[_i];
+                var index = Math.ceil(6 * Math.random());
+                dice['texture'] = RES.getRes("dice" + index + "_png");
+                dice.name = '' + index;
+            }
+        }, this, 40);
+    };
+    Scene_020.prototype.movePlayer = function (playerIndex, posIndex) {
+        var _this = this;
+        var player;
+        if (playerIndex == 0) {
+            player = this.leftPlayer;
+        }
+        else if (playerIndex == 1) {
+            player = this.ownPlayer;
+        }
+        else if (playerIndex == 2) {
+            player = this.rightPlayer;
+        }
+        var tween = egret.Tween.get(player);
+        tween.wait(500);
+        tween.to({ x: this.roadAllArr[playerIndex][posIndex].x, y: this.roadAllArr[playerIndex][posIndex].y }, 500).call(function () {
+            _this.isCanOperate = true;
+            _this.checkResult();
+        }, this);
+    };
+    Scene_020.prototype.checkResult = function () {
+        if (this.leftIndex >= this.roadAllArr[0].length - 1 || this.rightIndex >= this.roadAllArr[2].length - 1) {
+            this.isCanOperate = false;
+            EffectUtil.showResultEffect();
+        }
+        else if (this.ownIndex >= this.roadAllArr[1].length - 1) {
+            EffectUtil.showResultEffect(EffectUtil.PERFECT);
+            this.isCanOperate = false;
+        }
+    };
+    Scene_020.prototype.createLeftCastle = function () {
+        var sprite = new egret.Sprite();
+        var house = SpriteUtil.createImage('house');
+        house.y = 300;
+        sprite.addChild(house);
+        var kp1 = SpriteUtil.createText(this.dataVo.sData[0], 60, 0x00ff00, true);
+        kp1.y = 200;
+        sprite.addChild(kp1);
+        var kp2 = SpriteUtil.createText(this.dataVo.sData[1], 60, 0x00ff00, true);
+        kp2.y = 100;
+        sprite.addChild(kp2);
+        var kp3 = SpriteUtil.createText(this.dataVo.sData[2], 60, 0x00ff00, true);
+        sprite.addChild(kp3);
+        var mountain = SpriteUtil.createText(this.dataVo.sData[3], 60, 0x00ff00, true);
+        mountain.x = 120;
+        sprite.addChild(mountain);
+        var shape = SpriteUtil.createRect(30, house.y, 0x8B7765);
+        shape.anchorOffsetY = 0;
+        sprite.addChildAt(shape, 0);
+        var lshape = SpriteUtil.createRect(mountain.x, 30, 0x8B7765);
+        lshape.anchorOffsetX = 0;
+        sprite.addChildAt(lshape, 0);
+        return sprite;
+    };
+    Scene_020.prototype.createRightCastle = function () {
+        var sprite = new egret.Sprite();
+        var xx = 120;
+        var house = SpriteUtil.createImage('house');
+        house.x = xx;
+        house.y = 300;
+        sprite.addChild(house);
+        var kp1 = SpriteUtil.createText(this.dataVo.sData[0], 60, 0x00ff00, true);
+        kp1.x = xx;
+        kp1.y = 200;
+        sprite.addChild(kp1);
+        var kp2 = SpriteUtil.createText(this.dataVo.sData[1], 60, 0x00ff00, true);
+        kp2.x = xx;
+        kp2.y = 100;
+        sprite.addChild(kp2);
+        var kp3 = SpriteUtil.createText(this.dataVo.sData[2], 60, 0x00ff00, true);
+        kp3.x = xx;
+        sprite.addChild(kp3);
+        var mountain = SpriteUtil.createText(this.dataVo.sData[3], 60, 0x00ff00, true);
+        sprite.addChild(mountain);
+        var shape = SpriteUtil.createRect(30, house.y, 0x8B7765);
+        shape.anchorOffsetY = 0;
+        shape.x = xx;
+        sprite.addChildAt(shape, 0);
+        var lshape = SpriteUtil.createRect(xx, 30, 0x8B7765);
+        lshape.anchorOffsetX = 0;
+        sprite.addChildAt(lshape, 0);
+        return sprite;
+    };
+    Scene_020.prototype.createMiddleCastle = function () {
+        var sprite = new egret.Sprite();
+        var house = SpriteUtil.createImage('house');
+        house.y = 400;
+        sprite.addChild(house);
+        var kp1 = SpriteUtil.createText(this.dataVo.sData[0], 60, 0x00ff00, true);
+        kp1.y = 300;
+        sprite.addChild(kp1);
+        var kp2 = SpriteUtil.createText(this.dataVo.sData[1], 60, 0x00ff00, true);
+        kp2.y = 200;
+        sprite.addChild(kp2);
+        var kp3 = SpriteUtil.createText(this.dataVo.sData[2], 60, 0x00ff00, true);
+        kp3.y = 100;
+        sprite.addChild(kp3);
+        var mountain = SpriteUtil.createText(this.dataVo.sData[3], 60, 0x00ff00, true);
+        sprite.addChild(mountain);
+        var shape = SpriteUtil.createRect(30, house.y, 0x8B7765);
+        shape.anchorOffsetY = 0;
+        sprite.addChildAt(shape, 0);
+        return sprite;
+    };
+    Scene_020.prototype.storagePoint = function (sprite) {
+        var arr = [];
+        for (var i = sprite.numChildren - 1, j = 0; j < 5; i--, j++) {
+            var spr = sprite.getChildAt(i);
+            var point = sprite.localToGlobal(spr.x, spr.y);
+            arr.push({ x: point.x, y: point.y });
+        }
+        arr.reverse();
+        return arr;
+    };
+    Scene_020.prototype.exit = function () {
+        _super.prototype.exit.call(this);
+        for (var _i = 0, _a = this.diceArr; _i < _a.length; _i++) {
+            var dice = _a[_i];
+            egret.Tween.removeTweens(dice);
+        }
+        egret.Tween.removeTweens(this.leftPlayer);
+        egret.Tween.removeTweens(this.ownPlayer);
+        egret.Tween.removeTweens(this.rightPlayer);
+        egret.clearInterval(this.intervalId);
+    };
+    return Scene_020;
+}(BaseScene));
+__reflect(Scene_020.prototype, "Scene_020");
 var CommonUtil = (function () {
     function CommonUtil() {
     }
@@ -3963,7 +4583,13 @@ var EffectUtil = (function () {
                     text.parent.removeChild(text);
                 }
                 if (type == 0) {
-                    Game.instance().gameScene.gotoOver();
+                    if (GameData.currentLevel <= 1 || GameData.reviveCard <= 0) {
+                        Game.instance().gameScene.gotoOver();
+                    }
+                    else {
+                        Game.instance().gameView.tipsView.open();
+                        GameData.reviveCard--;
+                    }
                 }
                 else {
                     EventCenter.instance().dispatchEvent(new GameEvent(GameEvent.GOTO_NEXT));
@@ -4005,6 +4631,42 @@ var EffectUtil = (function () {
                     }, _this, 200);
                 });
             }, _this, 400);
+        });
+    };
+    //特殊
+    EffectUtil.showTextAndBack = function (txt, backFun, thisObj) {
+        var _this = this;
+        if (txt === void 0) { txt = ''; }
+        if (backFun === void 0) { backFun = null; }
+        if (thisObj === void 0) { thisObj = null; }
+        if (!txt)
+            return;
+        var text = SpriteUtil.createText(txt, 100, 0xffff00);
+        text.stroke = 5;
+        text.strokeColor = 0x0000ff;
+        text.bold = true;
+        text.x = SpriteUtil.stageCenterX;
+        text.y = SpriteUtil.stageCenterY - 200;
+        text.scaleX = 5;
+        text.scaleY = 5;
+        text.alpha = 0.1;
+        Game.instance().addMiddle(text);
+        egret.Tween.get(text).to({ scaleX: 1, scaleY: 1, alpha: 1 }, 500, egret.Ease.cubicIn).call(function () {
+            var ids = egret.setTimeout(function () {
+                egret.clearTimeout(ids);
+                if (text.parent) {
+                    text.parent.removeChild(text);
+                }
+                egret.Tween.removeTweens(text);
+                if (backFun) {
+                    if (thisObj) {
+                        backFun.call(thisObj);
+                    }
+                    else {
+                        backFun();
+                    }
+                }
+            }, _this, 800);
         });
     };
     //呼吸
@@ -4410,6 +5072,76 @@ var RankView = (function (_super) {
     return RankView;
 }(BaseView));
 __reflect(RankView.prototype, "RankView");
+var TipsView = (function (_super) {
+    __extends(TipsView, _super);
+    function TipsView() {
+        var _this = _super.call(this) || this;
+        _this.init();
+        return _this;
+    }
+    TipsView.prototype.init = function () {
+        var _this = this;
+        var sp = new egret.Shape();
+        sp.graphics.beginFill(0x000000, 0.5);
+        sp.graphics.drawRect(0, 0, SpriteUtil.stageWidth, SpriteUtil.stageHeight);
+        sp.graphics.endFill();
+        this.addChild(sp);
+        sp.touchEnabled = true;
+        var sprite = new egret.Sprite();
+        this.addChild(sprite);
+        var shape = SpriteUtil.createRect(SpriteUtil.stageWidth / 1.2, SpriteUtil.stageWidth / 1.8, 0xB03060);
+        shape.anchorOffsetX = 0;
+        shape.anchorOffsetY = 0;
+        sprite.addChild(shape);
+        var title = SpriteUtil.createText('提示', 42, 0x00ff00);
+        title.x = shape.width / 2;
+        title.y = 50;
+        sprite.addChild(title);
+        var text = SpriteUtil.createText('你有3次复活机会！', 36, 0xeeeeee);
+        text.anchorOffsetX = 0;
+        text.anchorOffsetY = 0;
+        text.x = 50;
+        text.y = 100;
+        text.width = shape.width - 100;
+        text.height = 160;
+        sprite.addChild(text);
+        this.tipsTxt = text;
+        var closebtn = SpriteUtil.createButton('X', 80, 80, 0xB03060, 50);
+        closebtn.x = shape.width - 82;
+        closebtn.y = 2;
+        sprite.addChild(closebtn);
+        closebtn.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+            _this.close();
+            Game.instance().gameScene.gotoOver();
+        }, this);
+        var btn1 = SpriteUtil.createButton('立即复活', 200, 80, 0x0000ff, 32);
+        btn1.x = shape.width / 2 - btn1.width - 40;
+        btn1.y = shape.height - 100;
+        sprite.addChild(btn1);
+        btn1.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+            _this.close();
+            GameData.currentLevel--;
+            EventCenter.instance().dispatchEvent(new GameEvent(GameEvent.GOTO_NEXT));
+        }, this);
+        var btn2 = SpriteUtil.createButton('看视频复活', 200, 80, 0x0000ff, 32);
+        btn2.x = shape.width / 2 + 40;
+        btn2.y = shape.height - 100;
+        sprite.addChild(btn2);
+        btn2.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+            return;
+            _this.close();
+            console.log('看视频');
+        }, this);
+        sprite.x = SpriteUtil.stageCenterX - shape.width / 2;
+        sprite.y = SpriteUtil.stageCenterY - shape.height / 2;
+    };
+    TipsView.prototype.open = function () {
+        this.tipsTxt.text = "\u4F60\u8FD8\u5269\u4F59" + GameData.reviveCard + "\u6B21\u590D\u6D3B\u673A\u4F1A\uFF01";
+        _super.prototype.open.call(this);
+    };
+    return TipsView;
+}(BaseView));
+__reflect(TipsView.prototype, "TipsView");
 var DataVO = (function () {
     function DataVO() {
         //关卡

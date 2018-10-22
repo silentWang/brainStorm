@@ -49,8 +49,10 @@ class Scene_017 extends BaseScene{
         this.addChild(box);
         this.skyBox = box;
 
-        let bspr = SpriteUtil.createRect(360,200,0x000000);
-        let body = Matter.Bodies.rectangle(SpriteUtil.stageCenterX,SpriteUtil.stageHeight - 100,bspr.width,bspr.height,{
+        let brbc = '以热爱祖国为荣  以危害祖国为耻\n以服务人民为荣  以背离人民为耻\n以崇尚科学为荣  以愚昧无知为耻\n以辛勤劳动为荣  以好逸恶劳为耻\n以团结互助为荣  以损人利己为耻\n以诚实守信为荣  以见利忘义为耻\n以遵纪守法为荣  以违法乱纪为耻\n以艰苦奋斗为荣  以骄奢淫逸为耻';
+        // let bspr = SpriteUtil.createRect(360,200,0x000000);
+        let bspr = SpriteUtil.createText(brbc,30,0x00ff00,true);
+        let body = Matter.Bodies.rectangle(SpriteUtil.stageCenterX,SpriteUtil.stageHeight - bspr.height/2,bspr.width,bspr.height,{
             isStatic:true,
             friction:2,
             frictionStatic:2,
@@ -75,14 +77,10 @@ class Scene_017 extends BaseScene{
             let len = this.boxArr.length;
             for(let i = 0;i < len;i++){
                 let bdy = this.boxArr[i];
-                if(bdy.position.y > SpriteUtil.stageHeight + 2*bdy.render.sprite.width && !bdy.isStatic && !bdy.isSensor){
-                    bdy.speed = 0;
+                if(bdy.position.y > SpriteUtil.stageHeight + 2*bdy.render.sprite.width && !bdy.isStatic){
                     this.loseCnt++;
                     Matter.Body.setStatic(bdy,true);
-                    bdy.isSensor = true;
-                }
-                else{
-                    bdy.isSensor = false;
+                    Matter.Body.setPosition(bdy,{x:-(200 + 800*Math.random()),y:bdy.position.y});
                 }
             }
             this.checkResult();
@@ -91,8 +89,14 @@ class Scene_017 extends BaseScene{
 
     private tapAddBox(evt){
         if(!this.isCanOperate) return;
+        GameSound.instance().playSound('click');
         this.usedCnt++;
         this.isCanOperate = false;
+        if(this.usedCnt > this.dataVo.score){
+            EffectUtil.showResultEffect();
+            return;
+        }
+        GameSound.instance().playSound('click');
         let idx = egret.setTimeout(()=>{
             egret.clearTimeout(idx);
             this.isCanOperate = true;
@@ -108,23 +112,21 @@ class Scene_017 extends BaseScene{
         let len = this.boxArr.length;
         for(let i = 0;i < len;i++){
             let bdy = this.boxArr[i];
-            if(bdy.position.y > SpriteUtil.stageHeight + bdy.render.sprite.width/2){
+            if(bdy.position.y > SpriteUtil.stageHeight + bdy.render.sprite.width/2 && bdy.position.x < -200){
                 Matter.Body.setStatic(bdy,false);
                 Matter.Body.setAngle(bdy,0);
                 Matter.Body.setAngularVelocity(bdy,0);
                 Matter.Body.setVelocity(bdy,{x:0,y:0});
                 Matter.Body.setPosition(bdy,{x:xx,y:yy});
                 Matter.Body.set(bdy,'isSleeping',false);
-                bdy.isSensor = false;
                 return;
             }
         }
 
         let sprite = SpriteUtil.createImage(this.dataVo.sData);
         let body = Matter.Bodies.rectangle(xx,yy,sprite.width,sprite.height,{
-            frictionAir:0,
+            frictionAir:0.001,
             friction:1,
-            isSensor:false,
             mass:5,
             render:{
                 sprite:sprite

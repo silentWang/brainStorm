@@ -64,6 +64,7 @@ class Scene_018 extends BaseScene{
     }
 
     private fireKnife(evt){
+        GameSound.instance().playSound('click');
         this.curKnife.sprite.touchEnabled = false;
         egret.Tween.get(this.curKnife.sprite).to({y:this.startPoint.y},200,egret.Ease.cubicIn).call(()=>{
             egret.Tween.removeTweens(this.curKnife.sprite);

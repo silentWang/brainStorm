@@ -5,6 +5,7 @@ class GameData{
     public static isWxGame:boolean = true;
     public static wxUserInfo:any;
     public static currentLevel:number = 0;
+    public static reviveCard:number = 3;
     public static gameConfig;
     //关卡参数
     public static getLevelConfig(){

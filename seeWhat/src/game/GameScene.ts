@@ -28,10 +28,12 @@ class GameScene{
         this.allScenes['012'] = Scene_012;
         this.allScenes['013'] = Scene_013;
         this.allScenes['014'] = Scene_014;
-        this.allScenes['015'] = Scene_015;
+        this.allScenes['015'] = Scene_015;  
         this.allScenes['016'] = Scene_016;
         this.allScenes['017'] = Scene_017;
         this.allScenes['018'] = Scene_018;
+        this.allScenes['019'] = Scene_019;
+        this.allScenes['020'] = Scene_020;
         //添加事件
         this.addEvent();
     }
@@ -70,7 +72,7 @@ class GameScene{
         lvl++;
         GameData.currentLevel = lvl;
         //only test
-        GameData.currentLevel = 41;
+        // GameData.currentLevel = 48;
         Game.instance().gameView.guideView.show();
         this._menuScene.exit();
         this._overScene.exit();
@@ -86,6 +88,5 @@ class GameScene{
         this._currentScene = new this.allScenes[config.levelType]();
         this._currentScene.enter();
     }
-
 
 }

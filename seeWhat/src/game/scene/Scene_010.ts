@@ -8,19 +8,16 @@ class Scene_010 extends BaseScene{
     //items 列条目
     private items = [];
     private btnsArr:Array<egret.TextField>;
-    private toolsArr;
     private questionTxt:egret.TextField;
+    private optionSpr:egret.Sprite;
     private curIndex = 0;
-    private summingUpData;
-    private isOperating:boolean = false;
+    private isCanOperate:boolean = true;
     private init(){
         let config = GameData.getConfig(`scene${this.dataVo.levelType}`);
         this.items = config['items'];
-        this.toolsArr = this.dataVo.sData.split('、');
-        this.summingUpData = [];
 
         this.questionTxt = new egret.TextField();
-        this.questionTxt.size = 36;
+        this.questionTxt.size = 30;
         this.questionTxt.width = SpriteUtil.stageWidth - 120;
         this.questionTxt.textColor = 0xEE00EE;
         this.questionTxt.stroke = 2;
@@ -32,17 +29,16 @@ class Scene_010 extends BaseScene{
         this.questionTxt.anchorOffsetX = this.questionTxt.width/2;
         this.questionTxt.anchorOffsetY = this.questionTxt.height/2;
         this.questionTxt.x = SpriteUtil.stageCenterX;
-        this.questionTxt.y = 200;
+        this.questionTxt.y = 120;
         this.questionTxt.text = "麻烦透露下您的性别";
         this.addChild(this.questionTxt);
 
         this.btnsArr = [];
-        let len = this.toolsArr.length;
         let sprite = new egret.Sprite();
-        for(let i = 0;i < len;i++){
-            let btn = this.createText('选项');
-            btn.x = 150*(i%4);
-            btn.y = Math.floor(i/4)*120;
+        for(let i = 0;i < 10;i++){
+            let btn = this.createText('');
+            btn.x = 280*(i%2);
+            btn.y = Math.floor(i/2)*80;
             sprite.addChild(btn);
             this.btnsArr.push(btn);
             btn.name = "btn_"+i;
@@ -52,31 +48,41 @@ class Scene_010 extends BaseScene{
         sprite.x = SpriteUtil.stageCenterX - sprite.width/2;
         sprite.y = 480;
         this.addChild(sprite);
+        this.optionSpr = sprite;
 
         this.timeItem = new TimeItem(this.dataVo.time);
         this.addChild(this.timeItem);
     }
 
     private clkSwitch(evt){
-        if(this.isOperating) return;
+        if(!this.isCanOperate) return;
+        if(this.curIndex >= this.items.length - 1){
+            Game.instance().gameScene.gotoMenu();
+            return;
+        }
         let target = evt.target;
         let name = target.name;
         if(!name || name.search('btn_') < 0) return;
         let idx = name.split('_')[1];
-        this.curIndex++;
-        if(this.curIndex >= this.items.length){
-            console.log('结论');
+        let answer = this.items[this.curIndex].answer;
+        this.isCanOperate = false;
+        if(idx == answer){
+            EffectUtil.showTextAndBack('✓',()=>{
+                this.curIndex++;
+                this.nextItem();
+                this.isCanOperate = true;
+            });
         }
         else{
-            this.nextItem();
+            this.timeItem.stop();
+            EffectUtil.showResultEffect();
         }
     }
 
     private nextItem(){
-        let question = this.items[this.curIndex];
-        this.questionTxt.text = `☛ ${question}`;
-
-        let ops = this.toolsArr;
+        let item = this.items[this.curIndex];
+        let ops = item.options;
+        this.questionTxt.text = `☛ ${item.question}`;
         let len = this.btnsArr.length;
         for(let i = 0;i < len;i++){
             if(ops[i]){
@@ -87,20 +93,21 @@ class Scene_010 extends BaseScene{
                 this.btnsArr[i].visible = false;
             }
         }
+        this.optionSpr.y = this.questionTxt.y + this.questionTxt.height + 40;
     }
 
     private createText(str = ""){
         let text = new egret.TextField();
-        text.size = 36;
+        text.size = 32;
         text.text = str;
         text.textColor = 0x551A8B;
         text.textAlign = 'center';
         text.verticalAlign = 'middle';
-        text.width = 120;
-        text.height = 80;
+        text.width = 200;
+        text.height = 60;
         text.bold = true;
         text.background = true;
-        text.backgroundColor = 0x00ffff;
+        text.backgroundColor = 0x00E5EE;
         return text;
     }
 

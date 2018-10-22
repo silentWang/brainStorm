@@ -11,14 +11,13 @@ class Scene_016 extends BaseScene{
     //飞到
     private birdBody;
     private wallArr;
-    private wallspeed = 3;
     private isCanOperate:boolean = true;
     private beforeUpdateFun:Function;
     private score = 0;
     private intervalId = 0;
 
     private init(){
-        //datavo time代表出现墙的频率 单位毫秒
+        //datavo time代表出现墙的频率 单位毫秒   sdata表示player皮肤  tdata 速度
         let shape = new egret.Shape();
         shape.graphics.beginFill(0x00ff00,0.01);
         shape.graphics.drawRect(0,0,SpriteUtil.stageWidth,SpriteUtil.stageHeight);
@@ -41,13 +40,13 @@ class Scene_016 extends BaseScene{
         EgretRender.run(render);
         this.engine.world.gravity.y = 1;
 
-        let bspr = SpriteUtil.createImage(this.dataVo.tData);
-        let body = Matter.Bodies.circle(SpriteUtil.stageCenterX,500,bspr.height/2,{
+        let bspr = SpriteUtil.createImage(this.dataVo.sData);
+        let body = Matter.Bodies.rectangle(SpriteUtil.stageCenterX,500,bspr.width - 20,bspr.height - 20,{
             label:'bird',
             render:{
                 sprite:bspr
             }
-        },0);
+        });
         this.birdBody = body;
         Matter.World.add(this.engine.world,body);
 
@@ -72,7 +71,7 @@ class Scene_016 extends BaseScene{
                 let body1 = body.body1;
                 let body2 = body.body2;
                 let xx = body1.position.x;
-                xx -= this.wallspeed;
+                xx -= this.dataVo.tData;
                 Matter.Body.setPosition(body1,{x:xx,y:body1.position.y});
                 Matter.Body.setPosition(body2,{x:xx,y:body2.position.y});
             }
@@ -98,6 +97,7 @@ class Scene_016 extends BaseScene{
 
     private tapMakeBirdFly(evt){
         if(!this.isCanOperate) return;
+        GameSound.instance().playSound('click');
         Matter.Body.setVelocity(this.birdBody,{x:0,y:-8});
     }
     //创建墙壁

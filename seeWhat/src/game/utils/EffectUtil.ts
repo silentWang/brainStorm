@@ -40,7 +40,13 @@ class EffectUtil{
                     text.parent.removeChild(text);
                 }
                 if(type == 0){
-                    Game.instance().gameScene.gotoOver();
+                    if(GameData.currentLevel <= 1 || GameData.reviveCard <= 0){
+                        Game.instance().gameScene.gotoOver();
+                    }
+                    else{
+                        Game.instance().gameView.tipsView.open();
+                        GameData.reviveCard--;
+                    }
                 }
                 else{
                     EventCenter.instance().dispatchEvent(new GameEvent(GameEvent.GOTO_NEXT));
@@ -81,6 +87,37 @@ class EffectUtil{
                     },this,200);
                 });
             },this, 400);
+        });
+    }
+    //特殊
+    public static showTextAndBack(txt = '',backFun:Function = null,thisObj = null){
+        if(!txt) return;
+        let text = SpriteUtil.createText(txt,100,0xffff00);
+        text.stroke = 5;
+        text.strokeColor = 0x0000ff;
+        text.bold = true;
+        text.x = SpriteUtil.stageCenterX;
+        text.y = SpriteUtil.stageCenterY - 200;
+        text.scaleX = 5;
+        text.scaleY = 5;
+        text.alpha = 0.1;
+        Game.instance().addMiddle(text);
+        egret.Tween.get(text).to({scaleX:1,scaleY:1,alpha:1},500,egret.Ease.cubicIn).call(()=>{
+            let ids = egret.setTimeout(()=>{
+                egret.clearTimeout(ids);
+                if(text.parent){
+                    text.parent.removeChild(text);
+                }
+                egret.Tween.removeTweens(text);
+                if(backFun){
+                    if(thisObj){
+                        backFun.call(thisObj);
+                    }
+                    else{
+                        backFun();
+                    }
+                }
+            },this,800);
         });
     }
     //呼吸

@@ -5,6 +5,7 @@ class MenuScene extends BaseScene{
     }
 
     private isInitOpenDataCtx:boolean = false;
+    private startBtn;
     private gameClubBtn;
     private init(){
         let logo = new egret.Bitmap(RES.getRes("logo_png"));
@@ -23,8 +24,7 @@ class MenuScene extends BaseScene{
             GameSound.instance().playSound('click');
             EventCenter.instance().dispatchEvent(new GameEvent(GameEvent.GOTO_NEXT));
         },this);
-        //呼吸
-        egret.Tween.get(btn,{loop:true}).to({scaleX:2.4,scaleY:2.4},1500).to({scaleX:2.2,scaleY:2.2},1500);
+        this.startBtn = btn;
 
         let rankbtn = SpriteUtil.createImage('rank');
         rankbtn.x = SpriteUtil.stageCenterX - 100;
@@ -62,10 +62,14 @@ class MenuScene extends BaseScene{
             openDatactx.postMessage({command:'cmd_openId',openId:GameData.wxUserInfo.avatarUrl});
         }
         this.gameClubBtn.show();
+        egret.Tween.get(this.startBtn,{loop:true}).to({scaleX:2.4,scaleY:2.4},1500).to({scaleX:2.2,scaleY:2.2},1500);
     }
     exit(){
         super.exit();
         this.gameClubBtn.hide();
+        egret.Tween.removeTweens(this.startBtn);
+        this.startBtn.scaleX = 2.2;
+        this.startBtn.scaleY = 2.2;
     }
 
 }

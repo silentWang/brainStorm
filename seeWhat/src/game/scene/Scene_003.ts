@@ -255,6 +255,10 @@ class Scene_003 extends BaseScene{
     exit(){
         Matter.World.remove(this.engine.world,this.engine.world.bodies,0);
         Matter.World.remove(this.engine.world,this.engine.world.constraints,0);
+        Matter.Runner.stop(this.runner);
+        EgretRender.stop();
+        Matter.Engine.clear(this.engine);
+        Matter.Events.off(this.engine,'collisionStart',this.collisionHandle);
         while(this.numChildren > 1){
             let child = this.getChildAt(this.numChildren - 1);
             this.removeChild(child);
