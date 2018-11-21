@@ -65,6 +65,9 @@ class Scene_019 extends BaseScene{
         this.scoreItem = new ScoreItem();
         this.addChild(this.scoreItem);
         this.createList();
+
+        this.timeItem = new TimeItem(this.dataVo.time);
+        this.addChild(this.timeItem);
     }
 
     private createList(){
@@ -86,6 +89,7 @@ class Scene_019 extends BaseScene{
 
     private tapExchange(evt){
         if(!this.isCanOperate) return;
+        if(this.timeItem.leftTime <= 0) return;
         GameSound.instance().playSound('click');
         let spr = evt.target;
         let index = spr.name.split('_')[1];
@@ -130,11 +134,22 @@ class Scene_019 extends BaseScene{
         }
         if(arr.length == 0){
             if(this.isCanPass()){
-                EffectUtil.showResultEffect(EffectUtil.PERFECT);
+                let time = this.timeItem.leftTime;
+                this.timeItem.stop();
+                if(time >= this.dataVo.time*1/3){
+                    EffectUtil.showResultEffect(EffectUtil.PERFECT);
+                }
+                else if(time >= this.dataVo.time*2/3){
+                    EffectUtil.showResultEffect(EffectUtil.GREAT);
+                }
+                else{
+                    EffectUtil.showResultEffect(EffectUtil.GOOD);
+                }
             }
             else if(this.stepNums <= 0){
                 this.isCanOperate = false;
                 EffectUtil.showResultEffect();
+                this.timeItem.stop();
             }
             else{
                 this.isCanOperate = true;
@@ -285,6 +300,11 @@ class Scene_019 extends BaseScene{
                 }
             },this);
         }
+    }
+
+    enter(){
+        super.enter();
+        this.timeItem.start();
     }
 
 }

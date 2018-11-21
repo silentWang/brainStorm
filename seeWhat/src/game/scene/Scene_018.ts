@@ -20,7 +20,7 @@ class Scene_018 extends BaseScene{
     private currCount = 0;
 
     private init(){
-        //创建刀列
+        //创建刀列  tdata 旋转速度  sdata 数量
         this.rotateAngle = this.dataVo.tData;
         this.currCount = this.dataVo.sData;
         let len = this.dataVo.sData;

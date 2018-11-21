@@ -40,7 +40,7 @@ class TipsView extends BaseView{
         sprite.addChild(closebtn);
         closebtn.addEventListener(egret.TouchEvent.TOUCH_TAP,()=>{
             this.close();
-            Game.instance().gameScene.gotoOver();
+            Game.instance().gameScene.enterOver();
         },this);
 
         let btn1 = SpriteUtil.createButton('立即复活',200,80,0x0000ff,32);
@@ -50,7 +50,7 @@ class TipsView extends BaseView{
         btn1.addEventListener(egret.TouchEvent.TOUCH_TAP,()=>{
             this.close();
             GameData.currentLevel--;
-            EventCenter.instance().dispatchEvent(new GameEvent(GameEvent.GOTO_NEXT));
+            EventCenter.instance().dispatchEvent(new GameEvent(GameEvent.GOTO_NEXT_LEVEL));
         },this);
 
         let btn2 = SpriteUtil.createButton('看视频复活',200,80,0x0000ff,32);

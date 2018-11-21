@@ -1,481 +1,1325 @@
 {
-    "levels":[
-        {
-            "title": "神秘的诅咒"
-        }, 
-        {
-            "level": 1,
-            "levelType":"001",
-            "title": "三字经", 
-            "desc": "三字经是我国古典文化精髓，不管怎样，我们至少要知道它的前几句吧！",
-            "sData":"人之初性本善",
-            "tData":"人之初性本善",
-            "time":90
-        },
-        {
-            "level": 2,
-            "levelType":"001",
-            "title": "语言表达", 
-            "desc": "小和尚问方丈：什么样的人是佛？方丈答：说话不急不慢！吃饭不咸不淡！遇事不怒不怨！待人不分贵贱！得失很少分辨！小和尚不信：就这么简单？方丈说：就这么简单。那不都成佛了？方丈说：至今我尚未遇见！总结一句话！",
-            "sData":"平平淡淡才是福",
-            "tData":"平平淡淡才是福",
-            "time":120
-        },
-        {
-            "level": 3,
-            "levelType":"001",
-            "title": "十二生肖", 
-            "desc": "中华文化生生不息，关于十二生肖的传说也很多，但十二生肖毋庸置疑为中国文化不可分割的一部分！十二生肖是哪些？把十二生肖找出来，同时要按照十二地支的顺序！",
-            "sData":"鼠牛猫虎兔鸭龙鱼蛇龟马羊象猴鸡熊狗猪凤",
-            "tData":"鼠牛虎兔龙蛇马羊猴鸡狗猪",
-            "time":150
-        }, 
-        {
-            "level": 4, 
-            "levelType":"002",
-            "title": "简单连连看（易）", 
-            "desc": "这里召集了一些常见的动物，每种动物都有其独特的特点，用这些动物来玩个简单连连看吧！之所以简单是因为不需要考虑路径的问题，快动手试试吧！",
-            "sData":["cat","ant","butterfly","dragon","rabbit","monkey","chicken","dog","tortoise","squab","tiger","frog","pork","eagle","goat","snake","panda","elephant","rat","lizard","duck"],
-            "tData":"",
-            "time":90
-        },
-        {
-            "level": 5, 
-            "levelType":"002",
-            "title": "简单连连看（中）", 
-            "desc": "之前召集的动物都很凌乱，说召集他们就是为了玩这个弱智的小游戏，于是他们露出了各种不同的表情，来吧！测测你的表情辨识能力！",
-            "sData":["emoji01","emoji02","emoji03","emoji04","emoji05","emoji06","emoji07","emoji08","emoji09","emoji10","emoji11","emoji12","emoji13","emoji14","emoji15","emoji16","emoji17","emoji18","emoji19","emoji20","basketball","egg","flower02","football","fire","flower05","lufeihat","down","house","bag","bride","together"],
-            "tData":"",
-            "time":120
-        }, 
-        {
-            "level": 6, 
-            "levelType":"002",
-            "title": "简单连连看（难）", 
-            "desc": "大部分动物都跑了，原因可想而知，我们美丽的大自然本就如此变幻无常，啊！皓月无穷的宇宙大自然，我们爱你，也在保护你！",
-            "sData":["flower01","flower02","flower03","flower04","flower05","god","house","lufeihat","sky","repair","bag","bride","river","sea","stick","string","emperor","feather","fire","diver","vintage","fruit1","fruit2","fruit3","fruit4","fruit5","fruit6","fruit7","dragonfly","rabbit","rat","tiger","horse","chicken","emoji17","emoji13","emoji11","emoji07","emoji03","china","mountain","night","lawn","tree","earth","rain","rainbow","insect","mushrooms","monkey"],
-            "tData":"",
-            "time":150
-        }, 
-        {
-            "level": 7, 
-            "levelType":"003",
-            "title": "拯救女友", 
-            "desc": "你爱你的女友吗？这里布满了很多陷阱和埋伏，不巧你的女友被陷阱包围了，这可不是儿戏，解救时间有限，鼓起勇气赶紧行动吧！",
-            "sData":"",
-            "tData":"",
-            "time":60
-        }, 
-        {
-            "level": 8, 
-            "levelType":"004",
-            "title": "路飞最爱的草帽", 
-            "desc": "娜美这家伙喜欢买些无用的衣服，碰巧不小心把路飞的草帽放进了衣服手袋里了，路飞说谁能帮他找到草帽，就把海贼王的位置让给他，去当你的海贼王吧！",
-            "sData":["bag",9],
-            "tData":"lufeihat",
-            "time":15
-        }, 
-        {
-            "level": 9, 
-            "levelType":"004",
-            "title": "装有玫瑰的魔法帽", 
-            "desc": "你本打算七夕送给你女友的玫瑰被魔术师（口头禅是：接下来就是见证奇迹的时刻）给偷走了，女友说了找不到就分手，那么你能找到你的玫瑰吗？",
-            "sData":["magicHat",16],
-            "tData":"flower05",
-            "time":15
-        }, 
-        {
-            "level": 10, 
-            "levelType":"004",
-            "title": "完美的婚姻", 
-            "desc": "玫瑰找到了，刚巧今天也是你的大喜之日，但是由于你（不知道你家有矿还是怎么地，就知道你买车如同买衣服一样）的婚房太多，不知道新娘被接到哪一个婚房里了，赶紧的，看看是不是在老王那？",
-            "sData":["house",25],
-            "tData":"bride",
-            "time":15
-        }, 
-        {
-            "level": 11, 
-            "levelType":"005",
-            "title": "猴子爱吃水果", 
-            "desc": "小时候看西游记，特别喜欢孙悟空，所以特别喜欢猴子，知道猴子喜欢吃水果，现在让你控制这只猴子，保持警惕，尽量躲避外来的入侵！",
-            "sData":["fruit1","fruit2","fruit3","fruit4","fruit5","fruit6","fruit7","fruit8","fruit9","fruit10","fruit1","fruit2","fruit3"],
-            "tData":["emoji17","emoji10","rabbit","rat","feather","football","basketball","egg","fire","lawn","tree","vintage","egg"],
-            "time":0,
-            "score":20
-        },
-        {
-            "level": 12, 
-            "levelType":"006",
-            "title": "人世无常", 
-            "desc": "花开花落，叹人世无常！是啊，在写这个游戏的时候，刚好老婆在闹离婚，没心情，就用这句话来作个记忆游戏吧！观察下面一副图像，然后在给出的序列中找到它！",
-            "sData":["flower01","emoji11","flower02","leaf","sigh","male","earth","sky","snake"],
-            "tData":9,
-            "time":90
-        }, 
-        {
-            "level": 13,    
-            "levelType":"006",
-            "title": "大学宗旨", 
-            "desc": "其实记忆就是这样，聪明与不聪明完全在于你自己的思维，而不是别人的看法！",
-            "sData":["repair","body","together","house","cure","china","land","sky","down"],
-            "tData":16,
-            "time":120
-        },
-        {
-            "level": 14, 
-            "levelType":"006",
-            "title": "爱国", 
-            "desc": "还记得社会主义核心价值观吗？富强、民主、文明、和谐，自由、平等、公正、法治，爱国、敬业、诚信、友善。当然这些是必须要牢记的，那么我们的表情也要记住(⊙﹏⊙)",
-            "sData":["emoji13","emoji04","emoji16","emoji11","emoji19","emoji20","emoji03","emoji14","emoji06"],
-            "tData":16,
-            "time":180
-        }, 
-        {
-            "level": 15, 
-            "levelType":"007",
-            "title": "小黑鼠实验", 
-            "desc": "通常生物学实验喜欢用小白鼠，这里就给小白鼠一个生还的机会，我们用小黑鼠，问题来了，不知道在有限时间内你能抓到多少只小黑鼠！",
-            "sData":["rat","lizard","panda"],
-            "tData":"rat",
-            "time":20,
-            "score":20
-        }, 
-        {
-            "level": 16, 
-            "levelType":"007",
-            "title": "爱吃萝卜的兔子", 
-            "desc": "兔子可是最可爱的，它象征着善良纯朴，虽然它是灰色的，做人也应该这样，虽然你很丑，但只要努力，你会发现你还很胖，没关系，一起来陪它玩玩吧！",
-            "sData":["rabbit","penguin","pork","ant","butterfly","panda"],
-            "tData":"rabbit",
-            "time":25,
-            "score":20
-        },
-        {
-            "level": 17, 
-            "levelType":"007",
-            "title": "我爱鸭子", 
-            "desc": "常言道，煮熟的鸭子飞了，虽然用意不太一样，但其实鸭子本来就会飞，而且我们要爱护它们，虽然它们被人为定义为家禽，放飞这些鸭子，功德圆满！",
-            "sData":["duck","monkey","tiger","eagle","elephant","chicken","dog","dragonfly","squab","penguin","goat","butterfly"],
-            "tData":"duck",
-            "time":30,
-            "score":25
-        },
-        {
-            "level": 18, 
-            "levelType":"008",
-            "title": "超强记忆", 
-            "desc": "动物也是有情绪的，所以你要记住每一个动物的表情，为你以后遇到可怕的动物做打算！",
-            "sData":["emoji11","emoji05"],
-            "tData":4,
-            "time":30
-        }, 
-        {
-            "level": 19, 
-            "levelType":"008",
-            "title": "超强记忆", 
-            "desc": "还是一如既往的完美与天然，可惜的是都是计算机的早期表情，有点难度，建议先训练智商半天！",
-            "sData":["emoji11","emoji05","emoji03","emoji04"],
-            "tData":6,
-            "time":30
-        }, 
-        {
-            "level": 20, 
-            "levelType":"008",
-            "title": "超强记忆", 
-            "desc": "最后一波，超强记忆之前赴后继，开发你最具潜能的记忆力，建议挑战之前先进行为期一天的记忆力培训训练！",
-            "sData":["emoji11","emoji05","emoji03","emoji04","emoji14","emoji09","emoji19"],
-            "tData":10,
-            "time":30
-        }, 
-        {
-            "level": 21, 
-            "levelType":"009",
-            "title": "篮球的逻辑", 
-            "desc": "做个实验吧！这里有10个篮球，其中有一个较重一个较轻，其他重量都一样，想办法找到他们！",
-            "time":300
-        },  
-        {
-            "level": 22, 
-            "levelType":"011",
-            "title": "玉中的王", 
-            "desc": "玉可是无价之宝，然而王却总喜欢玉，那么这么多的玉你会找到王吗？",
-            "sData":["玉",100],
-            "tData":"王",
-            "time":25
-        },
-        {
-            "level": 23, 
-            "levelType":"011",
-            "title": "自己", 
-            "desc": "过去的是已经，自己的永远是自己的，去寻觅自己吧！",
-            "sData":["已",120],
-            "tData":"己",
-            "time":30
-        },
-        {
-            "level": 24, 
-            "levelType":"011",
-            "title": "亳州的文化", 
-            "desc": "亳州是我美丽而又神圣的故乡，之所以说它神圣，因为神医华佗在此创造过无数的奇迹，中医讲差之毫厘，谬以千里，就像毫与亳的区别，找到我们伟大的亳州的‘亳’字！",
-            "sData":["毫",150],
-            "tData":"亳",
-            "time":35
-        },
-        {
-            "level": 25, 
-            "levelType":"015",
-            "title": "颜色识别（易）", 
-            "desc": "让我们从简单的色彩识别开始吧！很简单，找出颜色不一样的方块！",
-            "sData":["0x0000ff",36],
-            "tData":"0x0000cc",
-            "time":20
-        }, 
-        {
-            "level": 26, 
-            "levelType":"015",
-            "title": "颜色识别（中）", 
-            "desc": "我们经常会内心恐惧自己是不是很笨，很傻，连最简单的颜色都分不清！没关系，别那么自卑，要相信自己，对自己有信心！",
-            "sData":["0xff0000",64],
-            "tData":"0xf10000",
-            "time":45
-        }, 
-        {
-            "level": 27, 
-            "levelType":"015",
-            "title": "颜色识别（难）", 
-            "desc": "有点意思！有能耐！很不错！颜色识别能力已经超出80%的普通人了，那么你能达到天才的标准吗？",
-            "sData":["0x00f000",100],
-            "tData":"0x00f600",
-            "time":90
-        }, 
-        {
-            "level": 28, 
-            "levelType":"012",
-            "title": "欧拉回路（一笔画）", 
-            "desc": "欧拉回路很有意思，可以网上查下，这里有个图形，请用一笔画出它，线条不能重复，点可以重复！",
-            "sData":[{"x":150,"y":270},{"x":540,"y":270},{"x":350,"y":520},{"x":360,"y":180},{"x":470,"y":640},{"x":300,"y":660},{"x":280,"y":850},{"x":570,"y":840},{"x":500,"y":980},{"x":230,"y":1000}],
-            "tData":[[0,1],[1,2],[2,0],[0,3],[3,4],[4,2],[2,5],[5,6],[6,4],[4,5],[5,0],[0,6],[6,7],[7,4],[4,1],[1,7],[7,8],[8,6],[6,9],[9,8],[8,4]],
-            "time":60
-        },
-        {
-            "level": 29, 
-            "levelType":"012",
-            "title": "欧拉回路（一笔画）", 
-            "desc": "其实顶点数多不代表很难，就像我们知道一条街有哪些店面，哪些胡同一样，要敢于去尝试！",
-            "sData":[{"x":170,"y":380},{"x":280,"y":380},{"x":340,"y":300},{"x":420,"y":380},{"x":530,"y":380},{"x":530,"y":520},{"x":610,"y":590},{"x":530,"y":640},{"x":530,"y":750},{"x":400,"y":750},{"x":350,"y":860},{"x":280,"y":750},{"x":170,"y":750},{"x":170,"y":620},{"x":50,"y":560},{"x":170,"y":470}],
-            "tData":[[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],[8,9],[9,10],[10,11],[11,12],[12,13],[13,14],[14,15],[15,0],[0,9],[9,11],[11,3],[3,1],[1,13],[13,15],[15,5],[5,7],[7,9],[9,13],[13,3],[3,5],[5,11],[11,13],[13,7],[7,1],[1,15]],
-            "time":90
-        },
-        {
-            "level": 30, 
-            "levelType":"012",
-            "title": "欧拉回路（一笔画）", 
-            "desc": "只要大胆尝试，没有什么不可能！要相信自己！一定行的！",
-            "sData":[
-                {"x":200,"y":330},{"x":540,"y":330},{"x":620,"y":600},{"x":540,"y":900},{"x":200,"y":900},{"x":120,"y":600},{"x":290,"y":470},{"x":450,"y":470},{"x":520,"y":600},{"x":450,"y":730},{"x":290,"y":730},{"x":210,"y":600},{"x":40,"y":810},{"x":690,"y":810},{"x":370,"y":180},{"x":110,"y":300},{"x":30,"y":580},{"x":620,"y":300},{"x":700,"y":580}],
-            "tData":[
-                [0,1],[1,2],[2,3],[3,4],[4,5],[5,0],[0,6],[6,7],[7,8],[8,9],[9,10],[10,11],
-                [11,6],[6,9],[9,7],[7,10],[10,8],[8,6],[6,10],[10,4],[4,12],[12,5],[5,11],
-                [11,8],[8,2],[2,13],[13,3],[3,9],[9,11],[11,7],[7,1],[1,14],[14,0],[0,15],[15,16],
-                [16,5],[5,6],[6,1],[1,17],[17,18],[18,2],[2,9],[9,4],[4,11],[11,0],[0,7],[7,2]
-            ],
-            "time":120
-        },
-        {
-            "level": 31, 
-            "levelType":"013",
-            "title": "石头剪刀布", 
-            "desc": "石头剪刀布多么简单的游戏，但它可以考察我们的灵敏度，本关反应时间1秒，初级反应，注意要赢了这些伟人！",
-            "sData":["rock","scissors","paper"],
-            "tData":"",
-            "time":20,
-            "score":20
-        },
-        {
-            "level": 32, 
-            "levelType":"013",
-            "title": "棒子老虎鸡虫子", 
-            "desc": "棒子打老虎，老虎吃鸡，鸡吃虫子，本关反应时间0.75秒，中级反应！",
-            "sData":["stick","tiger","chicken","worm"],
-            "tData":"",
-            "time":15,
-            "score":20
-        },
-        {
-            "level": 33, 
-            "levelType":"013",
-            "title": "喜怒悲恐", 
-            "desc": "中医有五志，怒喜思悲恐，对应五脏肝心脾肺肾，对应五行木火土金水，怒克思，思克恐，恐克喜，喜克悲，悲克怒，规则就是克制对方发出的表情，本关超级反应，通过本关，你完全有做特级保镖的潜能！",
-            "sData":["emoji03","emoji11","emoji18","emoji05","emoji01"],
-            "tData":[3,4,0,1,2],
-            "time":15,
-            "score":20
-        },
-        {
-            "level": 34, 
-            "levelType":"014",
-            "title": "拼图游戏", 
-            "desc": "首先仔细观察并选择你喜欢的水果，然后来个很怀念的小游戏吧，来吧！咱们试试吧！",
-            "sData":"",
-            "tData":"",
-            "time":180
-        },
-        {
-            "level": 35, 
-            "levelType":"018",
-            "title": "地球是我家", 
-            "desc": "越来越多的砍伐和开垦，地球沙漠化越来越严重，所以要保护地球，保护人类唯一的家园，国家鼓励植树造林也是如此。这里有18课树苗，把它们全部栽到地球上，注意两棵树之间要保持一定的距离！",
-            "sData":18,
-            "tData":0.5,
-            "time":90
-        },
-        {
-            "level": 36, 
-            "levelType":"018",
-            "title": "植树是有技巧的", 
-            "desc": "这次准备20棵树，看看你能不能把地球绿化的最好！",
-            "sData":20,
-            "tData":0.8,
-            "time":120
-        },
-        {
-            "level": 37, 
-            "levelType":"018",
-            "title": "完美的地球", 
-            "desc": "地球本该是完美的，大自然也是，但是人类的过度开垦和欲望终究是小小地球无法满足的，所以人类要保护地球，保护大自然，还原最完美的地球!",
-            "sData":22,
-            "tData":1,
-            "time":150
-        },
-        {
-            "level": 38, 
-            "levelType":"016",
-            "title": "倒飞的鸽子", 
-            "desc": "鸽子是和平的象征，这也是是二战胜利的象征，然而有些鸽子总喜欢退步，就像某些人找错方向却还在坚持！什么自己选择的路跪着也要走完，纯粹的误人误导！点击屏幕，鸽子会往上飞，完成使命后，杀了它吧！",
-            "sData":"squab",
-            "tData":3,
-            "time":2000,
-            "score":15
-        },
-        {
-            "level": 39, 
-            "levelType":"016",
-            "title": "会飞的鸭子", 
-            "desc": "不知为什么，总觉得鸭子是很和蔼善良的象征，我喜欢鸭子因为它们的纯朴，善良和可爱，据说每个人的周围都会有个外号叫鸭子的人，他们曾经给我们带来很多快乐，让我们一起祝福他们吧!",
-            "sData":"duck",
-            "tData":5,
-            "time":1800,
-            "score":20
-        },
-        {
-            "level": 40, 
-            "levelType":"016",
-            "title": "鹰击长空", 
-            "desc": "鹰是最勇敢最勇猛的动物，那双如此敏锐的眼睛以及锋利的鹰爪还有翱翔的自由是很多人梦寐以求的伟大梦想，很多人把鹰当作自己的憧憬对象，甚至是自己的神，确实如此!从鹰身上可以学习太多东西了，我们也要刚强稳健和自由！",
-            "sData":"eagle",
-            "tData":10,
-            "time":1000,
-            "score":30
-        },
-        {
-            "level": 41, 
-            "levelType":"017",
-            "title": "集装箱", 
-            "desc": "社会主义荣辱观，即八荣八耻，是我国国民必须要树立的价值观，这样中国才能更强大！不管做什么事，都要以它为基础！玩过盖大楼吧！这里准备了30个箱子，至少要完成目标箱子数目的建筑，否则就证明你应该好好去学学八荣八耻了！",
-            "sData":"box",
-            "tData":10,
-            "time":2000,
-            "score":30
-        },
-        {
-            "level": 42, 
-            "levelType":"017",
-            "title": "盖大楼", 
-            "desc": "看到陆家嘴中心大厦吧！多么宏伟高大，没有八荣八耻的支持，很难建成，多想把它买下来啊！可惜...没有关系，我们自己手动盖一座大楼吧！",
-            "sData":"brick",
-            "tData":15,
-            "time":1500,
-            "score":30
-        },
-        {
-            "level": 43, 
-            "levelType":"017",
-            "title": "顶级配置", 
-            "desc": "世界上最高的峰是珠穆朗玛峰，最高的山是喜马拉雅山，最好玩的游戏是有意思的挑战，嗯！弄个顶级的高配置吧！",
-            "sData":"dizzy",
-            "tData":25,
-            "time":1000,
-            "score":40
-        },
-        {
-            "level": 44, 
-            "levelType":"019",
-            "title": "爱消除", 
-            "desc": "欢迎来到极限实验室，这里充满着无穷无尽的逻辑与混乱，先从消除游戏开始！三个一样的物体放在一起可消除！注意移动的步数！",
-            "sData":[
-                {"box":"box","index":75},{"box":"brick","index":76},{"box":"crystal","index":77},
-                {"box":"crystal","index":67},{"box":"box","index":68},{"box":"brick","index":69},
-                {"box":"brick","index":59},{"box":"crystal","index":60},{"box":"box","index":61}
-            ],
-            "tData":3,
-            "time":1000,
-            "score":40
-        },
-        {
-            "level": 45, 
-            "levelType":"019",
-            "title": "爱消除进阶篇", 
-            "desc": "人生的道路曲曲折折，就像移动箱子有很多方式一样，到底哪个方式能帮我们完美解决问题呢！让我们拭目以待！",
-            "sData":[
-                {"box":"box","index":73},{"box":"brick","index":74},{"box":"crystal","index":75},
-                {"box":"crystal","index":76},{"box":"box","index":77},{"box":"brick","index":78},
-                {"box":"brick","index":65},{"box":"crystal","index":66},{"box":"box","index":67},
-                {"box":"box","index":68},{"box":"brick","index":69},{"box":"crystal","index":70},
-                {"box":"crystal","index":57},{"box":"box","index":58},{"box":"brick","index":59},
-                {"box":"brick","index":60},{"box":"crystal","index":61},{"box":"box","index":62}
-            ],
-            "tData":7,
-            "time":1000,
-            "score":40
-        },
-        {
-            "level": 46, 
-            "levelType":"019",
-            "title": "顶级的爱消除", 
-            "desc": "严谨的逻辑中必然存在无序的混乱，而无序的混乱当中也必然存在严谨的逻辑！就像蝴蝶效应一样，每一步都影响到未来不可预知的结果，然而我们只要一个结果！",
-            "sData":[
-                {"box":"crystal","index":73},{"box":"box","index":74},{"box":"box","index":75},{"box":"brick","index":76},{"box":"brick","index":77},{"box":"dizzy","index":78},
-                {"box":"box","index":65},{"box":"crystal","index":66},{"box":"brick","index":67},{"box":"box","index":68},{"box":"dizzy","index":69},{"box":"brick","index":70},
-                {"box":"brick","index":57},{"box":"crystal","index":58},{"box":"brick","index":59},{"box":"box","index":60},{"box":"dizzy","index":61},{"box":"box","index":62},
-                {"box":"crystal","index":49},{"box":"dizzy","index":50},{"box":"crystal","index":51},{"box":"dizzy","index":52},{"box":"box","index":53},{"box":"dizzy","index":54},
-                {"box":"dizzy","index":41},{"box":"crystal","index":42},{"box":"dizzy","index":43},{"box":"box","index":44},{"box":"dizzy","index":45},{"box":"box","index":46},
-                {"box":"brick","index":33},{"box":"dizzy","index":34},{"box":"brick","index":35},{"box":"dizzy","index":36},{"box":"brick","index":37},{"box":"dizzy","index":38},
-                {"box":"dizzy","index":25},{"box":"brick","index":26},{"box":"dizzy","index":27},{"box":"brick","index":28},{"box":"dizzy","index":29},{"box":"brick","index":30},
-                {"box":"box","index":17},{"box":"dizzy","index":18},{"box":"box","index":19},{"box":"box","index":20},{"box":"dizzy","index":21},{"box":"dizzy","index":22}
-            ],
-            "tData":12,
-            "time":1000,
-            "score":40
-        },
-        {
-            "level": 47, 
-            "levelType":"020",
-            "title": "登上金字塔", 
-            "desc": "孩童时期玩过一个游戏，忘记叫什么名字了！就是三个人定好147、258、369，然后猜拳，伸出手指总数是谁的数字就轮到谁往前走一步！带着模糊的记忆，也做个类似的吧！仅作纪念，基本无可玩性！规则：从左至右分别是小明、我、小花，对应数字分别是147、258、369，点击骰子开始摇骰子，再次点击则停止，看看谁先到达金字塔！",
-            "sData":["格","至","诚","正","修","修","修","修","修","齐","治","平"],
-            "tData":"",
-            "time":0
-        },
-        {
-            "level": 48, 
-            "levelType":"010",
-            "title": "无标题", 
-            "desc": "当你看到这行字的时候就说明你已经登上顶峰，成为新一代的大神了，作者很荣幸能够膜拜下大佬！在这里我都等了几十年了，都没人来到过这里！可谓是可喜可贺啊！你的能力如果用在军事上，那么第三次世界大战的胜利必然是我们，很好！继续往前走再挑战下高智商的世界！",
-            "sData":"",
-            "tData":"",
-            "time":300
-        }
-    ],
+    "levels":{
+		"chapter001":[
+			{
+				"level": 1,
+				"levelType":"001",
+				"title": "三字经", 
+				"desc": "三字经是我国古典文化精髓，不管怎样，我们至少要知道它的前几句吧！",
+				"sData":"人之初性本善",
+				"tData":"人之初性本善",
+				"time":60
+			},
+			{
+				"level": 2,
+				"levelType":"001",
+				"title": "语言表达", 
+				"desc": "小和尚问方丈：什么样的人是佛？方丈答：说话不急不慢！吃饭不咸不淡！遇事不怒不怨！待人不分贵贱！得失很少分辨！小和尚不信：就这么简单？方丈说：就这么简单。那不都成佛了？方丈说：至今我尚未遇见！总结一句话！",
+				"sData":"平平淡淡才是福",
+				"tData":"平平淡淡才是福",
+				"time":90
+			},
+            {
+				"level": 3,
+				"levelType":"001",
+				"title": "认真的思考", 
+				"desc": "现在的人类由于众多激素、毒素等化学物质的影响，导致人类很难集中精力去思考，那么接下来请集中精力把下面的文字组成正确的一句话",
+				"sData":"儿子的爸爸是爷爷",
+				"tData":"爷爷的儿子是爸爸",
+				"time":120
+			},
+			{
+				"level": 4,
+				"levelType":"001",
+				"title": "十二生肖", 
+				"desc": "中华文化生生不息，关于十二生肖的传说也很多，但十二生肖毋庸置疑为中国文化不可分割的一部分！十二生肖是哪些？把十二生肖找出来，同时要按照十二地支的顺序！",
+				"sData":"鼠牛猫虎兔鸭龙鱼蛇龟马羊象猴鸡熊狗猪凤",
+				"tData":"鼠牛虎兔龙蛇马羊猴鸡狗猪",
+				"time":150
+			},
+			{
+				"level": 5,
+				"levelType":"001",
+				"title": "汉字笔画", 
+				"desc": "在以下给出的文字中，按照笔画从大到小排序！是不是觉得很难，还很麻烦，没关系，有技巧的！",
+				"sData":"靐赢德静勤善乾祥顺金寿成正木马",
+				"tData":"靐赢德静勤善乾祥顺金寿成正木马",
+				"time":180
+			}
+		],
+		"chapter002":[
+			{
+				"level": 1, 
+				"levelType":"002",
+				"title": "动物连连看", 
+				"desc": "这里召集了一些常见的动物，每种动物都有其独特的特点，用这些动物来玩个简单连连看吧！之所以简单是因为不需要考虑路径的问题，快动手试试吧！",
+				"sData":["cat","ant","butterfly","dragon","rabbit","monkey","chicken","dog","tortoise","squab","tiger","frog","pork","eagle","goat","snake","panda","elephant","rat","lizard","duck"],
+				"tData":"",
+				"time":90
+			},
+			{
+				"level": 2, 
+				"levelType":"002",
+				"title": "水果连连看", 
+				"desc": "生活中离不开植物的熏陶，这里有很多植物的果实，比如苹果香蕉梨等等，来试下简单的水果连连看吧！",
+				"sData":["fruit1","fruit2","fruit3","fruit4","fruit5","fruit6","fruit7","fruit8","fruit9","fruit10","fruit11","fruit12","flower01","flower02","flower03","flower04","flower05","leaf","tree","sea","mushrooms"],
+				"tData":"",
+				"time":90
+			},
+			{
+				"level": 3, 
+				"levelType":"002",
+				"title": "动物水果连连看", 
+				"desc": "自从网络聊天发展起来后，表情聊天已经是再平常不过了，但这么可爱又秀逗的表情，你能以最快的速度辨识过来吗？",
+				"sData":["butterfly","dragon","rabbit","monkey","dog","squab","tiger","frog","eagle","goat","cat","ant","chicken","tortoise","pork","snake","panda","elephant","fruit11","fruit12","duck","egg","fruit1","fruit2","fruit3","fruit4","fruit5","fruit6","fruit7","fruit8","fruit9","fruit10"],
+				"tData":"",
+				"time":120
+			},
+			{
+				"level": 4, 
+				"levelType":"002",
+				"title": "表情连连看", 
+				"desc": "自从网络聊天发展起来后，表情聊天已经是再平常不过了，但这么可爱又秀逗的表情，你能以最快的速度辨识过来吗？",
+				"sData":["emoji01","emoji02","emoji03","emoji04","emoji05","emoji06","emoji07","emoji08","emoji09","emoji10","emoji11","emoji12","emoji13","emoji14","emoji15","emoji16","emoji17","emoji18","emoji19","emoji20","basketball","egg","flower02","football","fire","flower05","lufeihat","down","house","bag","bride","together"],
+				"tData":"",
+				"time":120
+			}, 
+			{
+				"level":5, 
+				"levelType":"002",
+				"title": "复杂连连看", 
+				"desc": "其实生活就是这样，看起来平淡实际却很艰难，看起来艰难实际却又很复杂，没关系！大道至简，简单化一切，让生活也更简单！",
+				"sData":["flower01","flower02","flower03","flower04","flower05","god","house","lufeihat","sky","repair","bag","bride","river","sea","stick","string","emperor","feather","fire","diver","vintage","fruit1","fruit2","fruit3","fruit4","fruit5","fruit6","fruit7","dragonfly","rabbit","rat","tiger","horse","chicken","emoji17","emoji13","emoji11","emoji07","emoji03","china","mountain","night","lawn","tree","earth","rain","rainbow","insect","mushrooms","monkey"],
+				"tData":"",
+				"time":150
+			}
+		],
+		"chapter003":[
+			{
+				"level": 1, 
+				"levelType":"003",
+				"title": "拯救女友", 
+				"desc": "你爱你的女友吗？这里布满了很多陷阱和埋伏，不巧你的女友被陷阱包围了，这可不是儿戏，解救时间有限，鼓起勇气赶紧行动吧！",
+				"sData":5,
+				"tData":"",
+				"time":60
+			},
+			{
+				"level": 2, 
+				"levelType":"003",
+				"title": "拯救老婆", 
+				"desc": "哇！好厉害！你老婆最怕瓢虫了，但是被围起来了，你要想办法去拯救她，注意这些瓢虫是有剧毒的！",
+				"sData":10,
+				"tData":"",
+				"time":90
+			},
+			{
+				"level": 3, 
+				"levelType":"003",
+				"title": "拯救爱情", 
+				"desc": "山不厌高，有仙则灵，水不在深，有龙则灵！爱不逢缘，有勇则成！拿出你看家本领！",
+				"sData":5,
+				"tData":"",
+				"time":120
+			}
+		],
+		"chapter004":[
+			{
+				"level": 1, 
+				"levelType":"004",
+				"title": "路飞最爱的草帽", 
+				"desc": "娜美这家伙喜欢买些无用的衣服，碰巧不小心把路飞的草帽放进了衣服手袋里了，路飞说谁能帮他找到草帽，就把海贼王的位置让给他，去当你的海贼王吧！",
+				"sData":["bag",9],
+				"tData":"lufeihat",
+				"time":15
+			}, 
+			{
+				"level": 2, 
+				"levelType":"004",
+				"title": "一只瓢虫", 
+				"desc": "特别喜欢养蜜蜂的你突然发现有只瓢虫混进了你的蜂箱，大家都知道你很气愤，因为这可能会污染你的蜂蜜，怎么办？捉到它！",
+				"sData":["box",9],
+				"tData":"insect",
+				"time":15
+			}, 
+			{
+				"level": 3, 
+				"levelType":"004",
+				"title": "眩晕的水晶", 
+				"desc": "你花几十万买的水晶被催眠师眩晕了，放到眩晕空间里了，这可是你打算给你女友的最大惊喜啊！没办法了！运用你的超能力找回属于你的水晶吧！",
+				"sData":["dizzy",16],
+				"tData":"crystal",
+				"time":20
+			}, 
+			{
+				"level": 4, 
+				"levelType":"004",
+				"title": "装有玫瑰的魔法帽", 
+				"desc": "你本打算七夕送给你女友的玫瑰被魔术师（口头禅是：接下来就是见证奇迹的时刻）给偷走了，女友说了找不到就分手，那么你能找到你的玫瑰吗？",
+				"sData":["magicHat",16],
+				"tData":"flower05",
+				"time":20
+			}, 
+			{
+				"level": 5, 
+				"levelType":"004",
+				"title": "完美的婚姻", 
+				"desc": "玫瑰找到了，刚巧今天也是你的大喜之日，但是由于你（不知道你家有矿还是怎么地，就知道你买车如同买衣服一样）的婚房太多，不知道新娘被接到哪一个婚房里了，赶紧的，看看是不是在老王那？",
+				"sData":["house",25],
+				"tData":"bride",
+				"time":30
+			}
+		],
+		"chapter005":[
+			{
+				"level": 1, 
+				"levelType":"005",
+				"title": "猴子爱吃水果", 
+				"desc": "小时候看西游记，特别喜欢孙悟空，所以特别喜欢猴子，知道猴子喜欢吃水果，现在让你控制这只猴子，保持警惕，尽量躲避外来的入侵，完成目标分这只猴子就是你的了！",
+				"sData":["fruit1","fruit2","fruit3","fruit4","fruit5","fruit6","fruit7","fruit8","fruit9","fruit10","fruit1","fruit2","fruit3"],
+				"tData":["emoji17","emoji10","rabbit","rat","feather","football","basketball","egg","fire","lawn","tree","vintage","egg"],
+				"time":50,
+				"score":10,
+				"extData":"monkey"
+			},
+			{
+				"level": 2, 
+				"levelType":"005",
+				"title": "企鹅的志向", 
+				"desc": "企鹅除了水果其他都喜欢，所以尽量避免与水果的接触，达到目标分即可解救这只完美的企鹅。",
+				"sData":["emoji17","emoji10","male","female","paper","snail","vintage","egg"],
+				"tData":["fruit1","fruit2","fruit3","fruit4","fruit5","fruit6","fruit7","fruit8","fruit9","fruit10","fruit1","fruit2","fruit3"],
+				"time":60,
+				"score":15,
+				"extData":"penguin"
+			},
+			{
+				"level": 3, 
+				"levelType":"005",
+				"title": "新娘爱鲜花", 
+				"desc": "结婚时，一般新郎都会送鲜花给新娘，以表示永恒的爱，这里有好多花花草草，你作为新娘接受哪些比较好呢！",
+				"sData":["flower01","flower02","flower03","flower04","flower05"],
+				"tData":["leaf","magicHat","fire","feather","crystal","string","egg","basketball","football","emoji17","frog","earth","lawn"],
+				"time":80,
+				"score":20,
+				"extData":"bride"
+			}
+		],
+		"chapter006":[
+			{
+				"level": 1, 
+				"levelType":"006",
+				"title": "图像关联记忆", 
+				"desc": "图像关联记忆的方法很简单，就是把一个东西或一件事想象成一幅图像，然后记住图像，就相当于记住这个东西！下面图像代表的是：天行健君子以自强不息！",
+				"sData":["sky","snail","pyramid","male","dice1","cure","welldone","paper","river"],
+				"tData":9,
+				"time":60
+			}, 
+			{
+				"level": 2, 
+				"levelType":"006",
+				"title": "人世无常", 
+				"desc": "花开花落，叹人世无常！是啊，在写这个游戏的时候，刚好老婆在闹离婚，没心情，就用这句话来作个记忆游戏吧！",
+				"sData":["flower01","emoji11","flower02","leaf","sigh","male","earth","sky","snake"],
+				"tData":9,
+				"time":90
+			},
+			{
+				"level": 3,    
+				"levelType":"006",
+				"title": "大学宗旨", 
+				"desc": "其实记忆就是这样，聪明与不聪明完全在于你自己的思维，而不是别人的看法！",
+				"sData":["repair","body","together","house","cure","china","land","sky","down"],
+				"tData":9,
+				"time":120
+			},
+			{
+				"level": 4, 
+				"levelType":"006",
+				"title": "和谐", 
+				"desc": "和谐一直是这个世界的焦点，对单个人来说家庭就是世界！然而很多世界一直处于战争中，其实和谐很简单，就是懂得感恩和包容！拥有一颗感恩和包容的心是家庭和谐的基础！",
+				"sData":["rock","dice1","tree","kindness","river","god","flower05","heart","equal","house","emoji16","brick"],
+				"tData":12,
+				"time":180
+			},
+			{
+				"level": 5, 
+				"levelType":"006",
+				"title": "爱国", 
+				"desc": "还记得社会主义核心价值观吗？富强、民主、文明、和谐，自由、平等、公正、法治，爱国、敬业、诚信、友善。当然这些是必须要牢记的，那么我们的表情也要记住(⊙﹏⊙)",
+				"sData":["welldone","emoji04","emoji16","emoji11","emoji19","equal","god","together","china","cure","dog","bride"],
+				"tData":12,
+				"time":210
+			}
+		],
+		"chapter007":[
+			{
+				"level": 1, 
+				"levelType":"007",
+				"title": "小黑鼠实验", 
+				"desc": "通常生物学实验喜欢用小白鼠，这里就给小白鼠一个生还的机会，我们用小黑鼠，问题来了，不知道在有限时间内你能抓到多少只小黑鼠！",
+				"sData":["rat","lizard","panda"],
+				"tData":"rat",
+				"time":20,
+				"score":20
+			}, 
+			{
+				"level": 2, 
+				"levelType":"007",
+				"title": "爱吃萝卜的兔子", 
+				"desc": "兔子可是最可爱的，它象征着善良纯朴，虽然它是灰色的，做人也应该这样，虽然你很丑，但只要努力，你会发现你还很胖，没关系，一起来陪它玩玩吧！",
+				"sData":["rabbit","penguin","pork","ant","butterfly","panda"],
+				"tData":"rabbit",
+				"time":25,
+				"score":20
+			},
+			{
+				"level": 3, 
+				"levelType":"007",
+				"title": "我爱鸭子", 
+				"desc": "常言道，煮熟的鸭子飞了，虽然用意不太一样，但其实鸭子本来就会飞，而且我们要爱护它们，虽然它们被人为定义为家禽，放飞这些鸭子，功德圆满！",
+				"sData":["duck","monkey","tiger","eagle","elephant","chicken","dog","dragonfly","squab","penguin","goat","butterfly"],
+				"tData":"duck",
+				"time":30,
+				"score":25
+			}
+		],
+		"chapter008":[
+			{
+				"level": 1, 
+				"levelType":"008",
+				"title": "超强记忆", 
+				"desc": "动物也是有情绪的，所以你要记住每一个动物的表情，为你以后遇到可怕的动物做打算！",
+				"sData":["emoji11","emoji05"],
+				"tData":4,
+				"time":30
+			}, 
+			{
+				"level": 2, 
+				"levelType":"008",
+				"title": "超强记忆", 
+				"desc": "你的记忆力是很好的，正常人都可以通过本关！所以超越正常人吧！",
+				"sData":["emoji11","emoji05","emoji04"],
+				"tData":5,
+				"time":30
+			},
+			{
+				"level": 3, 
+				"levelType":"008",
+				"title": "超强记忆", 
+				"desc": "还是一如既往的完美与天然，可惜的是都是计算机的早期表情，有点难度，建议先训练智商半天！",
+				"sData":["emoji11","emoji05","emoji03","emoji04"],
+				"tData":6,
+				"time":40
+			}, 
+			{
+				"level": 4, 
+				"levelType":"008",
+				"title": "超强记忆", 
+				"desc": "超强记忆之超强记忆，通过本关的人将是非常完美的人！做个完美的人吧！建议挑战之前先进行为期一三天的记忆力培训训练！",
+				"sData":["emoji11","emoji05","emoji03","emoji04","emoji14"],
+				"tData":8,
+				"time":50
+			}, 
+			{
+				"level": 5, 
+				"levelType":"008",
+				"title": "超强记忆", 
+				"desc": "最后一波，超强记忆之前赴后继，开发你最具潜能的记忆力，建议挑战之前先进行为期一周的记忆力培训训练！",
+				"sData":["emoji11","emoji05","emoji03","emoji04","emoji14","emoji09","emoji19"],
+				"tData":10,
+				"time":60
+			}
+		],
+		"chapter009":[
+			{
+				"level": 1, 
+				"levelType":"009",
+				"title": "篮球的逻辑", 
+				"desc": "做个实验吧！这里有5个篮球，其中有两个重量比其他都大，想办法找到他们！",
+				"sData":5,
+				"time":180
+			},
+			{
+				"level": 2, 
+				"levelType":"009",
+				"title": "篮球的逻辑", 
+				"desc": "这次准备了10个篮球，其中有两个重量都比其他的轻，找到他们！",
+				"sData":10,
+				"time":240
+			},
+			{
+				"level": 3, 
+				"levelType":"009",
+				"title": "足球的逻辑", 
+				"desc": "这里有15个足球，其中有两个球的重量和其他的不一样，一个较重，一个较轻，找到他们！",
+				"sData":15,
+				"time":300
+			}
+		],
+		"chapter010":[
+			{
+				"level": 1, 
+				"levelType":"011",
+				"title": "玉中的王", 
+				"desc": "玉可是无价之宝，然而王却总喜欢玉，那么这么多的玉你会找到王吗？",
+				"sData":["玉",100],
+				"tData":"王",
+				"time":25
+			},
+			{
+				"level": 2, 
+				"levelType":"011",
+				"title": "晌午的钟声", 
+				"desc": "晌午响起了钟声，意味着一天已经过去一半了，时光飞逝，我们应该把时间花在有意义的事情上，比如多读书，多锻炼，多玩有意思的挑战！找到“晌”中的“响”。",
+				"sData":["晌",110],
+				"tData":"响",
+				"time":25
+			},
+			{
+				"level": 3, 
+				"levelType":"011",
+				"title": "自己", 
+				"desc": "过去的是已经，自己的永远是自己的，所以认清自己才是最大的成功。找到“已”中的“己”！",
+				"sData":["已",120],
+				"tData":"己",
+				"time":30
+			},
+			{
+				"level": 4, 
+				"levelType":"011",
+				"title": "免费的兔子", 
+				"desc": "善良淳朴的兔子可不是免费的，也没有免费的午餐，我们要爱护兔子，把兔子当中打着免费的家伙找出来，让他知错能改！找到“兔”中的“免”",
+				"sData":["兔",130],
+				"tData":"免",
+				"time":30
+			},
+			{
+				"level": 5, 
+				"levelType":"011",
+				"title": "治疗之冶", 
+				"desc": "冶金就是炼金的意思，冶炼出来的很多金属用来治病，所以很多人得了少白头，得了骨质酥松等千奇百怪的病，其实五谷为养，最为好！所以找到“治”中得“冶”。",
+				"sData":["治",140],
+				"tData":"冶",
+				"time":30
+			},
+			{
+				"level": 6, 
+				"levelType":"011",
+				"title": "亳州的文化", 
+				"desc": "亳州是我美丽而又神圣的故乡，之所以说它神圣，因为神医华佗在此创造过无数的奇迹，中医讲差之毫厘，谬以千里，就像毫与亳的区别，找到我们伟大的亳州的‘亳’字！",
+				"sData":["毫",150],
+				"tData":"亳",
+				"time":35
+			}
+		],
+		"chapter011":[
+			{
+				"level": 1, 
+				"levelType":"015",
+				"title": "颜色识别", 
+				"desc": "让我们从简单的色彩识别开始吧！很简单，找出颜色不一样的方块！",
+				"sData":["0x0000ff",36],
+				"tData":"0x0000cc",
+				"time":20
+			}, 
+			{
+				"level": 2, 
+				"levelType":"015",
+				"title": "颜色识别", 
+				"desc": "那个不一样得色块在嘲笑你呢，赶紧把它揪出来！",
+				"sData":["0x0000ff",36],
+				"tData":"0x0000dd",
+				"time":25
+			}, 
+			{
+				"level": 3, 
+				"levelType":"015",
+				"title": "颜色识别", 
+				"desc": "我们经常会内心恐惧自己是不是很笨，很傻，连最简单的颜色都分不清！没关系，别那么自卑，要相信自己，对自己有信心！",
+				"sData":["0xff0000",64],
+				"tData":"0xf10000",
+				"time":45
+			}, 
+			{
+				"level": 4, 
+				"levelType":"015",
+				"title": "颜色识别", 
+				"desc": "我给你的鼓励是让你前进，不是后退！继续向前，勇往直前，因为前面才是光明的道路！",
+				"sData":["0xff0000",64],
+				"tData":"0xf40000",
+				"time":45
+			}, 
+			{
+				"level": 5, 
+				"levelType":"015",
+				"title": "超级级颜色识别", 
+				"desc": "有点意思！有能耐！很不错！颜色识别能力已经超出80%的普通人了，那么你能达到天才的标准吗？",
+				"sData":["0x00f000",100],
+				"tData":"0x00f600",
+				"time":90
+			},
+			{
+				"level": 6, 
+				"levelType":"015",
+				"title": "终极颜色识别", 
+				"desc": "天才果然不同凡响，这最后的希望证明你是不是一个称职的奇才，如果可以，那么你完全可以驾驭一切了！相信我的判断！",
+				"sData":["0x00f000",100],
+				"tData":"0x00f800",
+				"time":90
+			}
+		],
+		"chapter012":[
+			{
+				"level": 1, 
+				"levelType":"012",
+				"title": "欧拉回路（一笔画）", 
+				"desc": "欧拉回路很有意思，可以网上查下，这里有个图形，请用一笔画出它，线条不能重复，点可以重复！",
+				"sData":[{"x":160,"y":500},{"x":580,"y":500},{"x":190,"y":900},{"x":370,"y":320},{"x":520,"y":900}],
+				"tData":[[0,1],[1,2],[2,3],[3,4],[4,0]],
+				"time":30
+			},
+			{
+				"level": 2, 
+				"levelType":"012",
+				"title": "欧拉回路（一笔画）", 
+				"desc": "在刚才图形的基础上，我们增加些难度，巧妙的思维终究会带给你巧妙的答案！",
+				"sData":[{"x":160,"y":500},{"x":580,"y":500},{"x":190,"y":900},{"x":370,"y":320},{"x":520,"y":900},{"x":370,"y":600}],
+				"tData":[[0,1],[1,2],[2,3],[3,4],[4,0],[0,3],[3,1],[1,4],[4,2],[2,0],[0,5],[5,1]],
+				"time":60
+			},
+			{
+				"level": 3, 
+				"levelType":"012",
+				"title": "欧拉回路（一笔画）", 
+				"desc": "很不错！科学就是严谨的思维和缜密的实验，科学就是勇于尝试，等一下！奇迹就是用于尝试！",
+				"sData":[{"x":150,"y":270},{"x":540,"y":270},{"x":350,"y":520},{"x":360,"y":180},{"x":470,"y":640},{"x":300,"y":660},{"x":280,"y":850},{"x":570,"y":840},{"x":500,"y":980},{"x":230,"y":1000}],
+				"tData":[[0,1],[1,2],[2,0],[0,3],[3,4],[4,2],[2,5],[5,6],[6,4],[4,5],[5,0],[0,6],[6,7],[7,4],[4,1],[1,7],[7,8],[8,6],[6,9],[9,8],[8,4]],
+				"time":90
+			},
+			{
+				"level": 4, 
+				"levelType":"012",
+				"title": "欧拉回路（一笔画）", 
+				"desc": "其实顶点数多不代表很难，就像我们知道一条街有哪些店面，哪些胡同一样，要敢于去尝试！",
+				"sData":[{"x":170,"y":380},{"x":280,"y":380},{"x":340,"y":300},{"x":420,"y":380},{"x":530,"y":380},{"x":530,"y":520},{"x":610,"y":590},{"x":530,"y":640},{"x":530,"y":750},{"x":400,"y":750},{"x":350,"y":860},{"x":280,"y":750},{"x":170,"y":750},{"x":170,"y":620},{"x":50,"y":560},{"x":170,"y":470}],
+				"tData":[[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],[8,9],[9,10],[10,11],[11,12],[12,13],[13,14],[14,15],[15,0],[0,9],[9,11],[11,3],[3,1],[1,13],[13,15],[15,5],[5,7],[7,9],[9,13],[13,3],[3,5],[5,11],[11,13],[13,7],[7,1],[1,15]],
+				"time":120
+			},
+			{
+				"level": 5, 
+				"levelType":"012",
+				"title": "欧拉回路（一笔画）", 
+				"desc": "只要大胆尝试，没有什么不可能！要相信自己！一定行的！",
+				"sData":[
+					{"x":200,"y":330},{"x":540,"y":330},{"x":620,"y":600},{"x":540,"y":900},{"x":200,"y":900},{"x":120,"y":600},{"x":290,"y":470},{"x":450,"y":470},{"x":520,"y":600},{"x":450,"y":730},{"x":290,"y":730},{"x":210,"y":600},{"x":40,"y":810},{"x":690,"y":810},{"x":370,"y":180},{"x":110,"y":300},{"x":30,"y":580},{"x":620,"y":300},{"x":700,"y":580}],
+				"tData":[
+					[0,1],[1,2],[2,3],[3,4],[4,5],[5,0],[0,6],[6,7],[7,8],[8,9],[9,10],[10,11],
+					[11,6],[6,9],[9,7],[7,10],[10,8],[8,6],[6,10],[10,4],[4,12],[12,5],[5,11],
+					[11,8],[8,2],[2,13],[13,3],[3,9],[9,11],[11,7],[7,1],[1,14],[14,0],[0,15],[15,16],
+					[16,5],[5,6],[6,1],[1,17],[17,18],[18,2],[2,9],[9,4],[4,11],[11,0],[0,7],[7,2]
+				],
+				"time":150
+			}
+		],
+		"chapter013":[
+			{
+				"level": 1, 
+				"levelType":"013",
+				"title": "石头剪刀布", 
+				"desc": "石头剪刀布多么简单的游戏，但它可以考察我们的灵敏度，本关反应时间1秒，初级反应，注意要赢了这些伟人！",
+				"sData":["rock","scissors","paper"],
+				"tData":"",
+				"time":20,
+				"score":15
+			},
+			{
+				"level": 2, 
+				"levelType":"013",
+				"title": "石头剪刀布", 
+				"desc": "同样时石头剪刀布，这次反应时间提高一个档次，挑战挑战吧！",
+				"sData":["rock","scissors","paper"],
+				"tData":"",
+				"time":20,
+				"score":20
+			},
+			{
+				"level": 3, 
+				"levelType":"013",
+				"title": "棒子老虎鸡虫子", 
+				"desc": "棒子打老虎，老虎吃鸡，鸡吃虫子，本关反应时间0.75秒，中级反应，开始你的表演！",
+				"sData":["stick","tiger","chicken","worm"],
+				"tData":"",
+				"time":20,
+				"score":20
+			},
+			{
+				"level": 4, 
+				"levelType":"013",
+				"title": "棒子老虎鸡虫子", 
+				"desc": "同样提高一个档次，完成这次高级挑战，挑战你的极限！",
+				"sData":["stick","tiger","chicken","worm"],
+				"tData":"",
+				"time":20,
+				"score":25
+			},
+			{
+				"level": 5, 
+				"levelType":"013",
+				"title": "怒喜怒悲恐", 
+				"desc": "中医有五志，怒喜思悲恐，对应五脏肝心脾肺肾，对应五行木火土金水，怒克思，思克恐，恐克喜，喜克悲，悲克怒，规则就是克制对方发出的表情，本关超级反应，通过本关，特级保镖的能力不在话下！本关很难，特别难！",
+				"sData":["emoji03","emoji11","emoji18","emoji05","emoji01"],
+				"tData":"",
+				"time":20,
+				"score":30
+			}
+		],
+		"chapter014":[
+			{
+				"level": 1, 
+				"levelType":"014",
+				"title": "拼图游戏", 
+				"desc": "首先仔细观察并选择你喜欢的水果，然后来个很怀念的小游戏吧，来吧！咱们试试吧！",
+				"sData":["night","rain","rainbow","diver","mountain","river","sky","mushrooms","china"],
+				"tData":"下面场景，你最喜欢哪个？",
+				"time":180
+			},
+			{
+				"level": 2, 
+				"levelType":"014",
+				"title": "拼图游戏", 
+				"desc": "首先仔细观察并选择你喜欢的水果，然后来个很怀念的小游戏吧，来吧！咱们试试吧！",
+				"sData":["rat","cow","tiger","rabbit","dragon","snake","horse","goat","monkey","chicken","dog","pork"],
+				"tData":"你的生肖是什么？",
+				"time":180
+			},
+			{
+				"level": 3, 
+				"levelType":"014",
+				"title": "拼图游戏", 
+				"desc": "首先仔细观察并选择你喜欢的水果，然后来个很怀念的小游戏吧，来吧！咱们试试吧！",
+				"sData":["fruit1","fruit2","fruit3","fruit4","fruit5","fruit6","fruit7","fruit8","fruit9","fruit10","fruit11","fruit12"],
+				"tData":"那么你最喜欢下面哪种水果？",
+				"time":180
+			}
+		],
+		"chapter015":[
+			{
+				"level": 1, 
+				"levelType":"018",
+				"title": "地球是我家", 
+				"desc": "越来越多的砍伐和开垦，地球沙漠化越来越严重，所以要保护地球，保护人类唯一的家园，国家鼓励植树造林也是如此。这里有18课树苗，把它们全部栽到地球上，注意两棵树之间要保持一定的距离！",
+				"sData":10,
+				"tData":0.4,
+				"time":90
+			},
+			{
+				"level": 2, 
+				"levelType":"018",
+				"title": "植树造林", 
+				"desc": "记得小时候每到春天都会栽很多树，石榴树，无花果树，桃子树等等，虽然都是很小的树，但很开心，现在回想下，好怀念啊！希望大家都爱护树木，保护环境！",
+				"sData":15,
+				"tData":0.6,
+				"time":90
+			},
+			{
+				"level": 3, 
+				"levelType":"018",
+				"title": "植树是有技巧的", 
+				"desc": "这次准备20棵树，看看你能不能把地球绿化的最好！",
+				"sData":18,
+				"tData":0.8,
+				"time":120
+			},
+			{
+				"level": 4, 
+				"levelType":"018",
+				"title": "美化的地球", 
+				"desc": "地球本该是漂亮的，大自然也是，但是人类的过度开垦和欲望终究是小小地球无法满足的，所以人类要保护地球，保护大自然，美化我们的地球!",
+				"sData":20,
+				"tData":0.9,
+				"time":150
+			},
+			{
+				"level": 5, 
+				"levelType":"018",
+				"title": "完美的地球", 
+				"desc": "地球本该是完美的，还原最完美的地球!",
+				"sData":22,
+				"tData":1,
+				"time":180
+			}
+		],
+		"chapter016":[
+			{
+				"level": 1, 
+				"levelType":"016",
+				"title": "会飞的乌龟", 
+				"desc": "乌龟由于其动作缓慢，静而少动，故年龄特别长，甚至有活上千年的，但是这只乌龟会飞，会飞注定活不了多久！",
+				"sData":"tortoise",
+				"tData":3,
+				"time":2000,
+				"score":15
+			},
+			{
+				"level": 2, 
+				"levelType":"016",
+				"title": "倒飞的鸽子", 
+				"desc": "鸽子是和平的象征，这也是是二战胜利的象征，然而有些鸽子总喜欢退步，就像某些人找错方向却还在坚持！什么自己选择的路跪着也要走完，纯粹的误人误导！点击屏幕，鸽子会往上飞，完成使命后，杀了它吧！",
+				"sData":"squab",
+				"tData":3,
+				"time":1800,
+				"score":15
+			},
+			{
+				"level": 3, 
+				"levelType":"016",
+				"title": "会飞的鸭子", 
+				"desc": "不知为什么，总觉得鸭子是很和蔼善良的象征，我喜欢鸭子因为它们的纯朴，善良和可爱，据说每个人的周围都会有个外号叫鸭子的人，他们曾经给我们带来很多快乐，让我们一起祝福他们吧!",
+				"sData":"duck",
+				"tData":5,
+				"time":1500,
+				"score":20
+			},
+			{
+				"level": 4, 
+				"levelType":"016",
+				"title": "腾云驾雾", 
+				"desc": "龙是最神秘的动物，甚至很多科学拥护者都说它是人们虚构的，不存在的。反对他们没有意义，我们中华历史就5000年了，5000年前谁知道有什么，现在出现的新的病毒生物，你们之前不是照样不知道吗？",
+				"sData":"dragon",
+				"tData":10,
+				"time":1000,
+				"score":30
+			},
+			{
+				"level": 5, 
+				"levelType":"016",
+				"title": "鹰击长空", 
+				"desc": "鹰是最勇敢最勇猛的动物，那双如此敏锐的眼睛以及锋利的鹰爪还有翱翔的自由是很多人梦寐以求的伟大梦想，很多人把鹰当作自己的憧憬对象，甚至是自己的神，确实如此!从鹰身上可以学习太多东西了，我们也要刚强稳健和自由！",
+				"sData":"eagle",
+				"tData":10,
+				"time":800,
+				"score":40
+			}
+		],
+		"chapter017":[
+			{
+				"level":1, 
+				"levelType":"017",
+				"title": "集装箱", 
+				"desc": "社会主义荣辱观，即八荣八耻，是我国国民必须要树立的价值观，这样中国才能更强大！不管做什么事，都要以它为基础！玩过盖大楼吧！这里准备了30个箱子，至少要完成目标箱子数目的建筑，否则就证明你应该好好去学学八荣八耻了！",
+				"sData":"box",
+				"tData":5,
+				"time":2500,
+				"score":20
+			},
+			{
+				"level":2, 
+				"levelType":"017",
+				"title": "热身", 
+				"desc": "是的，大家都知道这也太简单了，不过，不要太早下结论，先热热身，后面需要你的手忙和脚乱！",
+				"sData":"box",
+				"tData":10,
+				"time":2000,
+				"score":30
+			},
+			{
+				"level":3, 
+				"levelType":"017",
+				"title": "盖大楼", 
+				"desc": "看到陆家嘴中心大厦吧！多么宏伟高大，没有八荣八耻的支持，很难建成，多想把它买下来啊！可惜...没有关系，我们自己手动盖一座大楼吧！",
+				"sData":"brick",
+				"tData":15,
+				"time":1500,
+				"score":30
+			},
+			{
+				"level":4, 
+				"levelType":"017",
+				"title": "顶级配置", 
+				"desc": "世界上最高的峰是珠穆朗玛峰，最高的山是喜马拉雅山，最好玩的游戏是有意思的挑战，嗯！弄个顶级的高配置吧！",
+				"sData":"brick",
+				"tData":25,
+				"time":1000,
+				"score":40
+			},
+			{
+				"level":5, 
+				"levelType":"017",
+				"title": "极限挑战", 
+				"desc": "奥，真的，难以接受的设计与现实，为什么要挑战这种极限，难道不挑战就不能活了吗？那么反问一句，为什么要去拼命挣钱，难道不挣钱就不能活了吗?",
+				"sData":"dizzy",
+				"tData":30,
+				"time":800,
+				"score":50
+			}
+		],
+		"chapter018":[
+			{
+				"level": 1, 
+				"levelType":"019",
+				"title": "爱消除", 
+				"desc": "欢迎来到极限实验室，这里充满着无穷无尽的逻辑与混乱，先从消除游戏开始！三个一样的物体放在一起可消除！注意移动的步数！",
+				"sData":[
+					{"box":"box","index":75},{"box":"brick","index":76},{"box":"crystal","index":77},
+					{"box":"crystal","index":67},{"box":"box","index":68},{"box":"brick","index":69},
+					{"box":"brick","index":59},{"box":"crystal","index":60},{"box":"box","index":61}
+				],
+				"tData":3,
+				"time":60,
+				"score":40
+			},
+			{
+				"level": 2, 
+				"levelType":"019",
+				"title": "爱消除进阶篇", 
+				"desc": "人生的道路曲曲折折，就像移动箱子有很多方式一样，到底哪个方式能帮我们完美解决问题呢！让我们拭目以待！",
+				"sData":[
+					{"box":"box","index":74},{"box":"crystal","index":75},{"box":"crystal","index":76},{"box":"box","index":77},
+					{"box":"crystal","index":66},{"box":"box","index":67},{"box":"box","index":68},{"box":"crystal","index":69},
+					{"box":"brick","index":58},{"box":"box","index":59},{"box":"box","index":60},{"box":"brick","index":61},
+					{"box":"box","index":50},{"box":"crystal","index":51},{"box":"crystal","index":52},{"box":"box","index":53},
+					{"box":"crystal","index":42},{"box":"brick","index":43},{"box":"brick","index":44},{"box":"crystal","index":45}
+				],
+				"tData":6,
+				"time":120,
+				"score":40
+			},
+			{
+				"level": 3, 
+				"levelType":"019",
+				"title": "爱消除高级篇", 
+				"desc": "每一步都很关键，走错一步，可能造成的结果就无法挽回。人生亦是如此，所以谨言慎行！",
+				"sData":[
+					{"box":"box","index":73},{"box":"brick","index":74},{"box":"crystal","index":75},
+					{"box":"crystal","index":76},{"box":"box","index":77},{"box":"brick","index":78},
+					{"box":"brick","index":65},{"box":"crystal","index":66},{"box":"box","index":67},
+					{"box":"box","index":68},{"box":"brick","index":69},{"box":"crystal","index":70},
+					{"box":"crystal","index":57},{"box":"box","index":58},{"box":"brick","index":59},
+					{"box":"brick","index":60},{"box":"crystal","index":61},{"box":"box","index":62}
+				],
+				"tData":7,
+				"time":180,
+				"score":40
+			},
+			{
+				"level": 4, 
+				"levelType":"019",
+				"title": "顶级观察师", 
+				"desc": "严谨的逻辑中必然存在无序的混乱，而无序的混乱当中也必然存在严谨的逻辑！就像蝴蝶效应一样，每一步都影响到未来不可预知的结果，然而我们只要一个结果！",
+				"sData":[
+					{"box":"crystal","index":73},{"box":"box","index":74},{"box":"crystal","index":75},{"box":"brick","index":76},{"box":"crystal","index":77},{"box":"brick","index":78},
+					{"box":"box","index":65},{"box":"box","index":66},{"box":"crystal","index":67},{"box":"crystal","index":68},{"box":"brick","index":69},{"box":"crystal","index":70},
+					{"box":"brick","index":57},{"box":"crystal","index":58},{"box":"brick","index":59},{"box":"box","index":60},{"box":"brick","index":61},{"box":"brick","index":62},
+					{"box":"crystal","index":49},{"box":"box","index":50},{"box":"box","index":51},{"box":"brick","index":52},{"box":"box","index":53},{"box":"box","index":54},
+					{"box":"box","index":41},{"box":"brick","index":42},{"box":"crystal","index":43},{"box":"crystal","index":44},{"box":"box","index":45},{"box":"crystal","index":46},
+					{"box":"brick","index":33},{"box":"brick","index":34},{"box":"box","index":35},{"box":"brick","index":36},{"box":"crystal","index":37},{"box":"box","index":38}
+				],
+				"tData":10,
+				"time":240,
+				"score":40
+			},
+			{
+				"level": 5, 
+				"levelType":"019",
+				"title": "极限挑战", 
+				"desc": "科学提出观察力这一名词是有它的意义的，比如利用它可以刷掉一些有眼不识泰山的人，就比如下面的挑战！",
+				"sData":[
+					{"box":"crystal","index":73},{"box":"box","index":74},{"box":"box","index":75},{"box":"brick","index":76},{"box":"brick","index":77},{"box":"dizzy","index":78},
+					{"box":"box","index":65},{"box":"crystal","index":66},{"box":"brick","index":67},{"box":"box","index":68},{"box":"dizzy","index":69},{"box":"brick","index":70},
+					{"box":"brick","index":57},{"box":"crystal","index":58},{"box":"brick","index":59},{"box":"box","index":60},{"box":"dizzy","index":61},{"box":"box","index":62},
+					{"box":"crystal","index":49},{"box":"dizzy","index":50},{"box":"crystal","index":51},{"box":"dizzy","index":52},{"box":"box","index":53},{"box":"dizzy","index":54},
+					{"box":"dizzy","index":41},{"box":"crystal","index":42},{"box":"dizzy","index":43},{"box":"box","index":44},{"box":"dizzy","index":45},{"box":"box","index":46},
+					{"box":"brick","index":33},{"box":"dizzy","index":34},{"box":"brick","index":35},{"box":"dizzy","index":36},{"box":"brick","index":37},{"box":"dizzy","index":38},
+					{"box":"dizzy","index":25},{"box":"brick","index":26},{"box":"dizzy","index":27},{"box":"brick","index":28},{"box":"dizzy","index":29},{"box":"brick","index":30},
+					{"box":"box","index":17},{"box":"dizzy","index":18},{"box":"box","index":19},{"box":"box","index":20},{"box":"dizzy","index":21},{"box":"dizzy","index":22}
+				],
+				"tData":12,
+				"time":300,
+				"score":40
+			}
+		],
+		"chapter019":[
+			{
+				"level": 47, 
+				"levelType":"020",
+				"title": "登上金字塔", 
+				"desc": "孩童时期玩过一个游戏，忘记叫什么名字了！就是三个人定好147、258、369，然后猜拳，伸出手指总数是谁的数字就轮到谁往前走一步！带着模糊的记忆，也做个类似的吧！仅作纪念，基本无可玩性！规则：从左至右分别是小明、我、小花，对应数字分别是147、258、369，点击骰子开始摇骰子，再次点击则停止，看看谁先到达金字塔！",
+				"sData":["格","至","诚","正","修","修","修","修","修","齐","治","平"],
+				"tData":"",
+				"time":0
+			}
+		],
+		"chapter020":[
+			{
+				"level": 1, 
+				"levelType":"021",
+				"title": "逆向运动", 
+				"desc": "有一种思维叫逆向思维，有时候我们经常随波逐流，经常跟着大众走，从众心理很严重，原因就是我们总是使用正向思维，好吧！是该培养培养逆向思维了！去打篮球吧！",
+				"sData":"emoji11",
+				"tData":"basketball",
+				"time":120
+			},
+			{
+				"level": 2, 
+				"levelType":"021",
+				"title": "锻炼", 
+				"desc": "锻炼锻炼你的逆向操作，或许对你将来的成功有很大帮助！去踢足球！",
+				"sData":"emoji04",
+				"tData":"football",
+				"time":90
+			},
+			{
+				"level": 3, 
+				"levelType":"021",
+				"title": "加强", 
+				"desc": "加强思维训练，提高反应能力，顺便实验下我们之前的锻炼是否有效果，这种东西就需要快很准！用篮球去踢足球！",
+				"sData":"basketball",
+				"tData":"football",
+				"time":60
+			},
+			{
+				"level": 4, 
+				"levelType":"021",
+				"title": "巩固", 
+				"desc": "学到的东西需要巩固，学而时习之，不亦说乎！就是这个道理，就像以前学的微积分，现在全忘了，根本原因是没有经常复习和巩固！巩固开始，用足球去打篮球！",
+				"sData":"football",
+				"tData":"basketball",
+				"time":60
+			},
+			{
+				"level": 5, 
+				"levelType":"021",
+				"title": "运用", 
+				"desc": "路是人走出来的，不走就不会形成路，去采朵花，送给你完美的人生！",
+				"sData":"emoji03",
+				"tData":"flower02",
+				"time":90
+			},
+			{
+				"level": 6, 
+				"levelType":"021",
+				"title": "赢取白富美", 
+				"desc": "把花送给你的新娘，赢取白富美，完美的生活即将开始！赶紧的！",
+				"sData":"flower02",
+				"tData":"bride",
+				"time":90
+			},
+			{
+				"level": 7, 
+				"levelType":"021",
+				"title": "人生巅峰", 
+				"desc": "赢取白富美后，你就可以走上人生的巅峰了，但是不能出差错，要一步一个脚印，踏踏实实的！出发吧，领取可以使你人生走向巅峰的奖杯吧！",
+				"sData":"emoji19",
+				"tData":"rank",
+				"time":90
+			}
+		],
+        "chapter021":[
+			{
+				"level": 1, 
+				"levelType":"022",
+				"title": "瞬间记忆", 
+				"desc": "这里我们来做个测试，测试的项目是瞬间记忆！很简单就是短时间的记忆能力！游戏开始后会出现一个图形，点击它之后会再出现一个新的图形，点击新图形，以后每次都会增加一定数量的图形，找出新出现的图形即可！达到目标数目即可过关！",
+				"sData":1,
+				"tData":5,
+				"time":90
+			},
+			{
+				"level": 2, 
+				"levelType":"022",
+				"title": "瞬间记忆训练", 
+				"desc": "和之前一样，干什么事都要先锻炼锻炼，完成你的修炼！",
+				"sData":1,
+				"tData":10,
+				"time":90
+			},
+			{
+				"level": 3, 
+				"levelType":"022",
+				"title": "提高档次", 
+				"desc": "规则还是一样，不过从现在开始每次出现的图形是两个，主要要全部找到才可以走向人生巅峰(⊙o⊙)…",
+				"sData":2,
+				"tData":12,
+				"time":90
+			},
+			{
+				"level": 4, 
+				"levelType":"022",
+				"title": "实践证明", 
+				"desc": "用实践来证明你的瞬时记忆超乎寻常，其实大家都知道你很聪明，只不过你不喜欢动脑筋而已！",
+				"sData":2,
+				"tData":18,
+				"time":90
+			},
+			{
+				"level": 5, 
+				"levelType":"022",
+				"title": "高级挑战", 
+				"desc": "给我一个真正意义上的挑战吧！每次会出现3个图形，找到所以图形！如果你能通过本关，毫无疑问那完全可以证明你的记忆能力超乎正常人，你是一个高级谋士！",
+				"sData":3,
+				"tData":21,
+				"time":90
+			},
+			{
+				"level": 6, 
+				"levelType":"022",
+				"title": "终极挑战", 
+				"desc": "很不错，欢迎来到这里我的高级谋士！来一次疯狂的挑战吧！每次会出现4个图形，我们要做的很简单，利用我们超乎寻常的记忆力和记忆方法，完成这次终极挑战吧！一代伟人是崛起还是衰落就看这次挑战了！",
+				"sData":4,
+				"tData":32,
+				"time":90
+			}
+		],
+        "chapter022":[
+			{
+				"level": 1, 
+				"levelType":"023",
+				"title": "方向感测试", 
+				"desc": "测试下方向感，让我们来看看你对方向的掌控如何！",
+				"sData":3,
+				"tData":15,
+				"time":120
+			},
+			{
+				"level": 2, 
+				"levelType":"023",
+				"title": "方向感锻炼", 
+				"desc": "你已经简单掌握方向的掌控了，但是还需要加强锻炼，毕竟挑战不是那么简单的！",
+				"sData":5,
+				"tData":20,
+				"time":120
+			},
+			{
+				"level": 3, 
+				"levelType":"023",
+				"title": "超越", 
+				"desc": "方向感好！可以做一个宇航员，一个船长或者一个指挥家，这些难道仅仅是梦想？不，挑战成功至少可以作为梦想的基础！",
+				"sData":8,
+				"tData":30,
+				"time":120
+			}
+		],
+        "chapter023":[
+			{
+				"level": 1, 
+				"levelType":"024",
+				"title": "一心二用", 
+				"desc": "科学研究结果说人如果一心二用的话什么事都做不好，但是可以通过训练达到类似一心二用的效果！想要同一时间可以做多件事吗？可以的，先测试下是否有培养的资质！控制两个球尽量避免碰撞到表情！",
+				"sData":[1],
+				"tData":10,
+				"time":2000
+			},
+			{
+				"level": 2, 
+				"levelType":"024",
+				"title": "二次试验", 
+				"desc": "欢迎入选者，初次尝试体验怎样呢，换个角度再来实验下！",
+				"sData":[3],
+				"tData":15,
+				"time":1800
+			},
+			{
+				"level": 3, 
+				"levelType":"024",
+				"title": "苦练三年", 
+				"desc": "有时候坚持未必可以得到好的结果，但是不坚持结果可能更糟糕，毕竟谁也不知道未来会怎样，但是唯有信念和信心指引我们前进！",
+				"sData":[1,2],
+				"tData":20,
+				"time":2000
+			},
+			{
+				"level": 4, 
+				"levelType":"024",
+				"title": "坚持就是胜利", 
+				"desc": "正所谓台上一分钟，台下十年功，所以坚持努力的训练终会得到应有的结果，感谢前几年的努力，如今我们依然在努力，为的就是创造美好的未来！",
+				"sData":[3,4],
+				"tData":25,
+				"time":2000
+			},
+			{
+				"level": 5, 
+				"levelType":"024",
+				"title": "台上的角", 
+				"desc": "霸王别姬里有这么一句话，等哪天你成了角了，就知道今天的努力没有白费！然而国荣成角了，最终也成了牺牲品！不管怎样，纪念下张国荣！让我们体验第一次成为角的感觉吧！",
+				"sData":[1,3],
+				"tData":30,
+				"time":1800
+			},
+			{
+				"level": 6, 
+				"levelType":"024",
+				"title": "大买卖", 
+				"desc": "勇猛无敌的挑战者，能来到这里真是令我实为震惊，我是来自外星球‘哇擦挖去’的一员，我们的族人都有同一时间做多件事情的能力，听说地球也有这样能力的人物！我不信！除非你完成下面一关！",
+				"sData":[1,3,4],
+				"tData":40,
+				"time":1600
+			},
+			{
+				"level": 7, 
+				"levelType":"024",
+				"title": "救世主", 
+				"desc": "哇擦挖去星球的民族视打赌如命也，他们说如果挑战者能通过本次最强挑战，那么就不会入侵地球，那么地球依然可以和平的运转！注意前提条件！挑战者做人类的救世主吧！",
+				"sData":[1,2,3,4],
+				"tData":50,
+				"time":1500
+			}
+		],
+        "chapter024":[
+			{
+				"level": 1, 
+				"levelType":"025",
+				"title": "匀窑", 
+				"desc": "儿时玩的一款小游戏，方言：“匀窑”，一般是两个人，现在由此引申出一个单人玩法！规则：每个坑里有n个石子，随机选择一个坑，拿走该坑里的所有石子，从下一个坑开始，每个坑丢一个石子，直到手里的石子全部丢完为止，然后继续重复，假设x是手里最后一颗石子丢到的坑的序号，那么如果x+1坑里没有石子，而x+2坑里有石子，则吃掉x+2坑里的所有石子，如果x+3坑里没有石子，而x+4坑里有石子，那么吃掉x+4坑里的所有石子，以此类推，直到所有坑里都没有石子为止！好！限定时间内，吃掉所有石子。",
+				"sData":[1,1,2,2],
+				"tData":"",
+				"time":30
+			},
+			{
+				"level": 2, 
+				"levelType":"025",
+				"title": "开始", 
+				"desc": "通过第一关，我们对匀窑这个游戏应该有了基本的了解，其实就像隔空打牛一样，简单的很！在此给个警告，这个游戏的匀窑顺序才是重点！",
+				"sData":[2,2,2,2,3,3,3,3],
+				"tData":"",
+				"time":60
+			},
+			{
+				"level": 3, 
+				"levelType":"025",
+				"title": "努力", 
+				"desc": "这次每个坑里的石子数量都相等，在给定的时间内，运用我们最强大的大脑思维完成这项艰巨的任务！",
+				"sData":[4,4,4,4,4,4,4,4,4,4,4,4],
+				"tData":"",
+				"time":120
+			},
+			{
+				"level": 4, 
+				"levelType":"025",
+				"title": "提高档次", 
+				"desc": "之前也给过警告，没有摸清它的规律，所有的工作都是白搭，就像很多时候我们很努力，结果却不那么如意一样，因为我们一开始的方向就错了！",
+				"sData":[5,5,5,5,5,5,5,5,5,5,5,5],
+				"tData":"",
+				"time":150
+			},
+			{
+				"level": 5, 
+				"levelType":"025",
+				"title": "或跃在渊", 
+				"desc": "方向对了，方法也要对，不然埋头苦干可能导致效率很低，就像吃饭一样，一股劲只吃米饭，不吃菜，很难坚持，所以要融会贯通！",
+				"sData":[6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6],
+				"tData":"",
+				"time":180
+			},
+			{
+				"level": 6, 
+				"levelType":"025",
+				"title": "飞龙在天", 
+				"desc": "很不错的成绩，儿时游戏能玩到这里已经算是很成功了，或许就差一个大人物的挑战了！",
+				"sData":[5,5,5,5,5,5,5,5,5,5,5,5,5,6,6,6],
+				"tData":"",
+				"time":240
+			},
+			{
+				"level": 7, 
+				"levelType":"025",
+				"title": "亢龙有悔", 
+				"desc": "把方向和方法都完全锁定，然而话说的简单，实际做起来却没那么简单，看似简单的逻辑实质上却很复杂，我们来一起试试！",
+				"sData":[5,5,5,5,5,5],
+				"tData":"",
+				"time":300
+			},
+			{
+				"level": 8, 
+				"levelType":"025",
+				"title": "人生巅峰", 
+				"desc": "很多有意思的玩家看到这个标题估计都很清楚，最后的挑战，也是每个章节的最终挑战，一般情况下，奥！严格来说没有一般情况下，它的测验需要最完美的思考或最恐怖的操作，亦或者是最疯狂的反应力！",
+				"sData":[6,6,6,6,6,6,6,6,6,6],
+				"tData":"",
+				"time":300
+			}
+		],
+        "chapter025":[
+			{
+				"level": 1, 
+				"levelType":"026",
+				"title": "密码学", 
+				"desc": "通俗来说就是把明文加密成密文，接收后再以解码的方式把密文还原成明文的学问！加密方法很多，比如：明文1234567加密后密文是3456789，那么加密方法就是在明文的基础上每位加1。好！请解开以下密文！",
+				"sData":9,
+				"tData":[1,4,2,8,5,7],
+				"time":300,
+				"extData":"世界上最神奇的数字"
+			},
+			{
+				"level": 2, 
+				"levelType":"026",
+				"title": "解密", 
+				"desc": "奇数是1、3、5、7、9，偶数是0、2、4、6、8，进行一次加密后得到的数字即是密码，发挥你最强大的思维，推算出密码！",
+				"sData":9,
+				"tData":[1,3,5,7,0,2,4,6,8],
+				"time":300,
+				"extData":"奇数在前偶数在后"
+			},
+			{
+				"level": 3, 
+				"levelType":"026",
+				"title": "层层解密", 
+				"desc": "下面给出的文字刚好组成一句话，而这句话也刚好隐藏着通往正义的密码，为了正义，解开这个密码！",
+				"sData":9,
+				"tData":[7,2,3,8,0,4,6,1,5],
+				"time":300,
+				"extData":"皆、前、兵、斗、阵、行、列、临、者"
+			},
+			{
+				"level": 4, 
+				"levelType":"026",
+				"title": "高级解密", 
+				"desc": "想象力是社会进步的阶梯，发挥你的想象力，破解这个神奇的密码！",
+				"sData":16,
+				"tData":[10,0,8,2,7,13,6,1,9,14,15,11,3,4,5,12],
+				"time":1200,
+				"extData":"开创比较漂亮的film"
+			},
+			{
+				"level": 5, 
+				"levelType":"026",
+				"title": "极限挑战（未完成的实验）", 
+				"desc": "联想是很有趣的思维方式，把不可能的东西联系在一起非常困难，但我们可以克服困难！",
+				"sData":16,
+				"tData":[7,2,3,8,0,4,6,1,5,7,2,3,8,0,4,6,1,5],
+				"time":300,
+				"extData":"貏舙窳驞霒"
+			}
+		],
+        "chapter026":[
+			{
+				"level": 1, 
+				"levelType":"027",
+				"title": "黑白块", 
+				"desc": "踩着玩吧，不要踩到白块，黑块最多不能漏掉目标数目即可！",
+				"sData":60,
+				"tData":3,
+				"time":0,
+				"extData":{"direction":[2,0],"speed":1}
+			},
+			{
+				"level": 2, 
+				"levelType":"027",
+				"title": "旋转", 
+				"desc": "逆时针旋转90度，序列应该会变成横向的，对的！是横向的，来吧！我们继续踩！",
+				"sData":90,
+				"tData":3,
+				"time":0,
+				"extData":{"direction":[1,0],"speed":1}
+			},
+			{
+				"level": 3, 
+				"levelType":"027",
+				"title": "倒立", 
+				"desc": "倒过来吧！测验下我们的逆向反应及操作能力！",
+				"sData":80,
+				"tData":5,
+				"time":0,
+				"extData":{"direction":[0,4],"speed":1}
+			},
+			{
+				"level": 4, 
+				"levelType":"027",
+				"title": "逆否", 
+				"desc": "上下颠倒，左右倒立，其实就是逆时针旋转180度，横向黑白块，来试下！",
+				"sData":120,
+				"tData":6,
+				"time":0,
+				"extData":{"direction":[0,3],"speed":1}
+			},
+			{
+				"level": 5, 
+				"levelType":"027",
+				"title": "高级", 
+				"desc": "挑战者，你好！知道你很聪明敏锐，估计你也能猜到接下来的挑战了，没错！勇敢前进吧！",
+				"sData":120,
+				"tData":8,
+				"time":0,
+				"extData":{"direction":[2,4],"speed":1}
+			},
+			{
+				"level": 6, 
+				"levelType":"027",
+				"title": "极限挑战", 
+				"desc": "这个其实挺简单的，不要害怕！",
+				"sData":160,
+				"tData":10,
+				"time":0,
+				"extData":{"direction":[1,3],"speed":1}
+			}
+		],
+        "chapter027":[
+			{
+				"level": 1, 
+				"levelType":"028",
+				"title": "出差错",
+				"desc": "啛啛喳喳",
+				"sData":"",
+				"tData":"",
+				"time":300
+			}
+		],
+        "chapter028":[
+			{
+				"level": 48, 
+				"levelType":"010",
+				"title": "无标题", 
+				"desc": "当你看到这行字的时候就说明你已经登上顶峰，成为新一代的大神了，作者很荣幸能够膜拜下大佬！在这里我都等了几十年了，都没人来到过这里！可谓是可喜可贺啊！你的能力如果用在军事上，那么第三次世界大战的胜利必然是我们，很好！继续往前走再挑战下高智商的世界！",
+				"sData":"",
+				"tData":"",
+				"time":300
+			}
+		],
+        "chapter029":[
+			{
+				"level": 48, 
+				"levelType":"010",
+				"title": "无标题", 
+				"desc": "当你看到这行字的时候就说明你已经登上顶峰，成为新一代的大神了，作者很荣幸能够膜拜下大佬！在这里我都等了几十年了，都没人来到过这里！可谓是可喜可贺啊！你的能力如果用在军事上，那么第三次世界大战的胜利必然是我们，很好！继续往前走再挑战下高智商的世界！",
+				"sData":"",
+				"tData":"",
+				"time":300
+			}
+		],
+        "chapter030":[
+			{
+				"level": 48, 
+				"levelType":"010",
+				"title": "无标题", 
+				"desc": "当你看到这行字的时候就说明你已经登上顶峰，成为新一代的大神了，作者很荣幸能够膜拜下大佬！在这里我都等了几十年了，都没人来到过这里！可谓是可喜可贺啊！你的能力如果用在军事上，那么第三次世界大战的胜利必然是我们，很好！继续往前走再挑战下高智商的世界！",
+				"sData":"",
+				"tData":"",
+				"time":300
+			}
+		],
+        "chapter031":[
+			{
+				"level": 48, 
+				"levelType":"010",
+				"title": "无标题", 
+				"desc": "当你看到这行字的时候就说明你已经登上顶峰，成为新一代的大神了，作者很荣幸能够膜拜下大佬！在这里我都等了几十年了，都没人来到过这里！可谓是可喜可贺啊！你的能力如果用在军事上，那么第三次世界大战的胜利必然是我们，很好！继续往前走再挑战下高智商的世界！",
+				"sData":"",
+				"tData":"",
+				"time":300
+			}
+		],
+        "chapter032":[
+			{
+				"level": 48, 
+				"levelType":"010",
+				"title": "无标题", 
+				"desc": "当你看到这行字的时候就说明你已经登上顶峰，成为新一代的大神了，作者很荣幸能够膜拜下大佬！在这里我都等了几十年了，都没人来到过这里！可谓是可喜可贺啊！你的能力如果用在军事上，那么第三次世界大战的胜利必然是我们，很好！继续往前走再挑战下高智商的世界！",
+				"sData":"",
+				"tData":"",
+				"time":300
+			}
+		]
+	},
     "config":{
         "scene010":{
             "items":[

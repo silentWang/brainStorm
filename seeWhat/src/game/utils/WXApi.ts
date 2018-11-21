@@ -24,7 +24,7 @@ class WXApi{
                         wx.getUserInfo({
                             success:res=>{
                                 GameData.wxUserInfo = res.userInfo;
-                                Game.instance().gameScene.gotoMenu();
+                                Game.instance().gameScene.enterMenu();
                             }
                         });
                         WXApi.showShareMenu();
@@ -40,7 +40,7 @@ class WXApi{
     //创建授权按钮
     static createUserInfoButton(){
         if (egret.Capabilities.runtimeType != "wxgame") {
-            Game.instance().gameScene.gotoMenu();
+            Game.instance().gameScene.enterMenu();
             return;
         }
         let sysInfo = wx.getSystemInfoSync();
@@ -67,7 +67,7 @@ class WXApi{
                 button.destroy();
                 WXApi.showShareMenu();
                 GameData.wxUserInfo = res.userInfo;
-                Game.instance().gameScene.gotoMenu();
+                Game.instance().gameScene.enterMenu();
             }
         });
     }
@@ -113,11 +113,14 @@ class WXApi{
     }
     //set user level
     //排行榜数据更新
-    static updateRankLvl(){
+    static updateRankLvl(chapter:number){
+        let schapter = egret.localStorage.getItem('very_funny_small_game_chapter');
+        if(parseInt(schapter) >= chapter) return;
+        egret.localStorage.setItem("very_funny_small_game_chapter",""+chapter);
         let openDataContext = platform['openDataContext'];
         openDataContext.postMessage({
             command:'cmd_user',
-            level:GameData.currentLevel
+            level:chapter
         });
     }
 }

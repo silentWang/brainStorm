@@ -5,6 +5,7 @@ class GuideView extends BaseView{
     }
 
     private tipsTxt:egret.TextField;
+    private startBtn:egret.Sprite;
     private init(){
         let sp = new egret.Shape();
         sp.graphics.beginFill(0x000000);
@@ -23,24 +24,35 @@ class GuideView extends BaseView{
         this.tipsTxt.lineSpacing = 20;
         this.tipsTxt.width = SpriteUtil.stageWidth - 200;
         this.tipsTxt.x = (SpriteUtil.stageWidth - this.tipsTxt.width)/2;
-        this.tipsTxt.y = SpriteUtil.stageHeight/2 - 200;
         this.addChild(this.tipsTxt);
 
-        let btn = SpriteUtil.createButton('我知道了');
+        let btn = SpriteUtil.createButton('开始挑战');
         btn.x = SpriteUtil.stageCenterX - btn.width/2;
-        btn.y = SpriteUtil.stageCenterY + 100;
         this.addChild(btn);
         btn.addEventListener(egret.TouchEvent.TOUCH_TAP,()=>{
             GameSound.instance().playSound('click');
             this.close();
             EffectUtil.playReadyGo();
         },this);
+        this.startBtn = btn;
+
+        let home = SpriteUtil.createImage('home');
+        home.x = 80;
+        home.y = 80;
+        home.scaleX = 1.4;
+        home.scaleY = 1.5;
+        this.addChild(home);
+        home.addEventListener(egret.TouchEvent.TOUCH_TAP,()=>{
+            this.close();
+            Game.instance().gameScene.enterMenu();
+        },this);
     }
 
     public show(){
         this.tipsTxt.textFlow = this.getDesc();
-        this.tipsTxt.y = SpriteUtil.stageCenterY - this.tipsTxt.height;
         super.open();
+        this.tipsTxt.y = SpriteUtil.stageCenterY - this.tipsTxt.height/2 - 100;
+        this.startBtn.y = this.tipsTxt.y + this.tipsTxt.height + 50;
     }
 
     private getDesc(){

@@ -4,7 +4,7 @@ class DataVO{
     //关卡
     public level = 0;
     //关卡类型
-    public levelType = "";
+    public levelType = "000";
     //关卡名称
     public title = '神秘的关卡';
     //关卡描述
@@ -17,6 +17,8 @@ class DataVO{
     public time:number = 0;
     //关卡target分数
     public score:number = 0;
+    //其他参数
+    public extData:any = null;
 
     setData(data){
         this.reset();
@@ -29,6 +31,7 @@ class DataVO{
         this.tData = data.tData ? data.tData : this.tData;
         this.time = data.time ? data.time : this.time;
         this.score = data.score ? data.score : this.score;
+        this.extData = data.extData ? data.extData : this.extData;
     }
 
     reset(){

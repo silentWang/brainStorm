@@ -41,7 +41,7 @@ class EffectUtil{
                 }
                 if(type == 0){
                     if(GameData.currentLevel <= 1 || GameData.reviveCard <= 0){
-                        Game.instance().gameScene.gotoOver();
+                        Game.instance().gameScene.enterOver();
                     }
                     else{
                         Game.instance().gameView.tipsView.open();
@@ -49,7 +49,7 @@ class EffectUtil{
                     }
                 }
                 else{
-                    EventCenter.instance().dispatchEvent(new GameEvent(GameEvent.GOTO_NEXT));
+                    EventCenter.instance().dispatchEvent(new GameEvent(GameEvent.GOTO_NEXT_LEVEL));
                 }
             },this,800);
         });

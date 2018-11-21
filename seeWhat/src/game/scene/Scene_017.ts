@@ -51,11 +51,11 @@ class Scene_017 extends BaseScene{
 
         let brbc = '以热爱祖国为荣  以危害祖国为耻\n以服务人民为荣  以背离人民为耻\n以崇尚科学为荣  以愚昧无知为耻\n以辛勤劳动为荣  以好逸恶劳为耻\n以团结互助为荣  以损人利己为耻\n以诚实守信为荣  以见利忘义为耻\n以遵纪守法为荣  以违法乱纪为耻\n以艰苦奋斗为荣  以骄奢淫逸为耻';
         // let bspr = SpriteUtil.createRect(360,200,0x000000);
-        let bspr = SpriteUtil.createText(brbc,30,0x00ff00,true);
+        let bspr = SpriteUtil.createText(brbc,30,0xff0000,true);
         let body = Matter.Bodies.rectangle(SpriteUtil.stageCenterX,SpriteUtil.stageHeight - bspr.height/2,bspr.width,bspr.height,{
             isStatic:true,
-            friction:2,
-            frictionStatic:2,
+            friction:5,
+            frictionStatic:5,
             render:{
                 sprite:bspr
             }
@@ -118,6 +118,8 @@ class Scene_017 extends BaseScene{
                 Matter.Body.setAngularVelocity(bdy,0);
                 Matter.Body.setVelocity(bdy,{x:0,y:0});
                 Matter.Body.setPosition(bdy,{x:xx,y:yy});
+                Matter.Body.set(bdy,"restitution",0);
+                Matter.Body.set(bdy,"friction",1);
                 Matter.Body.set(bdy,'isSleeping',false);
                 return;
             }
@@ -125,9 +127,9 @@ class Scene_017 extends BaseScene{
 
         let sprite = SpriteUtil.createImage(this.dataVo.sData);
         let body = Matter.Bodies.rectangle(xx,yy,sprite.width,sprite.height,{
-            frictionAir:0.001,
-            friction:1,
-            mass:5,
+            frictionAir:0.005,
+            friction:0.5,
+            mass:10,
             render:{
                 sprite:sprite
             }

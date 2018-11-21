@@ -31,24 +31,10 @@ class Scene_006 extends BaseScene{
         this.createRandomPic(arr,6,7);
         //这里的tdata代表展示图片的数量
         let num = this.dataVo.tData;
-        let snum = this.dataVo.sData.length;
-        if(num == 16 && snum == 9){
-            this.createRandomPic(arr,1,4);
-            this.createRandomPic(arr,2,6);
-            this.createRandomPic(arr,0,6);
-            this.createRandomPic(arr,7,3);
-            this.createRandomPic(arr,5,2);
-            this.createRandomPic(arr,7,4);
-            this.createRandomPic(arr,0,7);
-        }
-        else if(num == 16 && snum == 16){
-            this.createRandomPic(arr,9,12);
-            this.createRandomPic(arr,10,14);
-            this.createRandomPic(arr,8,15);
-            this.createRandomPic(arr,6,11);
-            this.createRandomPic(arr,7,13);
-            this.createRandomPic(arr,3,12);
-            this.createRandomPic(arr,4,10);
+        if(num == 12){
+            this.createRandomPic(arr,3,8);
+            this.createRandomPic(arr,7,9);
+            this.createRandomPic(arr,5,11);
         }
     }
 
@@ -58,13 +44,14 @@ class Scene_006 extends BaseScene{
         this.tarSprite.addEventListener(egret.TouchEvent.TOUCH_TAP,this.selectClk,this);
         this.picSprs.sort((a,b)=>{return Math.random() > 0.5 ? 1 : -1;});
         let num = this.dataVo.tData;
-        let cols = Math.sqrt(num);
-        let scale = (SpriteUtil.stageWidth - 50) / (this.tarSprite.width*cols);
+        let cols = 3;
+        let scale = (SpriteUtil.stageWidth - 100) / (this.tarSprite.width*cols);
         let wid = scale*this.tarSprite.width;
+        let hgt = scale*this.tarSprite.height;
         let sprite = new egret.Sprite();
         for(let i = 0;i < this.picSprs.length;i++){
             let xx = (i%cols)*(wid+10);
-            let yy = 100 + (wid+20)*Math.floor(i/cols);
+            let yy = (hgt+5)*Math.floor(i/cols);
             this.picSprs[i].x = xx;
             this.picSprs[i].y = yy;
             sprite.addChild(this.picSprs[i]);
@@ -73,7 +60,7 @@ class Scene_006 extends BaseScene{
         }
         this.addChild(sprite);
         sprite.x = SpriteUtil.stageCenterX - sprite.width/2;
-        sprite.y = 100;
+        sprite.y = SpriteUtil.stageCenterY - sprite.height/2;
     }
 
     private createRandomPic(sarr = [],index1 = 0,index2 = 0){
@@ -120,7 +107,7 @@ class Scene_006 extends BaseScene{
     //创建图片
     private createPic(arr){
         let len = arr.length;
-        let cols = 3;//Math.sqrt(len);
+        let cols = 3;
         let wid = (SpriteUtil.stageWidth - 120)/cols;
         let sprite = new egret.Sprite();
         for(let i = 0;i < len;i++){

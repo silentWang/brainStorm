@@ -22,7 +22,8 @@ class MenuScene extends BaseScene{
         this.addChild(btn);
         btn.addEventListener(egret.TouchEvent.TOUCH_TAP,()=>{
             GameSound.instance().playSound('click');
-            EventCenter.instance().dispatchEvent(new GameEvent(GameEvent.GOTO_NEXT));
+            Game.instance().gameScene.enterChapter();
+            // EventCenter.instance().dispatchEvent(new GameEvent(GameEvent.GOTO_NEXT));
         },this);
         this.startBtn = btn;
 

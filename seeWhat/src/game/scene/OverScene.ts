@@ -8,7 +8,7 @@ class OverScene extends BaseScene{
         let text = new egret.TextField();
         text.name = 'target_text';
         text.textAlign = 'center';
-        text.text = 'Game Over';
+        text.text = '游 戏 结 束';
         text.size = 120;
         text.textColor = 0xFF0000;
         text.stroke = 1;
@@ -25,7 +25,7 @@ class OverScene extends BaseScene{
         this.addChild(btn);
         btn.addEventListener(egret.TouchEvent.TOUCH_TAP,()=>{
             GameSound.instance().playSound('click');
-            Game.instance().gameScene.gotoMenu();
+            Game.instance().gameScene.enterMenu();
         },this);
     }
 

@@ -1,5 +1,6 @@
 // TypeScript file
 class EgretRender {
+	private static render = null;
     public static create(options: Object) {
         let defaults = {
             controller: EgretRender,
@@ -59,17 +60,18 @@ class EgretRender {
     }
 
     public static run(render: Object) {
-		egret.startTick((timeStamp: number) => {
-			EgretRender.world(render);
-			return false;
-		}, EgretRender);
+		this.render = render;
+		egret.startTick(this.loop, EgretRender);
     }
 
+	public static loop(timeStamp:number){
+		EgretRender.world(this.render);
+		return false;
+	}
+
     public static stop(cb: Function = null) {
-        egret.stopTick((timeStamp: number)=> {
-			if(cb) cb();
-            return false;
-        }, EgretRender);
+        egret.stopTick(this.loop, EgretRender);
+		this.render = null;
     }
 
     public static world(render: any) {

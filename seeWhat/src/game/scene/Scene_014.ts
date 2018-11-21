@@ -18,16 +18,18 @@ class Scene_014 extends BaseScene{
 
         this.createFruit();
     }
-    //选择水果
+    //选择水果  sData 各种图像  tdata 标题
     private createFruit(){
-        let arr = ['fruit1_png','fruit2_png','fruit3_png','fruit4_png','fruit5_png','fruit6_png','fruit7_png','fruit8_png','fruit9_png','fruit10_png','fruit11_png','fruit12_png'];
+        let arr = this.dataVo.sData;
         let len = arr.length;
         this.beforeContainer = new egret.Sprite();
         this.addChild(this.beforeContainer);
         for(let i = 0;i < len;i++){
             let xx = 25 + 225*(i%3);
             let yy = 150 + 225*Math.floor(i/3);
-            let bit = new egret.Bitmap(RES.getRes(arr[i]));
+            let bit = SpriteUtil.createImage(arr[i]);
+            bit.anchorOffsetX = 0;
+            bit.anchorOffsetY = 0;
             bit.width = 200;
             bit.height = 200;
             bit.x = xx;
@@ -38,7 +40,7 @@ class Scene_014 extends BaseScene{
             this.beforeContainer.addChild(bit);
         }
 
-        this.titleTxt = SpriteUtil.createText('那么你最喜欢下面哪种水果？',32,0x0000ff);
+        this.titleTxt = SpriteUtil.createText(this.dataVo.tData,32,0x0000ff);
         this.titleTxt.x = SpriteUtil.stageCenterX;
         this.titleTxt.y = 100;
         this.addChild(this.titleTxt);
@@ -47,10 +49,10 @@ class Scene_014 extends BaseScene{
     private selectPic(evt){
         GameSound.instance().playSound('click');
         let name = evt.target.name;
-        this.createSeparate(name);
+        this.createSeparate(`${name}_png`);
         this.beforeContainer.visible = false;
         this.removeChild(this.beforeContainer);
-        this.titleTxt.text = '没错！还原这个你最爱的水果吧！';
+        this.titleTxt.text = '没错！还原这个图像！';
         this.timeItem = new TimeItem(this.dataVo.time);
         this.addChild(this.timeItem);
         this.timeItem.start();
@@ -127,7 +129,6 @@ class Scene_014 extends BaseScene{
             egret.Tween.get(this.currTarget).to({x:this.cropPoints[index1].x,y:this.cropPoints[index1].y},200).call(()=>{
                 egret.Tween.removeTweens(this.currTarget);
                 this.currTarget = null;
-                this.checkOver();
             });
             egret.Tween.get(pic).to({x:this.cropPoints[index2].x,y:this.cropPoints[index2].y},200).call(()=>{
                 egret.Tween.removeTweens(pic);

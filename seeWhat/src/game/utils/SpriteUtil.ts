@@ -16,9 +16,12 @@ class SpriteUtil{
         return circle;
     }
     //创建矩形
-    static createRect(width:number,height:number,color:number = 0x00ff00){
+    static createRect(width:number,height:number,color:number = 0x00ff00,isLine:boolean = false){
         let rect = new egret.Shape();
         rect.graphics.beginFill(color);
+        if(isLine){
+            rect.graphics.lineStyle(1,0x000000);
+        }
         rect.graphics.drawRect(0,0,width,height);
         rect.graphics.endFill();
         rect.anchorOffsetX = width/2;
@@ -26,18 +29,18 @@ class SpriteUtil{
         return rect;
     }
     //多边形
-    static createPolygon(points:Array<number>,color:number = 0x00ff00){
+    static createPolygon(points:Array<number>,color:number = 0x0000ff){
         if(!points || !points.length){
             return;
         }
         let polygon = new egret.Shape();
         let len = points.length;
-        polygon.graphics.beginFill(color);
         polygon.graphics.lineStyle(1,color);
+        polygon.graphics.beginFill(color);
         polygon.graphics.moveTo(points[0],points[1]);
         for(let i = 0;i < len;i+=2){
             polygon.graphics.lineTo(points[i],points[i+1]);
-            polygon.graphics.moveTo(points[i],points[i+1]);
+            // polygon.graphics.moveTo(points[i],points[i+1]);
         }
         polygon.graphics.lineTo(points[0],points[1]);
         polygon.graphics.endFill();

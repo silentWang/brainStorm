@@ -57,7 +57,7 @@ class Scene_010 extends BaseScene{
     private clkSwitch(evt){
         if(!this.isCanOperate) return;
         if(this.curIndex >= this.items.length - 1){
-            Game.instance().gameScene.gotoMenu();
+            Game.instance().gameScene.enterMenu();
             return;
         }
         let target = evt.target;

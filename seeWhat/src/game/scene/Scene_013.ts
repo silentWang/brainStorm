@@ -5,38 +5,48 @@ class Scene_013 extends BaseScene{
         this.init();
     }
 
-    private nameArr = ["阿诺","爱因斯坦","牛顿","作者","憨豆","贝克汉姆","范冰冰","成龙","吴京","成龙"];
-    private nameTxt:egret.TextField;
-    private enemySpr;
-    private currWinIndex = 0;
+    private leftSpr;
+    private rightSpr;
+    private leftIndex = 0;
+    private rightIndex = 0;
+    private xScale = 3.2;
     private isOperating:boolean = false;
     private score = 0;
     private init(){
         //sdata 规则物品  tdata 相应规则
-        let len = this.dataVo.sData.length;
+        let arr = ["赢","和","赢"];
+        let len = arr.length;
         let wid = (SpriteUtil.stageWidth - 100)/len;
+        let sprite = new egret.Sprite;
         for(let i = 0;i < len;i++){
-            let btn = SpriteUtil.createImage(this.dataVo.sData[i],true);
+            let btn = SpriteUtil.createText(arr[i],100,0xff0000,true);
             let scale = wid/btn.width;
-            btn.x = 30 + i*(wid+10) + scale*64/2;
-            btn.y = SpriteUtil.stageCenterY + 100;
+            btn.x = i*(wid+10) + scale*btn.width/2;
             btn.scaleX = scale;
             btn.scaleY = scale;
             this.addChild(btn);
             btn.name = 'index_'+i;
+            btn.touchEnabled = true;
             btn.addEventListener(egret.TouchEvent.TOUCH_TAP,this.playDoing,this);
+            sprite.addChild(btn);
         }
+        this.addChild(sprite);
+        sprite.anchorOffsetX = sprite.width/2;
+        sprite.anchorOffsetY = sprite.height/2;
+        sprite.x = SpriteUtil.stageCenterX;
+        sprite.y = SpriteUtil.stageCenterY + 280;
 
-        this.enemySpr = SpriteUtil.createImage(this.dataVo.sData[0]);
-        this.enemySpr.scaleX = 4;
-        this.enemySpr.scaleY = 4;
-        this.enemySpr.x = SpriteUtil.stageCenterX;
-        this.enemySpr.y = SpriteUtil.stageCenterY - 200;
-        this.addChild(this.enemySpr);
+        this.leftSpr = SpriteUtil.createImage(this.dataVo.sData[0]);
+        this.leftSpr.scaleY = this.xScale;
+        this.leftSpr.x = SpriteUtil.stageCenterX - 160;
+        this.leftSpr.y = SpriteUtil.stageCenterY - 160;
+        this.addChild(this.leftSpr);
+        this.rightSpr = SpriteUtil.createImage(this.dataVo.sData[0]);
+        this.rightSpr.scaleY = this.xScale;
+        this.rightSpr.x = SpriteUtil.stageCenterX + 160;
+        this.rightSpr.y = SpriteUtil.stageCenterY - 160;
+        this.addChild(this.rightSpr);
         //
-        this.nameTxt = SpriteUtil.createText("",48);
-        this.addChild(this.nameTxt);
-        this.nameTxt.y = this.enemySpr.y - 250;
         this.enemyDoing();
 
         if(this.dataVo.time > 0){
@@ -55,16 +65,43 @@ class Scene_013 extends BaseScene{
 
     private enemyDoing(){
         let len = this.dataVo.sData.length;
-        let index = Math.floor(len * Math.random());
-        let str = this.nameArr[Math.floor(this.nameArr.length * Math.random())];
-        this.nameTxt.text = str;
-        this.nameTxt.x = SpriteUtil.stageCenterX - this.nameTxt.width;
-        this.enemySpr.texture = RES.getRes(`${this.dataVo.sData[index]}_png`);
-        if(!this.dataVo.tData || !this.dataVo.tData.length){
-            this.currWinIndex = index > 0 ? (index - 1)%len : len - 1;
+        this.leftIndex = Math.floor(len * Math.random());
+        this.leftSpr.texture = RES.getRes(`${this.dataVo.sData[this.leftIndex]}_png`);
+        this.rightIndex = Math.floor(len * Math.random());
+        this.rightSpr.texture = RES.getRes(`${this.dataVo.sData[this.rightIndex]}_png`);
+        if(this.dataVo.level <= 2){
+            if(this.leftIndex == 2){
+                this.leftSpr.scaleX = this.xScale;
+            }
+            else{
+                this.leftSpr.scaleX = -this.xScale;
+            }
+            if(this.rightIndex == 2){
+                this.rightSpr.scaleX = -this.xScale;
+            }
+            else{
+                this.rightSpr.scaleX = this.xScale;
+            }
+            
+        }
+        else if(this.dataVo.level <= 4){
+            if(this.leftIndex == 2){
+                this.leftSpr.scaleX = -this.xScale;
+            }
+            else{
+                this.leftSpr.scaleX = this.xScale;
+            }
+            if(this.rightIndex == 1 || this.rightIndex == 3){
+                this.rightSpr.scaleX = -this.xScale;
+            }
+            else{
+                this.rightSpr.scaleX = this.xScale;
+            }
+
         }
         else{
-            this.currWinIndex = this.dataVo.tData[index];
+            this.leftSpr.scaleX = this.xScale;
+            this.rightSpr.scaleX = this.xScale;
         }
     }
 
@@ -73,7 +110,7 @@ class Scene_013 extends BaseScene{
         GameSound.instance().playSound('click');
         let name = evt.target.name;
         let index = name.split('_')[1];
-        if(index == this.currWinIndex){
+        if(index == this.getResult()){
             this.enemyDoing();
             this.score++;
             this.scoreItem.setSTScore(this.score);
@@ -83,6 +120,56 @@ class Scene_013 extends BaseScene{
             this.isOperating = true;
             EffectUtil.showResultEffect();
         }
+    }
+    
+    private getResult(){
+        let len = this.dataVo.sData.length;
+        let index = 0;
+        if(this.dataVo.level == 5){
+            let temp = this.leftIndex - this.rightIndex;
+            if(temp == 2 || temp == -3){
+                index = 2;
+            }
+            else if(temp == -1 || temp == 3){
+                index == 0;
+            }
+            else{
+                index = 1;
+            }
+            return index;
+        }
+        if(this.leftIndex == len - 1){
+            if(this.rightIndex == this.leftIndex - 1){
+                index = 2;
+            }
+            else if(this.rightIndex == 0){
+                index = 0;
+            }
+            else{
+                index = 1;
+            }
+        }
+        else if(this.rightIndex == len - 1){
+            if(this.leftIndex == this.rightIndex - 1){
+                index = 0;
+            }
+            else if(this.leftIndex == 0){
+                index = 2;
+            }
+            else{
+                index = 1;
+            }
+        }
+        else if(this.leftIndex - this.rightIndex == 1){
+            index = 2;
+        }
+        else if(this.leftIndex - this.rightIndex == -1){
+            index = 0;
+        }
+        else{
+            index = 1;
+        }
+        return index;
     }
 
     enter(){

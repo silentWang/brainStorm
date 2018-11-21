@@ -22,6 +22,7 @@ class Scene_005 extends BaseScene{
     private isTouching:boolean = false;
     
     private init(){
+        //sdata 水果  tdata 物品  time 总数
         this.engine = Matter.Engine.create({enableSleeping:false},null);
         this.runner = Matter.Runner.create(null);
         this.render = EgretRender.create({
@@ -40,7 +41,7 @@ class Scene_005 extends BaseScene{
         this.recycleArr = [];
         this.initAllItem();
 
-        let plySpr = SpriteUtil.createImage('monkey');
+        let plySpr = SpriteUtil.createImage(this.dataVo.extData);
         let scale = 100/plySpr.width;
         plySpr.scaleX = scale;
         plySpr.scaleY = scale;
@@ -90,23 +91,27 @@ class Scene_005 extends BaseScene{
         let len1 = arr1.length;
         let len2 = arr2.length;
         let index = 0;
-        for(let i = 0;i < 80;i++){
+        let num = this.dataVo.time;
+        let mids1 = Math.ceil(num/4);
+        let mids2 = Math.ceil(num/2);
+        let mids3 = Math.ceil(num*3/4);
+        for(let i = 0;i < num;i++){
             let xx = 0;
             let yy = 0;
-            if(i < 25){
+            if(i < mids1){
                 xx = -50;
-                yy = (i%25)*(SpriteUtil.stageHeight/25);
+                yy = (i%mids1)*(SpriteUtil.stageHeight/mids1);
             }
-            else if(i < 40){
-                xx = ((i-25)%15)*(SpriteUtil.stageWidth/15);
+            else if(i < mids2){
+                xx = ((i - mids1)%mids2)*(SpriteUtil.stageWidth/mids2);
                 yy = SpriteUtil.stageHeight + 50;
             }
-            else if(i < 65){
+            else if(i < mids3){
                 xx = SpriteUtil.stageWidth + 50;
-                yy = ((i-40)%25)*(SpriteUtil.stageHeight/25);
+                yy = ((i-mids2)%mids3)*(SpriteUtil.stageHeight/mids3);
             }
             else{
-                xx = ((i - 65)%15)*(SpriteUtil.stageWidth/15);
+                xx = ((i - mids3)%mids3)*(SpriteUtil.stageWidth/mids3);
                 yy = -50;
             }
             let fruit;

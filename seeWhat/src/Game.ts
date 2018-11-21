@@ -40,7 +40,7 @@ class Game{
         this._gameView = new GameView();
         //进入菜单
         if(!GameData.isWxGame){
-            this._gameScene.gotoMenu();
+            this._gameScene.enterMenu();
         }
         else{
             WXApi.getSetting();
