@@ -118,7 +118,7 @@ class Scene_021 extends BaseScene{
     }
 
     private collisionHandle(evt){
-        console.log("碰撞o%",evt);
+        // console.log("碰撞o%",evt);
         let pairs = evt.pairs;
         for(let pair of pairs){
             if(pair.bodyA.label == "target" && pair.bodyB.label == "player"){

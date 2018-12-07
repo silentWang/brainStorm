@@ -193,7 +193,7 @@ class Scene_009 extends BaseScene{
         rans.sort((a,b)=>{
             return a - b;
         });
-        console.log(rans);
+        // console.log(rans);
         let xname = 'basketball';
         if(this.dataVo.level == 3){
             xname = 'football';
@@ -304,7 +304,7 @@ class Scene_009 extends BaseScene{
         let left = Matter.Bodies.rectangle(-5,SpriteUtil.stageCenterY,10,SpriteUtil.stageHeight,{isStatic:true});
         let right = Matter.Bodies.rectangle(SpriteUtil.stageWidth + 5,SpriteUtil.stageCenterY,10,SpriteUtil.stageHeight,{isStatic:true});
         let top = Matter.Bodies.rectangle(SpriteUtil.stageCenterX,-5,SpriteUtil.stageWidth,10,{isStatic:true});
-        let bottom = Matter.Bodies.rectangle(SpriteUtil.stageCenterX,SpriteUtil.stageHeight - 100,SpriteUtil.stageWidth,200,{isStatic:true});
+        let bottom = Matter.Bodies.rectangle(SpriteUtil.stageCenterX,SpriteUtil.stageHeight - 100,SpriteUtil.stageWidth,250,{isStatic:true});
         Matter.World.add(this.engine.world,[left,right,top,bottom]);
     }
     //创建竖直隔板
@@ -326,14 +326,14 @@ class Scene_009 extends BaseScene{
     //创建跷跷板
     private createCatapult(){
         let rect = SpriteUtil.createRect(200,16,0xCD00CD);
-        let catapult = Matter.Bodies.rectangle(SpriteUtil.stageWidth - 100,SpriteUtil.stageHeight - 240,rect.width,rect.height,{
+        let catapult = Matter.Bodies.rectangle(SpriteUtil.stageWidth - 100,SpriteUtil.stageHeight - 290,rect.width,rect.height,{
             render:{
                 sprite:rect
             }
         });
 
         let prect = SpriteUtil.createRect(20,40,0xff00ff);
-        let pbody = Matter.Bodies.rectangle(SpriteUtil.stageWidth - 100,SpriteUtil.stageHeight - 220,prect.width,prect.height,{
+        let pbody = Matter.Bodies.rectangle(SpriteUtil.stageWidth - 100,SpriteUtil.stageHeight - 270,prect.width,prect.height,{
             isStatic:true,
             render:{
                 sprite:prect
@@ -341,7 +341,7 @@ class Scene_009 extends BaseScene{
         });
 
         let srect = SpriteUtil.createRect(30,30,0x0f0f0f);
-        let sbody = Matter.Bodies.rectangle(SpriteUtil.stageWidth - 15,SpriteUtil.stageHeight - 216,srect.width,srect.height,{
+        let sbody = Matter.Bodies.rectangle(SpriteUtil.stageWidth - 15,SpriteUtil.stageHeight - 266,srect.width,srect.height,{
             isStatic:true,
             render:{
                 sprite:srect

@@ -48,6 +48,17 @@ class LoadingUI extends egret.Sprite implements RES.PromiseTaskReporter {
         this.textField.stroke = 2;
         this.textField.strokeColor = 0xff0000;
         this.textField.bold = true;
+
+        let text = new egret.TextField();
+        text.text = "健康游戏忠告\n抵制不良游戏，拒绝盗版游戏。\n注意自我保护，谨防受骗上当。\n适度游戏益脑，沉迷游戏伤身。\n合理安排时间，享受健康生活。";
+        text.textAlign = "center";
+        text.textColor = 0xffffff;
+        text.lineSpacing = 20;
+        text.size = 36;
+        text.anchorOffsetX = text.width/2;
+        text.x = 360;
+        text.y = 700;
+        this.addChild(text);
     }
 
     public onProgress(current: number, total: number): void {

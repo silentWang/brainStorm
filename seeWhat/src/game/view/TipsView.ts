@@ -5,6 +5,7 @@ class TipsView extends BaseView{
     }
 
     private tipsTxt:egret.TextField;
+    private background:egret.Shape;
     init(){
         let sp = new egret.Shape();
         sp.graphics.beginFill(0x000000,0.5);
@@ -57,10 +58,35 @@ class TipsView extends BaseView{
         btn2.x = shape.width/2 + 40;
         btn2.y = shape.height - 100;
         sprite.addChild(btn2);
+
+        let bg = new egret.Shape();
+        bg.graphics.beginFill(0x000000);
+        bg.graphics.drawRect(0,0,SpriteUtil.stageWidth,SpriteUtil.stageHeight);
+        bg.graphics.endFill();
+        bg.touchEnabled = true;
+        bg.alpha = 0.6;
+        this.background = bg;
         btn2.addEventListener(egret.TouchEvent.TOUCH_TAP,()=>{
-            return;
-            this.close();
-            console.log('看视频');
+            let videoAd = WXApi.showVideoAd();
+            Game.instance().addTop(bg);
+            videoAd.load().then(() => {
+                videoAd.show();
+                videoAd.onClose((res)=>{
+                    if(res.isEnded == true){
+                        this.close();
+                        GameData.currentLevel--;
+                        EventCenter.instance().dispatchEvent(new GameEvent(GameEvent.GOTO_NEXT_LEVEL));
+                    }
+                    if(bg && bg.parent){
+                        bg.parent.removeChild(bg);
+                    }
+                });
+            }).catch(err => {
+                if(bg && bg.parent){
+                    bg.parent.removeChild(bg);
+                }
+                // console.log(err.errMsg);
+            });
         },this);
         
         sprite.x = SpriteUtil.stageCenterX - shape.width/2;

@@ -33,7 +33,7 @@ class Scene_022 extends BaseScene{
         let h = Math.floor(SpriteUtil.stageWidth - 100)/100;
         let v = Math.floor(SpriteUtil.stageHeight - 480)/100;
         for(let i = 0;i < h*v;i++){
-            let point = new egret.Point(50+(i%h)*100,240+Math.floor(i/h)*100);
+            let point = new egret.Point(50+(i%h)*100,180+Math.floor(i/h)*100);
             this.pointsArr.push(point);
         }
 

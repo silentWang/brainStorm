@@ -117,14 +117,14 @@ class Scene_018 extends BaseScene{
         this.leftKnifesTxt.bold = true;
         this.leftKnifesTxt.textColor = 0x0000ff;
         this.leftKnifesTxt.x = SpriteUtil.stageCenterX + 50;
-        this.leftKnifesTxt.y = SpriteUtil.stageCenterY + 300;
+        this.leftKnifesTxt.y = SpriteUtil.stageCenterY + 270;
         this.addChild(this.leftKnifesTxt);
     }
     //创建刀
     private createKnifes(){
         let kspr = SpriteUtil.createImage('tree');
         kspr.x = SpriteUtil.stageCenterX;
-        kspr.y = SpriteUtil.stageCenterY + 330;
+        kspr.y = SpriteUtil.stageCenterY + 300;
         kspr.scaleX = 0.8;
         kspr.scaleY = -1;
         kspr.touchEnabled = true;

@@ -65,7 +65,8 @@ class Scene_001 extends BaseScene{
                 text.touchEnabled = true;
                 this.tarText.touchEnabled = true;
                 this.selectedArr.push(text);
-                if(str == this.dataVo.tData){
+                
+                if(this.dataVo.tData.indexOf(str) >= 0){
                     let leftTime = this.timeItem.leftTime;
                     this.timeItem.stop();
                     if(leftTime >= 30){

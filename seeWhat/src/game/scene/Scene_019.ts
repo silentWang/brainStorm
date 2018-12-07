@@ -55,7 +55,7 @@ class Scene_019 extends BaseScene{
 
         let btn = SpriteUtil.createButton("重置",160,80,0x0000ff,36);
         btn.x = SpriteUtil.stageCenterX - btn.width/2;
-        btn.y = SpriteUtil.stageHeight - 200;
+        btn.y = 200;
         this.addChild(btn);
         btn.addEventListener(egret.TouchEvent.TOUCH_TAP,()=>{
             if(!this.isCanOperate) return;

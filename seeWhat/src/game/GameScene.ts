@@ -91,6 +91,7 @@ class GameScene{
         this._menuScene.enter();
         this._currentScene = this._menuScene;
         GameSound.instance().stopMusic();
+        WXApi.showBannerAd();
     }
     //game over
     enterOver(){
@@ -101,6 +102,7 @@ class GameScene{
         this._currentScene = this._overScene;
         GameData.currentChapter = 0;
         GameSound.instance().stopMusic();
+        WXApi.showBannerAd();
     }
     //关卡选项
     enterChapter(){
@@ -110,12 +112,16 @@ class GameScene{
         this._chapterScene.enter();
         this._currentScene = this._chapterScene;
         GameSound.instance().stopMusic();
+        WXApi.showBannerAd();
     }
     //
     private nextChapter(){
         let chapter = GameData.currentChapter;
         GameData.currentLevel = -1;
         this.gotoNext();
+        if(chapter == 1 || chapter == 3 || chapter == 6 || chapter == 20 || chapter == 26){
+            WXApi.showBannerAd(false);
+        }
     }
     //下一关
     private gotoNext(evt:GameEvent = null){
@@ -128,7 +134,7 @@ class GameScene{
             return;
         }
         //only test
-        // GameData.currentLevel = 5;
+        // GameData.currentLevel = 3;
         Game.instance().gameView.guideView.show();
         if(this._currentScene){
             this._currentScene.exit();

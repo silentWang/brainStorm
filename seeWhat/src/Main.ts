@@ -55,7 +55,7 @@ class Main extends egret.DisplayObjectContainer {
         }
 
         this.runGame().catch(e => {
-            console.log(e);
+            // console.log(e);
         })
 
 
@@ -66,7 +66,7 @@ class Main extends egret.DisplayObjectContainer {
         await this.loadResource()
         const result = await RES.getResAsync("config_json");
         GameData.gameConfig = result;
-        console.log("游戏配置o%",result);
+        // console.log("游戏配置o%",result);
         await platform.login();
         this.createGameScene();
     }

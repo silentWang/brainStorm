@@ -15,7 +15,7 @@ class Scene_011 extends BaseScene{
         let str = this.dataVo.sData[0];
         let num = this.dataVo.sData[1];
         let rand = Math.floor((num - 10)*Math.random() + 10);
-        console.log(rand);
+        // console.log(rand);
         for(let i = 0;i < num;i++){
             let text;
             if(i == rand){

@@ -165,7 +165,7 @@ class Scene_004 extends BaseScene{
     enter(){
         super.enter();
         this.targetIndex = Math.floor(this.giftBoxArr.length*Math.random());
-        console.log('targetIndex:'+this.targetIndex);
+        // console.log('targetIndex:'+this.targetIndex);
         this.playDrop();
     }
 

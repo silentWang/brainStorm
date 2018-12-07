@@ -40,7 +40,7 @@ class Scene_012 extends BaseScene{
 
         let btn = SpriteUtil.createButton("重来",140,60,0x0000ff,28);
         btn.x = SpriteUtil.stageCenterX - btn.width/2;
-        btn.y = SpriteUtil.stageHeight - 260;
+        btn.y = SpriteUtil.stageHeight - 300;
         this.addChild(btn);
         btn.addEventListener(egret.TouchEvent.TOUCH_TAP,()=>{
             this.pathShape.graphics.clear();

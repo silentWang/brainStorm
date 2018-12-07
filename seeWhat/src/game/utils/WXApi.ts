@@ -11,6 +11,9 @@ declare namespace wx {
     let getSystemInfoSync:Function;//
     let createInnerAudioContext:Function;//创建音频context
     let createGameClubButton:Function;//创建游戏圈按钮
+    let navigateToMiniProgram:Function;//跳转小游戏
+    let createBannerAd:Function;//创建广告
+    let createRewardedVideoAd:Function;//激励视频
 }
 
 class WXApi{
@@ -44,7 +47,7 @@ class WXApi{
             return;
         }
         let sysInfo = wx.getSystemInfoSync();
-        console.log(sysInfo);
+        // console.log(sysInfo);
         let button = wx.createUserInfoButton({
             type: 'text',
             text: '登陆',
@@ -110,6 +113,61 @@ class WXApi{
             }
         });
         return btn;
+    }
+    //跳转到指定小游戏
+    static navigateToMiniProgram(appid){
+        wx.navigateToMiniProgram({
+            appId:appid,
+            success:function(){
+                // console.log("跳转成功！");
+            }
+        });
+    }
+    //广告显示
+    static globalBannerAd;
+    static showBannerAd(b:boolean = true){
+        if(!this.globalBannerAd){
+            let systemInfo:any = wx.getSystemInfoSync();
+            let shgt = SpriteUtil.stageHeight;
+            let wid = SpriteUtil.stageWidth;
+            if(shgt > systemInfo.windowHeight){
+                shgt = systemInfo.windowHeight*wid/systemInfo.windowWidth;
+            }
+            let bannerAd = wx.createBannerAd({
+                adUnitId: 'adunit-3f56016b3591065a',
+                style: {
+                    left: 0,
+                    top: 0,
+                    width: wid
+                }
+            });
+            bannerAd.onResize(res=>{
+                bannerAd.style.left = 0;
+                bannerAd.style.top = systemInfo.windowHeight - res.height;
+                this.globalBannerAd = bannerAd;
+                if(b){
+                    bannerAd.show();
+                }
+                else{
+                    bannerAd.hide();
+                }
+            });
+        }
+        else{
+            if(b){
+                this.globalBannerAd.show();
+            }
+            else{
+                this.globalBannerAd.hide();
+            }
+        }
+    }
+    //激励视频
+    static showVideoAd(){
+        let videoAd = wx.createRewardedVideoAd({
+            adUnitId: 'adunit-37768ba621106947'
+        });
+        return videoAd;
     }
     //set user level
     //排行榜数据更新

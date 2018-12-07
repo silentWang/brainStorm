@@ -24,7 +24,7 @@ class Scene_007 extends BaseScene{
         for(let i = 0;i < 40;i++){
             let point = new egret.Point();
             point.x = 90 + 140*(i%5);
-            point.y = 120 + 120*Math.floor(i/5);
+            point.y = 120 + 100*Math.floor(i/5);
             this.pointsArr.push(point);
         }
     }

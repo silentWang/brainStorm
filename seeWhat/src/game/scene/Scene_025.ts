@@ -261,7 +261,7 @@ class Scene_025 extends BaseScene{
         this.curIndex = evt.target.name.split("_")[1];
         this.isCanOperate = false;
         this.playGetAnim().catch((err)=>{
-            console.log(err);
+            // console.log(err);
         });
     }
 

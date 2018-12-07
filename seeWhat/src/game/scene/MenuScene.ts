@@ -51,6 +51,18 @@ class MenuScene extends BaseScene{
             WXApi.shareAppMessage();
         },this);
 
+        let jumpbtn = SpriteUtil.createImage('game_more_1');
+        jumpbtn.x = SpriteUtil.stageWidth - jumpbtn.width + 10;
+        jumpbtn.y = 150;
+        jumpbtn.scaleX = 1.2;
+        jumpbtn.scaleY = 1.2;
+        this.addChild(jumpbtn);
+        jumpbtn.addEventListener(egret.TouchEvent.TOUCH_TAP,()=>{ 
+            if(!GameData.isWxGame) return;
+            //逻辑迷宫
+            WXApi.navigateToMiniProgram("wx8bc01658647ef87a");
+        },this);
+
         this.gameClubBtn = WXApi.createGameClubButton();
     }
 

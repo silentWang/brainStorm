@@ -15,17 +15,17 @@ class Scene_023 extends BaseScene{
         let left = this.createDirBtn("left");
         let right = this.createDirBtn("right");
         up.x = SpriteUtil.stageCenterX;
-        up.y = SpriteUtil.stageHeight - up.height*2.5 - 200;
+        up.y = SpriteUtil.stageHeight - up.height*2.5 - 300;
         down.x = up.x;
-        down.y = SpriteUtil.stageHeight - down.height/2 - 200;
+        down.y = SpriteUtil.stageHeight - down.height/2 - 300;
         left.x = SpriteUtil.stageCenterX - left.height;
-        left.y = SpriteUtil.stageHeight - left.height*1.5 - 200;
+        left.y = SpriteUtil.stageHeight - left.height*1.5 - 300;
         right.x = SpriteUtil.stageCenterX + left.height;
         right.y = left.y;
 
         let bg = SpriteUtil.createImage('together');
         bg.x = SpriteUtil.stageCenterX;
-        bg.y = SpriteUtil.stageHeight - left.height*1.5 - 200;
+        bg.y = SpriteUtil.stageHeight - left.height*1.5 - 300;
         bg.scaleX = 1.8;
         bg.scaleY = 1.8;
         bg.alpha = 0.8
