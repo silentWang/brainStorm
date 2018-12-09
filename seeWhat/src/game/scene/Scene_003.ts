@@ -46,8 +46,8 @@ class Scene_003 extends BaseScene{
         EgretRender.run(render);
 
         //player
-        let playerSpr = SpriteUtil.createText('👦',80);
-        this.player = Matter.Bodies.circle(50,1250,(playerSpr.width - 10)/2,{
+        let playerSpr = SpriteUtil.createImage("boy");
+        this.player = Matter.Bodies.rectangle(50,1250,playerSpr.width - 20,playerSpr.height - 6,{
             stiffness:1,
             collisionFilter:{
             category:this.playerCategory
@@ -55,11 +55,11 @@ class Scene_003 extends BaseScene{
             render:{
                 sprite:playerSpr
             }
-        },0);
+        });
 
         //target
-        let girl = SpriteUtil.createText('👧',80);
-        this.girlbdy = Matter.Bodies.circle(SpriteUtil.stageCenterX,girl.height/2+10,(girl.width - 10)/2,{
+        let girl = SpriteUtil.createImage("girl");
+        this.girlbdy = Matter.Bodies.circle(SpriteUtil.stageCenterX,girl.height/2+10,girl.width/2,{
             stiffness:1,
             collisionFilter:{
                 category:this.categories[0],
@@ -314,8 +314,11 @@ class Scene_003 extends BaseScene{
         });
 
         let spr = new egret.Sprite();
+        let scale = radius*2/64;
         for(let i = 0;i < num;i++){
-            let t1 = SpriteUtil.createText('🔥',radius*2,0xff0000,false);
+            let t1 = SpriteUtil.createImage("fireball");
+            t1.scaleX = scale;
+            t1.scaleY = scale;
             t1.x = i*radius*2;
             spr.addChild(t1);
         }

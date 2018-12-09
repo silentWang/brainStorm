@@ -119,8 +119,11 @@ class GameScene{
         let chapter = GameData.currentChapter;
         GameData.currentLevel = -1;
         this.gotoNext();
-        if(chapter == 1 || chapter == 3 || chapter == 6 || chapter == 20 || chapter == 26){
+        if(chapter == 3 || chapter == 6 || chapter == 7 || chapter == 19 || chapter == 22){
             WXApi.showBannerAd(false);
+        }
+        else{
+            WXApi.showBannerAd(true);
         }
     }
     //下一关

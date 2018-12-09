@@ -1,6 +1,6 @@
 {
     "levels":{
-		"chapter001":[
+		"chapter006":[
 			{
 				"level": 1,
 				"levelType":"001",
@@ -47,7 +47,7 @@
 				"time":180
 			}
 		],
-		"chapter002":[
+		"chapter008":[
 			{
 				"level": 1, 
 				"levelType":"002",
@@ -123,7 +123,7 @@
 				"time":120
 			}
 		],
-		"chapter004":[
+		"chapter001":[
 			{
 				"level": 1, 
 				"levelType":"004",
@@ -170,7 +170,7 @@
 				"time":30
 			}
 		],
-		"chapter005":[
+		"chapter004":[
 			{
 				"level": 1, 
 				"levelType":"005",
@@ -205,7 +205,7 @@
 				"extData":"bride"
 			}
 		],
-		"chapter006":[
+		"chapter007":[
 			{
 				"level": 1, 
 				"levelType":"006",
@@ -252,7 +252,7 @@
 				"time":210
 			}
 		],
-		"chapter007":[
+		"chapter005":[
 			{
 				"level": 1, 
 				"levelType":"007",
@@ -284,7 +284,7 @@
 				"score":25
 			}
 		],
-		"chapter008":[
+		"chapter015":[
 			{
 				"level": 1, 
 				"levelType":"008",
@@ -331,7 +331,7 @@
 				"time":60
 			}
 		],
-		"chapter009":[
+		"chapter025":[
 			{
 				"level": 1, 
 				"levelType":"009",
@@ -357,7 +357,7 @@
 				"time":300
 			}
 		],
-		"chapter010":[
+		"chapter002":[
 			{
 				"level": 1, 
 				"levelType":"011",
@@ -413,7 +413,7 @@
 				"time":35
 			}
 		],
-		"chapter011":[
+		"chapter016":[
 			{
 				"level": 1, 
 				"levelType":"015",
@@ -469,7 +469,7 @@
 				"time":90
 			}
 		],
-		"chapter012":[
+		"chapter018":[
 			{
 				"level": 1, 
 				"levelType":"012",
@@ -522,7 +522,7 @@
 				"time":150
 			}
 		],
-		"chapter013":[
+		"chapter014":[
 			{
 				"level": 1, 
 				"levelType":"013",
@@ -574,7 +574,7 @@
 				"score":30
 			}
 		],
-		"chapter014":[
+		"chapter010":[
 			{
 				"level": 1, 
 				"levelType":"014",
@@ -603,7 +603,7 @@
 				"time":180
 			}
 		],
-		"chapter015":[
+		"chapter009":[
 			{
 				"level": 1, 
 				"levelType":"018",
@@ -650,7 +650,7 @@
 				"time":180
 			}
 		],
-		"chapter016":[
+		"chapter011":[
 			{
 				"level": 1, 
 				"levelType":"016",
@@ -702,7 +702,7 @@
 				"score":40
 			}
 		],
-		"chapter017":[
+		"chapter023":[
 			{
 				"level":1, 
 				"levelType":"017",
@@ -754,7 +754,7 @@
 				"score":50
 			}
 		],
-		"chapter018":[
+		"chapter017":[
 			{
 				"level": 1, 
 				"levelType":"019",
@@ -839,7 +839,7 @@
 				"score":40
 			}
 		],
-		"chapter019":[
+		"chapter026":[
 			{
 				"level": 47, 
 				"levelType":"020",
@@ -850,7 +850,7 @@
 				"time":0
 			}
 		],
-		"chapter020":[
+		"chapter019":[
 			{
 				"level": 1, 
 				"levelType":"021",
@@ -915,7 +915,7 @@
 				"time":90
 			}
 		],
-        "chapter021":[
+        "chapter012":[
 			{
 				"level": 1, 
 				"levelType":"022",
@@ -971,7 +971,7 @@
 				"time":90
 			}
 		],
-        "chapter022":[
+        "chapter020":[
 			{
 				"level": 1, 
 				"levelType":"023",
@@ -1000,7 +1000,7 @@
 				"time":120
 			}
 		],
-        "chapter023":[
+        "chapter021":[
 			{
 				"level": 1, 
 				"levelType":"024",
@@ -1065,7 +1065,7 @@
 				"time":1500
 			}
 		],
-        "chapter024":[
+        "chapter013":[
 			{
 				"level": 1, 
 				"levelType":"025",
@@ -1139,7 +1139,7 @@
 				"time":300
 			}
 		],
-        "chapter025":[
+        "chapter024":[
 			{
 				"level": 1, 
 				"levelType":"026",
@@ -1176,22 +1176,22 @@
 				"title": "高级解密", 
 				"desc": "想象力是社会进步的阶梯，发挥你的想象力，破解这个神奇的密码！",
 				"sData":16,
-				"tData":[10,0,8,2,7,13,6,1,9,14,15,11,3,4,5,12],
+				"tData":[10,15,7,4,0,13,12,14,3,8,6,1,5,2,11,9],
 				"time":1200,
-				"extData":"开创比较漂亮的film"
+				"extData":"曹操使用一滴蓝墨水保护八百个强匪"
 			},
 			{
 				"level": 5, 
 				"levelType":"026",
-				"title": "极限挑战（未完成的实验）", 
+				"title": "极限挑战", 
 				"desc": "联想是很有趣的思维方式，把不可能的东西联系在一起非常困难，但我们可以克服困难！",
 				"sData":16,
-				"tData":[7,2,3,8,0,4,6,1,5,7,2,3,8,0,4,6,1,5],
+				"tData":[10,0,8,2,7,13,6,1,9,14,15,11,3,4,5,12],
 				"time":300,
-				"extData":"貏舙窳驞霒"
+				"extData":"开创比较漂亮的film"
 			}
 		],
-        "chapter026":[
+        "chapter022":[
 			{
 				"level": 1, 
 				"levelType":"027",

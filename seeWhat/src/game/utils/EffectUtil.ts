@@ -40,12 +40,12 @@ class EffectUtil{
                     text.parent.removeChild(text);
                 }
                 if(type == 0){
-                    if(GameData.currentLevel <= 1 || GameData.reviveCard <= 0){
-                        Game.instance().gameScene.enterOver();
+                    if(GameData.reviveCard <= 0){
+                        GameData.reviveCard = 0;
+                        Game.instance().gameView.tipsView.open(false);
                     }
                     else{
                         Game.instance().gameView.tipsView.open();
-                        GameData.reviveCard--;
                     }
                 }
                 else{

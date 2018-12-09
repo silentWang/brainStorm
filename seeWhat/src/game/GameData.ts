@@ -8,7 +8,7 @@ class GameData{
     public static currentChapter:number = 0;
     //当前关卡
     public static currentLevel:number = 0;
-    public static reviveCard:number = 3;
+    public static reviveCard:number = 1;
     public static gameConfig;
     //当前关卡参数
     public static getLevelConfig(){

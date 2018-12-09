@@ -6,6 +6,8 @@ class TipsView extends BaseView{
 
     private tipsTxt:egret.TextField;
     private background:egret.Shape;
+    private reviveBtn:egret.Sprite;
+    private lookBtn:egret.Sprite;
     init(){
         let sp = new egret.Shape();
         sp.graphics.beginFill(0x000000,0.5);
@@ -25,13 +27,14 @@ class TipsView extends BaseView{
         title.y = 50;
         sprite.addChild(title);
 
-        let text = SpriteUtil.createText('你有3次复活机会！',36,0xeeeeee);
+        let text = SpriteUtil.createText('你有1次复活机会！',36,0xeeeeee);
         text.anchorOffsetX = 0;
         text.anchorOffsetY = 0;
         text.x = 50;
         text.y = 100;
         text.width = shape.width - 100;
         text.height = 160;
+        text.lineSpacing = 20;
         sprite.addChild(text);
         this.tipsTxt = text;
 
@@ -49,15 +52,19 @@ class TipsView extends BaseView{
         btn1.y = shape.height - 100;
         sprite.addChild(btn1);
         btn1.addEventListener(egret.TouchEvent.TOUCH_TAP,()=>{
+            if(GameData.reviveCard <= 0) return;
             this.close();
+            GameData.reviveCard--;
             GameData.currentLevel--;
             EventCenter.instance().dispatchEvent(new GameEvent(GameEvent.GOTO_NEXT_LEVEL));
         },this);
+        this.reviveBtn = btn1;
 
         let btn2 = SpriteUtil.createButton('看视频复活',200,80,0x0000ff,32);
         btn2.x = shape.width/2 + 40;
         btn2.y = shape.height - 100;
         sprite.addChild(btn2);
+        this.lookBtn = btn2;
 
         let bg = new egret.Shape();
         bg.graphics.beginFill(0x000000);
@@ -69,6 +76,12 @@ class TipsView extends BaseView{
         btn2.addEventListener(egret.TouchEvent.TOUCH_TAP,()=>{
             let videoAd = WXApi.showVideoAd();
             Game.instance().addTop(bg);
+            videoAd.onError((res)=>{
+                if(bg && bg.parent){
+                    bg.parent.removeChild(bg);
+                }
+                console.log(res.errMsg);
+            });
             videoAd.load().then(() => {
                 videoAd.show();
                 videoAd.onClose((res)=>{
@@ -85,7 +98,7 @@ class TipsView extends BaseView{
                 if(bg && bg.parent){
                     bg.parent.removeChild(bg);
                 }
-                // console.log(err.errMsg);
+                console.log(err.errMsg);
             });
         },this);
         
@@ -93,8 +106,16 @@ class TipsView extends BaseView{
         sprite.y = SpriteUtil.stageCenterY - shape.height/2;
     }
 
-    open(){
-        this.tipsTxt.text = `你还剩余${GameData.reviveCard}次复活机会！`;
+    open(isbool = true){
+        this.reviveBtn.visible = isbool;
+        if(isbool){
+            this.tipsTxt.text = `你还剩余${GameData.reviveCard}次复活机会！`;
+            this.lookBtn.x = SpriteUtil.stageWidth/1.2/2 + 40;
+        }
+        else{
+            this.lookBtn.x = SpriteUtil.stageWidth/1.2/2 - this.lookBtn.width/2;
+            this.tipsTxt.text = `您的免费复活次数已用光\n可以看视频复活！`;
+        }
         super.open();
     }
 }

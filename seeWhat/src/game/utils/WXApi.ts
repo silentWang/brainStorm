@@ -152,6 +152,10 @@ class WXApi{
                     bannerAd.hide();
                 }
             });
+            bannerAd.onError((res)=>{
+                console.log(res.errMsg);
+            });
+
         }
         else{
             if(b){
