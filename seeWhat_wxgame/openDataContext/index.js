@@ -31,8 +31,8 @@ class openDataContextMain{
         wx.getUserCloudStorage({
           keyList:['level'],
           complete:res=>{
-            console.log('我的level');
-            console.log(res);
+            // console.log('我的level');
+            // console.log(res);
             let kv = res.KVDataList;
             if (!kv || kv.length == 0){
               //注意key value 都必须是string 否则报错
@@ -40,20 +40,20 @@ class openDataContextMain{
               wx.setUserCloudStorage({
                 KVDataList:kv,
                 complete:res=>{
-                  console.log(res);
+                  // console.log(res);
                 }
               });
             }
             else{
               let nlvl = parseInt(data.level);
               let slvl = parseInt(kv[0].value);
-              console.log(nlvl +'----' + slvl);
+              // console.log(nlvl +'----' + slvl);
               if(nlvl > slvl){
                 kv[0].value = ''+nlvl;
                 wx.setUserCloudStorage({
                   KVDataList: kv,
                   complete: res => {
-                    console.log(res);
+                    // console.log(res);
                   }
                 });
               }

@@ -85,10 +85,10 @@ class SpriteUtil{
         return bitmap;
     }
     //create a button
-    static createButton(label:string,width = 200,height = 80,backgroundColor = 0x0000ff,size = 40){
+    static createButton(label:string,width = 200,height = 80,backgroundColor = 0xff00ff,size = 40){
         let btn = new egret.Sprite();
         let rect = new egret.Shape();
-        rect.graphics.lineStyle(5,0xB03060);
+        rect.graphics.lineStyle(5,0x8F8F8F);
         rect.graphics.beginFill(backgroundColor);
         rect.graphics.drawRect(0,0,width,height);
         rect.graphics.endFill();

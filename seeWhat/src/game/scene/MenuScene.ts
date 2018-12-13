@@ -64,18 +64,25 @@ class MenuScene extends BaseScene{
         },this);
 
         this.gameClubBtn = WXApi.createGameClubButton();
+        //
+        EventCenter.instance().addEventListener(GameEvent.AUTHORIZE_REFRESH,this.initOpenData,this);
+        WXApi.getSetting();
     }
 
-    enter(){
-        super.enter();
+    private initOpenData(){
+        EventCenter.instance().removeEventListener(GameEvent.AUTHORIZE_REFRESH,this.initOpenData,this);
         if(!this.isInitOpenDataCtx){
             this.isInitOpenDataCtx = true;
             let openDatactx = platform['openDataContext'];
             //由于没有服务器 暂时使用avatarUrl 标识用户
             openDatactx.postMessage({command:'cmd_openId',openId:GameData.wxUserInfo.avatarUrl});
         }
-        this.gameClubBtn.show();
+    }
+
+    enter(){
+        super.enter();
         egret.Tween.get(this.startBtn,{loop:true}).to({scaleX:2.4,scaleY:2.4},1500).to({scaleX:2.2,scaleY:2.2},1500);
+        this.gameClubBtn.show();
     }
     exit(){
         super.exit();

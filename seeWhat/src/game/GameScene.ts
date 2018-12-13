@@ -72,6 +72,10 @@ class GameScene{
         this.allScenes['026'] = Scene_026;
         this.allScenes['027'] = Scene_027;
         this.allScenes['028'] = Scene_028;
+        this.allScenes['029'] = Scene_029;
+        this.allScenes['030'] = Scene_030;
+        this.allScenes['031'] = Scene_031;
+        this.allScenes['032'] = Scene_032;
         //添加事件
         this.addEvent();
     }

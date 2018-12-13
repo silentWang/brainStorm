@@ -224,9 +224,11 @@ class Scene_005 extends BaseScene{
         if(rate < -10){
             rate = -10;
         }
-        let fx = dx/Math.abs(dx);
-        let fy = fx*rate;
-        Matter.Body.setVelocity(body,{x:fx*3,y:fy*3});
+        let fx = 2.5*dx/Math.abs(dx);
+        let fy = 2.5*fx*rate;
+        fx = Math.abs(fx) > 4 ? 4*fx/Math.abs(fx) : fx;
+        fy = Math.abs(fy) > 5 ? 5*fy/Math.abs(fy) : fy;
+        Matter.Body.setVelocity(body,{x:fx,y:fy});
         Matter.Body.setAngularVelocity(body,0.01*fx);
         return true;
     }

@@ -43,7 +43,7 @@ class Game{
             this._gameScene.enterMenu();
         }
         else{
-            WXApi.getSetting();
+            Game.instance().gameScene.enterMenu();
         }
     }
 

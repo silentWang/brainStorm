@@ -88,7 +88,6 @@ class Scene_018 extends BaseScene{
     }
 
     private showNext(){
-        GameSound.instance().playSound('click');
         if(this.currCount <= 0){
             this.leftKnifesTxt.text = "";
             let leftTime = this.timeItem.leftTime;

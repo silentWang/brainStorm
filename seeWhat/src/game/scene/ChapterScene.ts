@@ -179,10 +179,10 @@ class ChapterScene extends BaseScene{
             WXApi.updateRankLvl(parseInt(mychap));
         }
         //only test
-        if(parseInt(mychap) >= 27){
-            mychap = "27";
+        if(parseInt(mychap) > 32){
+            mychap = "32";
         }
-        // mychap = "30";
+        // mychap = "32";
         for(let i = 0;i < parseInt(mychap);i++){
             let sprite = this.chaptersArr[i];
             sprite.getChildAt(0).visible = true;

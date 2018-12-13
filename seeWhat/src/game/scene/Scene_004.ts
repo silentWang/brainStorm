@@ -66,7 +66,7 @@ class Scene_004 extends BaseScene{
             this.maxTimes = 30;
         }
         else {
-            this.intervalTime = 170;
+            this.intervalTime = 180;
             this.maxTimes = 60;
         }
 

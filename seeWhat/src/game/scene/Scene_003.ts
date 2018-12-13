@@ -59,7 +59,7 @@ class Scene_003 extends BaseScene{
 
         //target
         let girl = SpriteUtil.createImage("girl");
-        this.girlbdy = Matter.Bodies.circle(SpriteUtil.stageCenterX,girl.height/2+10,girl.width/2,{
+        this.girlbdy = Matter.Bodies.circle(SpriteUtil.stageCenterX,girl.height/2+60,girl.width/2,{
             stiffness:1,
             collisionFilter:{
                 category:this.categories[0],
@@ -196,11 +196,11 @@ class Scene_003 extends BaseScene{
         let enemy7 = this.createEnemy(210,1100,this.categories[5],15);
         Matter.World.add(world,enemy7);
         //包围机器人
-        let enemy8 = this.createEnemy(160,100,this.categories[5]);
+        let enemy8 = this.createEnemy(160,160,this.categories[5]);
         Matter.World.add(world,enemy8);
-        let enemy9 = this.createEnemy(310,200,this.categories[5]);
+        let enemy9 = this.createEnemy(310,260,this.categories[5]);
         Matter.World.add(world,enemy9);
-        let enemy10 = this.createEnemy(460,100,this.categories[5]);
+        let enemy10 = this.createEnemy(460,160,this.categories[5]);
         Matter.World.add(world,enemy10);
         this.enemies = [enemy1,enemy2,enemy3,enemy4,enemy5,enemy6,enemy7,enemy8,enemy9,enemy10];
         //飞镖
@@ -208,7 +208,7 @@ class Scene_003 extends BaseScene{
         let scale = 50/arrowspr1.width;
         arrowspr1.scaleX = scale;
         arrowspr1.scaleY = scale;
-        let arrow1 = Matter.Bodies.circle(100,300,scale*arrowspr1.width/2,{
+        let arrow1 = Matter.Bodies.circle(100,360,scale*arrowspr1.width/2,{
             label:'Body_enemy',
             friction:0,
             frictionAir:0,
@@ -219,7 +219,7 @@ class Scene_003 extends BaseScene{
         let arrowspr2 = SpriteUtil.createImage('insect');
         arrowspr2.scaleX = scale;
         arrowspr2.scaleY = scale;
-        let arrow2 = Matter.Bodies.circle(SpriteUtil.stageWidth - 100,400,scale*arrowspr2.width/2,{
+        let arrow2 = Matter.Bodies.circle(SpriteUtil.stageWidth - 100,460,scale*arrowspr2.width/2,{
             label:'Body_enemy',
             friction:0,
             frictionAir:0,

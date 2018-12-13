@@ -14,12 +14,15 @@ class Scene_020 extends BaseScene{
     private leftIndex = 0;
     private rightIndex = 0;
     private ownIndex = 0;
-
+    private container:egret.Sprite;
     private diceArr = [];
     private isRunning = false;
     private intervalId = 0;
     private isCanOperate = true;
     private init(){
+        let sprite = new egret.Sprite();
+        this.addChild(sprite);
+        this.container = sprite;
         let shape = new egret.Shape();
         shape.graphics.beginFill(0x000000,0.1);
         shape.graphics.lineStyle(30,0x8B7765);
@@ -28,73 +31,73 @@ class Scene_020 extends BaseScene{
         shape.anchorOffsetY = shape.height/2;
         shape.x = SpriteUtil.stageCenterX + 15;
         shape.y = SpriteUtil.stageCenterY - 100;
-        this.addChild(shape);
+        this.container.addChild(shape);
 
         let lspr = this.createLeftCastle();
         lspr.x = 115;
         lspr.y = SpriteUtil.stageCenterY - 110;
-        this.addChild(lspr);
+        this.container.addChild(lspr);
 
         let rspr = this.createRightCastle();
         rspr.x = SpriteUtil.stageCenterX + 130;
         rspr.y = lspr.y;
-        this.addChild(rspr);
+        this.container.addChild(rspr);
 
         let mspr = this.createMiddleCastle();
         mspr.x = SpriteUtil.stageCenterX;
         mspr.y = lspr.y + 120;
-        this.addChild(mspr);
+        this.container.addChild(mspr);
 
         let kp1 = SpriteUtil.createText(this.dataVo.sData[4],60,0x00ff00,true);
         kp1.x = shape.x - shape.width/2;
         kp1.y = shape.y - shape.height/2;
-        this.addChild(kp1);
+        this.container.addChild(kp1);
 
         let kp2 = SpriteUtil.createText(this.dataVo.sData[5],60,0x00ff00,true);
         kp2.x = shape.x - 15;
         kp2.y = shape.y - shape.height/2;
-        this.addChild(kp2);
+        this.container.addChild(kp2);
 
         let kp3 = SpriteUtil.createText(this.dataVo.sData[6],60,0x00ff00,true);
         kp3.x = shape.x + shape.width/2 - 30;
         kp3.y = shape.y - shape.height/2;
-        this.addChild(kp3);
+        this.container.addChild(kp3);
 
         let kp4 = SpriteUtil.createText(this.dataVo.sData[7],60,0x00ff00,true);
         kp4.x = shape.x + shape.width/2 - 30;
         kp4.y = shape.y + shape.height/2 - 30;
-        this.addChild(kp4);
+        this.container.addChild(kp4);
         
         let kp5 = SpriteUtil.createText(this.dataVo.sData[8],60,0x00ff00,true);
         kp5.x = shape.x - shape.width/2;
         kp5.y = shape.y + shape.height/2 - 30;
-        this.addChild(kp5);
+        this.container.addChild(kp5);
         
         let kp6 = SpriteUtil.createText(this.dataVo.sData[9],60,0x00ff00,true);
         kp6.x = shape.x - 15;
         kp6.y = shape.y - 10;
-        this.addChild(kp6);
+        this.container.addChild(kp6);
         
         let kp7 = SpriteUtil.createText(this.dataVo.sData[10],60,0x00ff00,true);
         kp7.x = shape.x - 15;
         kp7.y = SpriteUtil.stageCenterY - shape.height/2 - 200;
-        this.addChild(kp7);
+        this.container.addChild(kp7);
         
         let kp8 = SpriteUtil.createText(this.dataVo.sData[11],60,0x00ff00,true);
         kp8.x = shape.x - 15;
         kp8.y = SpriteUtil.stageCenterY - shape.height/2 - 300;
-        this.addChild(kp8);
+        this.container.addChild(kp8);
         
         let pyramid = SpriteUtil.createImage('pyramid');
         pyramid.x = SpriteUtil.stageCenterX;
         pyramid.y = SpriteUtil.stageCenterY - shape.height/2 - 400;
-        this.addChild(pyramid);
+        this.container.addChild(pyramid);
 
         let pshp = SpriteUtil.createRect(30,400,0xFFD7000);
         pshp.anchorOffsetY = 0;
         pshp.x = shape.x - 15;
         pshp.y = pyramid.y + 20;
-        this.addChildAt(pshp,1);
+        this.container.addChildAt(pshp,1);
 
         this.roadAllArr[0] = this.storagePoint(lspr);
         this.roadAllArr[1] = this.storagePoint(mspr);
@@ -109,33 +112,37 @@ class Scene_020 extends BaseScene{
         this.leftPlayer = SpriteUtil.createImage('emoji11');
         this.leftPlayer.x = this.roadAllArr[0][0].x;
         this.leftPlayer.y = this.roadAllArr[0][0].y;
-        this.addChild(this.leftPlayer);
+        this.container.addChild(this.leftPlayer);
         EffectUtil.breath(this.leftPlayer,0.2);
 
         this.ownPlayer = SpriteUtil.createImage('emoji16');
         this.ownPlayer.x = this.roadAllArr[1][0].x;
         this.ownPlayer.y = this.roadAllArr[1][0].y;
-        this.addChild(this.ownPlayer);
+        this.container.addChild(this.ownPlayer);
         EffectUtil.breath(this.ownPlayer,0.2);
 
         this.rightPlayer = SpriteUtil.createImage('emoji19');
         this.rightPlayer.x = this.roadAllArr[2][0].x;
         this.rightPlayer.y = this.roadAllArr[2][0].y;
-        this.addChild(this.rightPlayer);
+        this.container.addChild(this.rightPlayer);
         EffectUtil.breath(this.rightPlayer,0.2);
 
         let dice1 = SpriteUtil.createImage('dice1');
         dice1.x = SpriteUtil.stageCenterX - 100;
         dice1.y = SpriteUtil.stageCenterY + 500;
-        this.addChild(dice1);
+        this.container.addChild(dice1);
         let dice2 = SpriteUtil.createImage('dice2');
         dice2.x = SpriteUtil.stageCenterX;
         dice2.y = SpriteUtil.stageCenterY + 500;
-        this.addChild(dice2);
+        this.container.addChild(dice2);
         let dice3 = SpriteUtil.createImage('dice3');
         dice3.x = SpriteUtil.stageCenterX + 100;
         dice3.y = SpriteUtil.stageCenterY + 500;
-        this.addChild(dice3);
+        this.container.addChild(dice3);
+
+        this.container.scaleX = 0.8;
+        this.container.scaleY = 0.8;
+        this.container.x = this.container.width*0.2/2;
 
         this.diceArr = [dice1,dice2,dice3];
         dice1.addEventListener(egret.TouchEvent.TOUCH_TAP,this.diceTap,this);

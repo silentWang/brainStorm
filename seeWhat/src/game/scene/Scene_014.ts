@@ -52,7 +52,8 @@ class Scene_014 extends BaseScene{
         this.createSeparate(`${name}_png`);
         this.beforeContainer.visible = false;
         this.removeChild(this.beforeContainer);
-        this.titleTxt.text = '没错！还原这个图像！';
+        this.titleTxt.text = '来吧！还原这个图像！';
+        this.titleTxt.anchorOffsetX = this.titleTxt.width/2;
         this.timeItem = new TimeItem(this.dataVo.time);
         this.addChild(this.timeItem);
         this.timeItem.start();

@@ -27,7 +27,7 @@ class WXApi{
                         wx.getUserInfo({
                             success:res=>{
                                 GameData.wxUserInfo = res.userInfo;
-                                Game.instance().gameScene.enterMenu();
+                                EventCenter.instance().dispatchEvent(new GameEvent(GameEvent.AUTHORIZE_REFRESH));
                             }
                         });
                         WXApi.showShareMenu();
@@ -50,18 +50,18 @@ class WXApi{
         // console.log(sysInfo);
         let button = wx.createUserInfoButton({
             type: 'text',
-            text: '登陆',
+            text: '',
             style: {
-                left: sysInfo.windowWidth/2 - 60,
-                top: sysInfo.windowHeight/2 - 25,
-                width: 120,
-                height: 50,
+                left: 0,
+                top: 0,
+                width: sysInfo.windowWidth,
+                height: sysInfo.windowHeight,
                 backgroundColor: '#0000ff',
                 color: '#ffff00',
                 textAlign: 'center',
                 fontSize: 48,
-                opacity: 1,
-                borderRadius: 10,
+                opacity: 0.1,
+                borderRadius: 0,
             }
         });
         button.onTap(res=>{
@@ -70,7 +70,7 @@ class WXApi{
                 button.destroy();
                 WXApi.showShareMenu();
                 GameData.wxUserInfo = res.userInfo;
-                Game.instance().gameScene.enterMenu();
+                EventCenter.instance().dispatchEvent(new GameEvent(GameEvent.AUTHORIZE_REFRESH));
             }
         });
     }
@@ -90,7 +90,7 @@ class WXApi{
     //主动转发
     static shareAppMessage(){
         wx.shareAppMessage({
-            title:"有人@你，请你帮忙过了这一关！",
+            title:"有人@你，来尝试下极限挑战！",
             imageUrl:'resource/assets/head.png',
             query:''
         });

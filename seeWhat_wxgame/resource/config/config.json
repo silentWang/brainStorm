@@ -47,7 +47,7 @@
 				"time":180
 			}
 		],
-		"chapter008":[
+		"chapter007":[
 			{
 				"level": 1, 
 				"levelType":"002",
@@ -62,7 +62,7 @@
 				"levelType":"002",
 				"title": "水果连连看", 
 				"desc": "生活中离不开植物的熏陶，这里有很多植物的果实，比如苹果香蕉梨等等，来试下简单的水果连连看吧！",
-				"sData":["fruit1","fruit2","fruit3","fruit4","fruit5","fruit6","fruit7","fruit8","fruit9","fruit10","fruit11","fruit12","flower01","flower02","flower03","flower04","flower05","leaf","tree","sea","mushrooms"],
+				"sData":["fruit1","fruit2","fruit3","fruit4","fruit5","fruit6","fruit7","fruit8","fruit9","fruit10","fruit11","fruit12","fruit13","fruit14","fruit15","fruit16","fruit17","fruit18","fruit20","fruit19","fruit21"],
 				"tData":"",
 				"time":90
 			},
@@ -70,8 +70,8 @@
 				"level": 3, 
 				"levelType":"002",
 				"title": "动物水果连连看", 
-				"desc": "自从网络聊天发展起来后，表情聊天已经是再平常不过了，但这么可爱又秀逗的表情，你能以最快的速度辨识过来吗？",
-				"sData":["butterfly","dragon","rabbit","monkey","dog","squab","tiger","frog","eagle","goat","cat","ant","chicken","tortoise","pork","snake","panda","elephant","fruit11","fruit12","duck","egg","fruit1","fruit2","fruit3","fruit4","fruit5","fruit6","fruit7","fruit8","fruit9","fruit10"],
+				"desc": "动物和水果，完全不相干的两种东西，其实关系非常紧密，比如猴子爱吃香蕉了，食人花爱吃人了！",
+				"sData":["butterfly","dragon","rabbit","monkey","dog","squab","tiger","frog","eagle","goat","cat","ant","chicken","tortoise","pork","snake","panda","elephant","fruit11","fruit12","duck","fruit13","fruit1","fruit2","fruit3","fruit4","fruit5","fruit6","fruit7","fruit8","fruit9","fruit10"],
 				"tData":"",
 				"time":120
 			},
@@ -91,7 +91,7 @@
 				"desc": "其实生活就是这样，看起来平淡实际却很艰难，看起来艰难实际却又很复杂，没关系！大道至简，简单化一切，让生活也更简单！",
 				"sData":["flower01","flower02","flower03","flower04","flower05","god","house","lufeihat","sky","repair","bag","bride","river","sea","stick","string","emperor","feather","fire","diver","vintage","fruit1","fruit2","fruit3","fruit4","fruit5","fruit6","fruit7","dragonfly","rabbit","rat","tiger","horse","chicken","emoji17","emoji13","emoji11","emoji07","emoji03","china","mountain","night","lawn","tree","earth","rain","rainbow","insect","mushrooms","monkey"],
 				"tData":"",
-				"time":150
+				"time":120
 			}
 		],
 		"chapter003":[
@@ -200,12 +200,12 @@
 				"desc": "结婚时，一般新郎都会送鲜花给新娘，以表示永恒的爱，这里有好多花花草草，你作为新娘接受哪些比较好呢！",
 				"sData":["flower01","flower02","flower03","flower04","flower05"],
 				"tData":["leaf","magicHat","fire","feather","crystal","string","egg","basketball","football","emoji17","frog","earth","lawn"],
-				"time":80,
+				"time":90,
 				"score":20,
 				"extData":"bride"
 			}
 		],
-		"chapter007":[
+		"chapter012":[
 			{
 				"level": 1, 
 				"levelType":"006",
@@ -219,7 +219,7 @@
 				"level": 2, 
 				"levelType":"006",
 				"title": "人世无常", 
-				"desc": "花开花落，叹人世无常！是啊，在写这个游戏的时候，刚好老婆在闹离婚，没心情，就用这句话来作个记忆游戏吧！",
+				"desc": "花开花落，叹人世无常！是啊，衰败在所难免，一切都是浮云，就用这句话来作个记忆游戏吧！",
 				"sData":["flower01","emoji11","flower02","leaf","sigh","male","earth","sky","snake"],
 				"tData":9,
 				"time":90
@@ -280,7 +280,7 @@
 				"desc": "常言道，煮熟的鸭子飞了，虽然用意不太一样，但其实鸭子本来就会飞，而且我们要爱护它们，虽然它们被人为定义为家禽，放飞这些鸭子，功德圆满！",
 				"sData":["duck","monkey","tiger","eagle","elephant","chicken","dog","dragonfly","squab","penguin","goat","butterfly"],
 				"tData":"duck",
-				"time":30,
+				"time":35,
 				"score":25
 			}
 		],
@@ -326,12 +326,12 @@
 				"levelType":"008",
 				"title": "超强记忆", 
 				"desc": "最后一波，超强记忆之前赴后继，开发你最具潜能的记忆力，建议挑战之前先进行为期一周的记忆力培训训练！",
-				"sData":["emoji11","emoji05","emoji03","emoji04","emoji14","emoji09","emoji19"],
+				"sData":["emoji11","emoji05","emoji03","emoji04","emoji14","emoji09"],
 				"tData":10,
 				"time":60
 			}
 		],
-		"chapter025":[
+		"chapter030":[
 			{
 				"level": 1, 
 				"levelType":"009",
@@ -465,7 +465,7 @@
 				"title": "终极颜色识别", 
 				"desc": "天才果然不同凡响，这最后的希望证明你是不是一个称职的奇才，如果可以，那么你完全可以驾驭一切了！相信我的判断！",
 				"sData":["0x00f000",100],
-				"tData":"0x00f800",
+				"tData":"0x00f700",
 				"time":90
 			}
 		],
@@ -579,7 +579,7 @@
 				"level": 1, 
 				"levelType":"014",
 				"title": "拼图游戏", 
-				"desc": "首先仔细观察并选择你喜欢的水果，然后来个很怀念的小游戏吧，来吧！咱们试试吧！",
+				"desc": "设身感受一下大自然的美，以及国家的和谐，嗯！选择自我感觉最好的环境或场景，来一场观察记忆拼图游戏吧！",
 				"sData":["night","rain","rainbow","diver","mountain","river","sky","mushrooms","china"],
 				"tData":"下面场景，你最喜欢哪个？",
 				"time":180
@@ -588,19 +588,19 @@
 				"level": 2, 
 				"levelType":"014",
 				"title": "拼图游戏", 
-				"desc": "首先仔细观察并选择你喜欢的水果，然后来个很怀念的小游戏吧，来吧！咱们试试吧！",
+				"desc": "拼图是有意思，可是像素级别的拼图更有意思，如果再完成自己最喜爱的动物的拼图，那简直是完美至极！",
 				"sData":["rat","cow","tiger","rabbit","dragon","snake","horse","goat","monkey","chicken","dog","pork"],
 				"tData":"你的生肖是什么？",
-				"time":180
+				"time":150
 			},
 			{
 				"level": 3, 
 				"levelType":"014",
 				"title": "拼图游戏", 
-				"desc": "首先仔细观察并选择你喜欢的水果，然后来个很怀念的小游戏吧，来吧！咱们试试吧！",
+				"desc": "水果是生活中必不可少的美味，比如苹果香蕉梨，任何东西都不能和他一一比，在我心里，有了它就有幸福和甜蜜...怎么唱起来了，好吧！挑选喜欢的水果吧！",
 				"sData":["fruit1","fruit2","fruit3","fruit4","fruit5","fruit6","fruit7","fruit8","fruit9","fruit10","fruit11","fruit12"],
 				"tData":"那么你最喜欢下面哪种水果？",
-				"time":180
+				"time":120
 			}
 		],
 		"chapter009":[
@@ -839,17 +839,6 @@
 				"score":40
 			}
 		],
-		"chapter026":[
-			{
-				"level": 47, 
-				"levelType":"020",
-				"title": "登上金字塔", 
-				"desc": "孩童时期玩过一个游戏，忘记叫什么名字了！就是三个人定好147、258、369，然后猜拳，伸出手指总数是谁的数字就轮到谁往前走一步！带着模糊的记忆，也做个类似的吧！仅作纪念，基本无可玩性！规则：从左至右分别是小明、我、小花，对应数字分别是147、258、369，点击骰子开始摇骰子，再次点击则停止，看看谁先到达金字塔！",
-				"sData":["格","至","诚","正","修","修","修","修","修","齐","治","平"],
-				"tData":"",
-				"time":0
-			}
-		],
 		"chapter019":[
 			{
 				"level": 1, 
@@ -915,7 +904,7 @@
 				"time":90
 			}
 		],
-        "chapter012":[
+        "chapter008":[
 			{
 				"level": 1, 
 				"levelType":"022",
@@ -1139,7 +1128,7 @@
 				"time":300
 			}
 		],
-        "chapter024":[
+        "chapter027":[
 			{
 				"level": 1, 
 				"levelType":"026",
@@ -1253,62 +1242,258 @@
 				"extData":{"direction":[1,3],"speed":1}
 			}
 		],
-        "chapter027":[
+        "chapter024":[
 			{
 				"level": 1, 
 				"levelType":"028",
-				"title": "出差错",
-				"desc": "啛啛喳喳",
-				"sData":"",
+				"title": "监视能力",
+				"desc": "规则很简单，首先会飞过一串东西，然后凭记忆算出各自出现的次数，瞬时记忆加反应类游戏！让我们开始吧！",
+				"sData":["tiger","panda"],
+				"tData":[6,500],
+				"time":30
+			},
+			{
+				"level": 2, 
+				"levelType":"028",
+				"title": "乌龟和青蛙",
+				"desc": "乌龟是金钟罩，青蛙是蛤蟆功，两者谁厉害暂且不说！我们要做的是金钟罩和蛤蟆功的原型！当然记住它们各自出现的次数！",
+				"sData":["tortoise","frog"],
+				"tData":[8,500],
+				"time":30
+			},
+			{
+				"level": 3, 
+				"levelType":"028",
+				"title": "实践应用",
+				"desc": "任何技能，学的再好都需要实践才能证明。这里有三个球，比较混乱，但混乱之中又存在合理！实践检验真理！",
+				"sData":["basketball","football","earth"],
+				"tData":[10,500],
+				"time":45
+			},
+			{
+				"level": 4, 
+				"levelType":"028",
+				"title": "高级挑战",
+				"desc": "萤烛之火，也敢于日月争辉！不服！就来试试！",
+				"sData":["fruit3","fruit12","fruit9","fruit8"],
+				"tData":[10,500],
+				"time":60
+			},
+			{
+				"level": 5, 
+				"levelType":"028",
+				"title": "极限挑战",
+				"desc": "宇宙是无穷无尽的，它与万物都是一体的，宇宙可以做的，万物也可以做，人类的极限就是宇宙的极限，人与宇宙合为一体！",
+				"sData":["boy","girl","female","female"],
+				"tData":[12,500],
+				"time":60
+			}
+		],
+		"chapter032":[
+			{
+				"level": 47, 
+				"levelType":"020",
+				"title": "登上金字塔", 
+				"desc": "孩童时期玩过一个游戏，忘记叫什么名字了！就是三个人定好147、258、369，然后猜拳，伸出手指总数是谁的数字就轮到谁往前走一步！带着模糊的记忆，也做个类似的吧！仅作纪念，基本无可玩性！规则：从左至右分别是小明、我、小花，对应数字分别是147、258、369，点击骰子开始摇骰子，再次点击则停止，看看谁先到达金字塔！",
+				"sData":["格","至","诚","正","修","修","修","修","修","齐","治","平"],
+				"tData":"",
+				"time":0
+			}
+		],
+        "chapter025":[
+			{
+				"level": 1, 
+				"levelType":"029",
+				"title": "记忆连连看", 
+				"desc": "规则和之前的一样，玩法类似记忆翻牌，记住你翻开的元素，挑战规则：必须在有限的时间内找到所有相同的元素！",
+				"sData":["cat","ant","butterfly","dragon","rabbit","monkey","chicken","dog","tortoise","squab","tiger","frog","pork","eagle","goat","snake","panda","elephant","rat","lizard","duck"],
+				"tData":"",
+				"time":180
+			},
+			{
+				"level": 2, 
+				"levelType":"029",
+				"title": "强化", 
+				"desc": "看人先看己，吃饭吃水果！水果记忆开始啦！",
+				"sData":["fruit1","fruit2","fruit3","fruit4","fruit5","fruit6","fruit7","fruit8","fruit9","fruit10","fruit11","fruit12","fruit13","fruit14","fruit15","fruit16","fruit17","fruit18","fruit20","fruit19","fruit21"],
+				"tData":"",
+				"time":180
+			},
+			{
+				"level": 3, 
+				"levelType":"029",
+				"title": "实践", 
+				"desc": "天下大势，分久必合，合久必分！生活中会遇到各式各样的记忆逻辑难题，没关系！我们需要实践！",
+				"sData":["butterfly","dragon","rabbit","monkey","dog","squab","tiger","frog","eagle","goat","cat","ant","chicken","tortoise","pork","snake","panda","elephant","fruit11","fruit12","duck","fruit10","fruit1","fruit2","fruit3","fruit4","fruit5","fruit6","fruit7","fruit8","fruit9","fruit10"],
+				"tData":"",
+				"time":210
+			},
+			{
+				"level": 4, 
+				"levelType":"029",
+				"title": "高级挑战", 
+				"desc": "看到标题是‘高级挑战’的时候，你会做出何种表情呢！复杂的表情是由简单的合成而来！有无相生，难易相成！",
+				"sData":["emoji01","emoji02","emoji03","emoji04","emoji05","emoji06","emoji07","emoji08","emoji09","emoji10","emoji11","emoji12","emoji13","emoji14","emoji15","emoji16","emoji17","emoji18","emoji19","emoji20","basketball","egg","flower02","football","fire","flower05","lufeihat","down","house","bag","bride","together"],
+				"tData":"",
+				"time":240
+			}, 
+			{
+				"level":5, 
+				"levelType":"029",
+				"title": "极限挑战", 
+				"desc": "望着窗外蔚蓝的天空，我好想踏上那朵美丽的云彩，超越凡夫俗子的境界，奥！没有云，踏空了！",
+				"sData":["flower01","flower02","flower03","flower04","flower05","god","house","lufeihat","sky","repair","bag","bride","river","sea","stick","string","emperor","feather","fire","diver","vintage","fruit1","fruit2","fruit3","fruit4","fruit5","fruit6","fruit7","dragonfly","rabbit","rat","tiger","horse","chicken","emoji17","emoji13","emoji11","emoji07","emoji03","china","mountain","night","lawn","tree","earth","rain","rainbow","insect","mushrooms","monkey"],
 				"tData":"",
 				"time":300
+			}
+		],
+        "chapter026":[
+			{
+				"level": 1, 
+				"levelType":"030",
+				"title": "点破小球", 
+				"desc": "小球可能会爆破，爆破后会生成多个球，就像分裂一样，可以分裂很多个！我们的目的是点破所有的小球！",
+				"sData":[2,4],
+				"tData":1,
+				"time":60
+			},
+			{
+				"level": 2, 
+				"levelType":"030",
+				"title": "提高速度", 
+				"desc": "爆破开始！为了世界和平！爆破吧！",
+				"sData":[3,4],
+				"tData":1,
+				"time":60
+			},
+			{
+				"level": 3, 
+				"levelType":"030",
+				"title": "速度即是胜利", 
+				"desc": "以最快的速度点破所有小球，注意不要把屏幕点破了，先声明！我不做任何赔偿的！",
+				"sData":[4,4],
+				"tData":2,
+				"time":90
+			},
+			{
+				"level": 4, 
+				"levelType":"030",
+				"title": "高级挑战", 
+				"desc": "必须提高速度和反应，否则很容落后，从小的教育都是这样，一直都是这样！",
+				"sData":[3,4],
+				"tData":3,
+				"time":120
+			},
+			{
+				"level": 5, 
+				"levelType":"030",
+				"title": "极限挑战", 
+				"desc": "漫天黄沙掠过，走遍每个角落！就让那魑魅魍魉妖魔都服从吧！",
+				"sData":[5,5],
+				"tData":3,
+				"time":150
 			}
 		],
         "chapter028":[
 			{
-				"level": 48, 
-				"levelType":"010",
-				"title": "无标题", 
-				"desc": "当你看到这行字的时候就说明你已经登上顶峰，成为新一代的大神了，作者很荣幸能够膜拜下大佬！在这里我都等了几十年了，都没人来到过这里！可谓是可喜可贺啊！你的能力如果用在军事上，那么第三次世界大战的胜利必然是我们，很好！继续往前走再挑战下高智商的世界！",
-				"sData":"",
-				"tData":"",
-				"time":300
+				"level": 1, 
+				"levelType":"031",
+				"title": "微控", 
+				"desc": "规则：小球一直处于匀速运动，通过点击中间的大圆，来改变球的颜色，如果球的颜色与碰撞的球的颜色不一致，游戏结束！赶紧试试吧！",
+				"sData":2,
+				"tData":10,
+				"time":0,
+				"extData":{"speed":1.2,"num":3,"rate":0.2}
+			},
+			{
+				"level": 2, 
+				"levelType":"031",
+				"title": "三个色块", 
+				"desc": "如果微控能力很强的话，那么做什么事情都能迎刃而解，做事效率很高，而且很准确！",
+				"sData":3,
+				"tData":20,
+				"time":0,
+				"extData":{"speed":1.3,"num":3,"rate":0.4}
+			},
+			{
+				"level": 3, 
+				"levelType":"031",
+				"title": "加加", 
+				"desc": "首先清楚颜色的排列顺序，然后大脑运算需要点多少次，最后控制自己的手迅速点击到目标次数！这才是完美的解法！",
+				"sData":4,
+				"tData":25,
+				"time":0,
+				"extData":{"speed":1.4,"num":3,"rate":0.5}
+			},
+			{
+				"level": 4, 
+				"levelType":"031",
+				"title": "高级挑战", 
+				"desc": "茫茫无际的星空，我只看到最亮的那颗！完美的世界，我只看到渺小的你！你强大是因为你很渺小！",
+				"sData":5,
+				"tData":30,
+				"time":0,
+				"extData":{"speed":1.5,"num":3,"rate":0.6}
+			},
+			{
+				"level": 5, 
+				"levelType":"031",
+				"title": "极限挑战", 
+				"desc": "真的很刺激！如今都在寻求刺激，什么最刺激！完成不了的东西最刺激！",
+				"sData":6,
+				"tData":40,
+				"time":0,
+				"extData":{"speed":1.5,"num":4,"rate":0.8}
 			}
 		],
         "chapter029":[
 			{
-				"level": 48, 
-				"levelType":"010",
-				"title": "无标题", 
-				"desc": "当你看到这行字的时候就说明你已经登上顶峰，成为新一代的大神了，作者很荣幸能够膜拜下大佬！在这里我都等了几十年了，都没人来到过这里！可谓是可喜可贺啊！你的能力如果用在军事上，那么第三次世界大战的胜利必然是我们，很好！继续往前走再挑战下高智商的世界！",
-				"sData":"",
-				"tData":"",
-				"time":300
-			}
-		],
-        "chapter030":[
+				"level": 1, 
+				"levelType":"032",
+				"title": "颜色辨识", 
+				"desc": "之前挑战过颜色的识别，我们重温一下，点击文字所表示的颜色，而不是文字的颜色！",
+				"sData":3,
+				"tData":10,
+				"time":30
+			},
 			{
-				"level": 48, 
-				"levelType":"010",
-				"title": "无标题", 
-				"desc": "当你看到这行字的时候就说明你已经登上顶峰，成为新一代的大神了，作者很荣幸能够膜拜下大佬！在这里我都等了几十年了，都没人来到过这里！可谓是可喜可贺啊！你的能力如果用在军事上，那么第三次世界大战的胜利必然是我们，很好！继续往前走再挑战下高智商的世界！",
-				"sData":"",
-				"tData":"",
-				"time":300
+				"level": 2, 
+				"levelType":"032",
+				"title": "火苗", 
+				"desc": "你知道吗？星星之火可以燎原，意思就是一点小火星可以毁了一片大草原！所以玩火需注意，安全第一！所以慢点点！",
+				"sData":4,
+				"tData":15,
+				"time":30
+			},
+			{
+				"level": 3, 
+				"levelType":"032",
+				"title": "愚公", 
+				"desc": "有人说愚公移山很蠢，我并不这样认为，相反，我觉得他很聪明，什么都没有的人却有一颗坚定的心，本关就需要拥有一颗坚定不移的心态！",
+				"sData":5,
+				"tData":20,
+				"time":30
+			},
+			{
+				"level": 4, 
+				"levelType":"032",
+				"title": "佛", 
+				"desc": "佛教的文化与易经几乎不谋而合，什么原因！因为完整与统一！天人合一，永远不会出问题！所以要懂养生！缓而不失其速，必过之！",
+				"sData":6,
+				"tData":25,
+				"time":30
+			},
+			{
+				"level": 5, 
+				"levelType":"032",
+				"title": "风水", 
+				"desc": "风水很重要，老板都相信！不知为啥！所以要把你的手机放到合适的位置，人站在最舒服的地方，然后开始你的挑战！",
+				"sData":7,
+				"tData":30,
+				"time":30
 			}
 		],
         "chapter031":[
-			{
-				"level": 48, 
-				"levelType":"010",
-				"title": "无标题", 
-				"desc": "当你看到这行字的时候就说明你已经登上顶峰，成为新一代的大神了，作者很荣幸能够膜拜下大佬！在这里我都等了几十年了，都没人来到过这里！可谓是可喜可贺啊！你的能力如果用在军事上，那么第三次世界大战的胜利必然是我们，很好！继续往前走再挑战下高智商的世界！",
-				"sData":"",
-				"tData":"",
-				"time":300
-			}
-		],
-        "chapter032":[
 			{
 				"level": 48, 
 				"levelType":"010",

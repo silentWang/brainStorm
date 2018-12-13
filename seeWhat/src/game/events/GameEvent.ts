@@ -5,6 +5,8 @@ class GameEvent extends egret.Event{
     public static GOT0_CHAPTER = 'goto_next_chapter';
     //当前游戏的下一个关卡
     public static GOTO_NEXT_LEVEL = 'goto_next_level';
+    //授权后刷新
+    public static AUTHORIZE_REFRESH = "authorize_refresh";
     public data = null;
     constructor(type: string, bubbles?: boolean, cancelable?: boolean, data?: any){
         super(type, bubbles, cancelable, data);
