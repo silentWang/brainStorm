@@ -179,7 +179,7 @@ class ChapterScene extends BaseScene{
             WXApi.updateRankLvl(parseInt(mychap));
         }
         //only test
-        if(parseInt(mychap) > 32){
+        if(parseInt(mychap) > 32){                                        
             mychap = "32";
         }
         // mychap = "32";
