@@ -56,9 +56,9 @@ class EffectUtil{
     }
     //ready go
     public static playReadyGo(){
-        let text1 = SpriteUtil.createText("Ready",100,0xFF00FF);
+        let text1 = SpriteUtil.createText("Ready",100,0x00FFFF);
         text1.stroke = 5;
-        text1.strokeColor = 0x0000ff;
+        text1.strokeColor = 0xff0000;
         text1.bold = true;
         text1.x = SpriteUtil.stageCenterX;
         text1.y = SpriteUtil.stageCenterY - 200;

@@ -40,7 +40,7 @@ class Scene_014 extends BaseScene{
             this.beforeContainer.addChild(bit);
         }
 
-        this.titleTxt = SpriteUtil.createText(this.dataVo.tData,32,0x0000ff);
+        this.titleTxt = SpriteUtil.createText(this.dataVo.tData,32,0xF8F8FF);
         this.titleTxt.x = SpriteUtil.stageCenterX;
         this.titleTxt.y = 100;
         this.addChild(this.titleTxt);

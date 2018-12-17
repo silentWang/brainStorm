@@ -17,7 +17,7 @@ class TimeItem extends egret.Sprite{
         this.timeTxt.size = 32;
         this.timeTxt.textColor = 0xff0000;
         this.timeTxt.stroke = 1;
-        this.timeTxt.strokeColor = 0x000000;
+        this.timeTxt.strokeColor = 0xCDAD00;
         this.timeTxt.text = `剩余时间  ${CommonUtil.getMSTimeBySeconds(this._leftTime)}`;
         this.y = 30;
         this.x = (SpriteUtil.stageWidth - 200)/2;

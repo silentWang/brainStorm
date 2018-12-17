@@ -57,7 +57,7 @@ class SpriteUtil{
         text.background = isBackground;
         text.backgroundColor = backgroundColor;
         text.stroke = 1;
-        text.strokeColor = 0x000000;
+        text.strokeColor = 0xCDAD00;
         text.textAlign = 'center';
         text.verticalAlign = 'middle';
         text.bold = true;
@@ -66,7 +66,7 @@ class SpriteUtil{
         return text;
     }
     //创建bitmap
-    static createImage(name:string,isBackground = false,backgroundColor = 0x1E90FF){
+    static createImage(name:string,isBackground = false,backgroundColor = 0x9FB6CD){
         let bitmap = new egret.Bitmap(RES.getRes(`${name}_png`));
         if(isBackground){
             let sprite = new egret.Sprite();
