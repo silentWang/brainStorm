@@ -65,9 +65,9 @@ class Scene_011 extends BaseScene{
         let text = new egret.TextField();
         text.size = 54;
         text.text = name;
-        text.textColor = 0x0000ff;//0xffffff*(8*Math.random() + 2)/10;
+        text.textColor = 0x7FFFD4;//0xffffff*(8*Math.random() + 2)/10;
         text.stroke = 0.5;
-        text.strokeColor = 0xffff00;
+        text.strokeColor = 0xCDAD00;
         text.bold = true;
         this.addChild(text);
         text.touchEnabled = true;

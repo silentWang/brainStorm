@@ -98,7 +98,7 @@ class Scene_028 extends BaseScene{
 
     private createBtnList(){
         let len = this.dataVo.sData.length;
-        let title = SpriteUtil.createText("你能确定各自出现次数吗？",48,0x0000ff);
+        let title = SpriteUtil.createText("你能确定各自出现次数吗？",48,0xF8F8FF);
         title.x = SpriteUtil.stageCenterX;
         title.y = SpriteUtil.stageCenterY - 200;
         this.addChild(title);
@@ -122,7 +122,7 @@ class Scene_028 extends BaseScene{
         img.scaleX = 2;
         img.scaleY = 2;
         img.name = str+"_"+index;
-        let text = SpriteUtil.createText("x0",48,0xFF34B3);
+        let text = SpriteUtil.createText("x0",48,0xF8F8FF);
         text.touchEnabled = false;
         img.y = text.height + 80;
         sprite.addChild(text);

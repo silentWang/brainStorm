@@ -111,7 +111,7 @@ class Scene_008 extends BaseScene{
         this.dataVo.tData = this.passArr[Math.floor(this.passArr.length * Math.random())].emoji;
         let emoji = SpriteUtil.createImage(this.dataVo.tData);
         let askstr = `谜题:找出所有发出表情       的动物`;
-        let text = SpriteUtil.createText(askstr,36,0x0000FF);
+        let text = SpriteUtil.createText(askstr,36,0xF8F8FF);
         text.x = SpriteUtil.stageCenterX;
         text.y = 150;
         emoji.x = text.x + text.measuredWidth - text.width/2 - text.measuredWidth*4/15;
