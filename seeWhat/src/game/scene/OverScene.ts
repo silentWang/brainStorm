@@ -12,21 +12,21 @@ class OverScene extends BaseScene{
         img.y = SpriteUtil.stageCenterY - 300;
         this.addChild(img);
 
-        let btn = SpriteUtil.createText(">> 继 续 <<",60,0xff00ff);
+        let btn = SpriteUtil.createText(">> 继 续 <<",60,0xffff00);
         btn.x = SpriteUtil.stageCenterX;
         btn.y = SpriteUtil.stageCenterY - 80;
         btn.touchEnabled = true;
         this.addChild(btn);
         EffectUtil.breath(btn,0.05);
 
-        let btn1 = SpriteUtil.createText(">> 菜 单 <<",60,0xff00ff);
+        let btn1 = SpriteUtil.createText(">> 菜 单 <<",60,0xffff00);
         btn1.x = SpriteUtil.stageCenterX;
         btn1.y = SpriteUtil.stageCenterY + 20;
         btn1.touchEnabled = true;
         this.addChild(btn1);
         EffectUtil.breath(btn1,0.05);
 
-        let btn2 = SpriteUtil.createText(">> 分 享 <<",60,0xff00ff);
+        let btn2 = SpriteUtil.createText(">> 分 享 <<",60,0xffff00);
         btn2.x = SpriteUtil.stageCenterX;
         btn2.y = SpriteUtil.stageCenterY + 120;
         btn2.touchEnabled = true;

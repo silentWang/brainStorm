@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "bg_png,config_json,logo_png,good_mp3,great_mp3,perfect_mp3,bg_mp3,fail_mp3,readyGo_mp3,wrong_mp3,click_mp3,head_png,ant_png,butterfly_png,cat_png,chicken_png,cow_png,dog_png,dragon_png,dragonfly_png,duck_png,eagle_png,elephant_png,frog_png,goat_png,horse_png,lizard_png,monkey_png,panda_png,penguin_png,pork_png,rabbit_png,rat_png,snake_png,squab_png,tiger_png,tortoise_png,fruit1_png,fruit10_png,fruit2_png,fruit3_png,fruit4_png,fruit5_png,fruit6_png,fruit7_png,fruit8_png,fruit9_png,bag_png,basketball_png,bride_png,china_png,cure_png,diver_png,down_png,egg_png,emperor_png,feather_png,fire_png,flower01_png,flower02_png,flower03_png,flower04_png,flower05_png,football_png,god_png,house_png,land_png,lufeihat_png,magicHat_png,repair_png,river_png,sea_png,sky_png,stick_png,string_png,together_png,vintage_png,emoji01_png,emoji02_png,emoji03_png,emoji04_png,emoji05_png,emoji06_png,emoji07_png,emoji08_png,emoji09_png,emoji10_png,emoji11_png,emoji12_png,emoji13_png,emoji14_png,emoji15_png,emoji16_png,emoji17_png,emoji18_png,emoji19_png,emoji20_png,earth_png,insect_png,lawn_png,mountain_png,mushrooms_png,night_png,rain_png,rainbow_png,snail_png,tree_png,sigh_png,female_png,male_png,leaf_png,body_png,equal_png,paper_png,rock_png,scissors_png,welldone_png,worm_png,fruit12_png,fruit11_png,box_png,crystal_png,social_png,share_png,rank_png,brick_png,dizzy_png,dice6_png,dice1_png,dice2_png,dice3_png,dice4_png,dice5_png,pyramid_png,circle_png,arrow_png,home_png,lock_png,heart_png,kindness_png,left_png,point_png,stone_png,game_more_1_png,girl_png,boy_png,fireball_png,fruit17_png,fruit13_png,fruit14_png,fruit15_png,fruit16_png,fruit21_png,fruit18_png,fruit19_png,fruit20_png,refresh_png,lose_png",
+			"keys": "bg_png,config_json,logo_png,good_mp3,great_mp3,perfect_mp3,bg_mp3,fail_mp3,readyGo_mp3,wrong_mp3,click_mp3,head_png,ant_png,butterfly_png,cat_png,chicken_png,cow_png,dog_png,dragon_png,dragonfly_png,duck_png,eagle_png,elephant_png,frog_png,goat_png,horse_png,lizard_png,monkey_png,panda_png,penguin_png,pork_png,rabbit_png,rat_png,snake_png,squab_png,tiger_png,tortoise_png,fruit1_png,fruit10_png,fruit2_png,fruit3_png,fruit4_png,fruit5_png,fruit6_png,fruit7_png,fruit8_png,fruit9_png,bag_png,basketball_png,bride_png,china_png,cure_png,diver_png,down_png,egg_png,emperor_png,feather_png,fire_png,flower01_png,flower02_png,flower03_png,flower04_png,flower05_png,football_png,god_png,house_png,land_png,lufeihat_png,magicHat_png,repair_png,river_png,sea_png,sky_png,stick_png,string_png,together_png,vintage_png,emoji01_png,emoji02_png,emoji03_png,emoji04_png,emoji05_png,emoji06_png,emoji07_png,emoji08_png,emoji09_png,emoji10_png,emoji11_png,emoji12_png,emoji13_png,emoji14_png,emoji15_png,emoji16_png,emoji17_png,emoji18_png,emoji19_png,emoji20_png,earth_png,insect_png,lawn_png,mountain_png,mushrooms_png,night_png,rain_png,rainbow_png,snail_png,tree_png,sigh_png,female_png,male_png,leaf_png,body_png,equal_png,paper_png,rock_png,scissors_png,welldone_png,worm_png,fruit12_png,fruit11_png,box_png,crystal_png,social_png,share_png,rank_png,brick_png,dizzy_png,dice6_png,dice1_png,dice2_png,dice3_png,dice4_png,dice5_png,pyramid_png,circle_png,arrow_png,home_png,lock_png,heart_png,kindness_png,left_png,point_png,stone_png,game_more_1_png,girl_png,boy_png,fireball_png,fruit17_png,fruit13_png,fruit14_png,fruit15_png,fruit16_png,fruit21_png,fruit18_png,fruit19_png,fruit20_png,refresh_png,lose_png,qiuqiuhome_png,migong_png,zhijian_png",
 			"name": "preload"
 		}
 	],
@@ -795,6 +795,21 @@
 			"name": "lose_png",
 			"type": "image",
 			"url": "assets/lose.png"
+		},
+		{
+			"name": "qiuqiuhome_png",
+			"type": "image",
+			"url": "assets/qiuqiuhome.png"
+		},
+		{
+			"name": "migong_png",
+			"type": "image",
+			"url": "assets/migong.png"
+		},
+		{
+			"name": "zhijian_png",
+			"type": "image",
+			"url": "assets/zhijian.png"
 		}
 	]
 }

@@ -56,9 +56,9 @@ class EffectUtil{
     }
     //ready go
     public static playReadyGo(){
-        let text1 = SpriteUtil.createText("Ready",100,0xFF00FF);
+        let text1 = SpriteUtil.createText("Ready",100,0x54FF9F);
         text1.stroke = 5;
-        text1.strokeColor = 0x0000ff;
+        text1.strokeColor = 0xff00ff;
         text1.bold = true;
         text1.x = SpriteUtil.stageCenterX;
         text1.y = SpriteUtil.stageCenterY - 200;
@@ -66,7 +66,7 @@ class EffectUtil{
         text1.scaleY = 5;
         text1.alpha = 0.1;
         Game.instance().addMiddle(text1);
-        GameSound.instance().playSound('ready');
+        GameSound.instance().playSound('Ready');
         egret.Tween.get(text1).to({scaleX:1,scaleY:1,alpha:1},300,egret.Ease.cubicIn).call(()=>{
             let idx = egret.setTimeout(()=>{
                 egret.clearTimeout(idx);

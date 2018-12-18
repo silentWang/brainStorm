@@ -14,7 +14,8 @@ class ScoreItem extends egret.Sprite{
         this.scoreTxt.text = '0';
         this.scoreTxt.textColor = 0x00ff00;
         this.scoreTxt.width = 300;
-        this.scoreTxt.stroke = 1;
+        this.scoreTxt.stroke = 0.5;
+        this.scoreTxt.bold = true;
         this.scoreTxt.strokeColor = 0x000000;
         // this.scoreTxt.bold = true;
         this.addChild(this.scoreTxt);

@@ -67,7 +67,7 @@ class Main extends egret.DisplayObjectContainer {
         const result = await RES.getResAsync("config_json");
         GameData.gameConfig = result;
         // console.log("游戏配置o%",result);
-        await platform.login();
+        // await platform.login();
         this.createGameScene();
     }
 

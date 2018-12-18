@@ -24,17 +24,27 @@ class WXApi{
                     let settings = res.authSetting;
                     if(settings['scope.userInfo'] == true){
                         //已经授权
-                        wx.getUserInfo({
-                            success:res=>{
-                                GameData.wxUserInfo = res.userInfo;
-                                EventCenter.instance().dispatchEvent(new GameEvent(GameEvent.AUTHORIZE_REFRESH));
-                            }
-                        });
+                        let avatarUrl = egret.localStorage.getItem("very_funny_small_game_user_avatar_url");
+                        if(!avatarUrl){
+                            wx.getUserInfo({
+                                success:res=>{
+                                    GameData.wxUserInfo = res.userInfo;
+                                    egret.localStorage.setItem('very_funny_small_game_user_avatar_url',res.userInfo.avatarUrl);
+                                    EventCenter.instance().dispatchEvent(new GameEvent(GameEvent.AUTHORIZE_REFRESH));
+                                }
+                            });
+                        }
+                        else{
+                            EventCenter.instance().dispatchEvent(new GameEvent(GameEvent.AUTHORIZE_REFRESH));
+                        }
                         WXApi.showShareMenu();
                     }
                     else{
                         WXApi.createUserInfoButton();
                     }
+                }
+                else{
+                    console.error(res);
                 }
             }
         });
@@ -70,6 +80,7 @@ class WXApi{
                 button.destroy();
                 WXApi.showShareMenu();
                 GameData.wxUserInfo = res.userInfo;
+                egret.localStorage.setItem('very_funny_small_game_user_avatar_url',res.userInfo.avatarUrl);
                 EventCenter.instance().dispatchEvent(new GameEvent(GameEvent.AUTHORIZE_REFRESH));
             }
         });

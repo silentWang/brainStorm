@@ -26,7 +26,7 @@ class GuideView extends BaseView{
         this.tipsTxt.x = (SpriteUtil.stageWidth - this.tipsTxt.width)/2;
         this.addChild(this.tipsTxt);
 
-        let btn = SpriteUtil.createText(">> 开始挑战 <<",48,0xff00ff);
+        let btn = SpriteUtil.createText(">> 开始挑战 <<",48,0xffff00);
         btn.x = SpriteUtil.stageCenterX;
         btn.y = SpriteUtil.stageCenterY - 80;
         btn.touchEnabled = true;
