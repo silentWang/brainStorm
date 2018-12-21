@@ -1,0 +1,7 @@
+{"file":"home.png","frames":{
+"logo":{"x":1,"y":1,"w":469,"h":315,"offX":16,"offY":43,"sourceW":500,"sourceH":400},
+"lose":{"x":1,"y":320,"w":403,"h":53,"offX":37,"offY":0,"sourceW":480,"sourceH":54},
+"migong":{"x":408,"y":320,"w":80,"h":80,"offX":0,"offY":0,"sourceW":80,"sourceH":80},
+"qiuqiuhome":{"x":208,"y":377,"w":80,"h":80,"offX":0,"offY":0,"sourceW":80,"sourceH":80},
+"social":{"x":1,"y":377,"w":119,"h":119,"offX":1,"offY":1,"sourceW":120,"sourceH":120},
+"zhijian":{"x":124,"y":377,"w":80,"h":80,"offX":0,"offY":0,"sourceW":80,"sourceH":80}}}

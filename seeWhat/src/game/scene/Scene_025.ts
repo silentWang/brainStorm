@@ -45,7 +45,7 @@ class Scene_025 extends BaseScene{
         let img = this.getPools();
         let house = this.housesArr[this.curIndex];
         let point = house.sprite.parent.localToGlobal(house.sprite.x,house.sprite.y);
-        this.handSpr["texture"] = RES.getRes("point_png");
+        this.handSpr["texture"] = RES.getRes("images_json#point");
         this.handSpr.visible = true;
         this.handSpr.rotation = 0;
         this.handSpr.x = point.x;
@@ -272,14 +272,14 @@ class Scene_025 extends BaseScene{
             return;
         }
         let point = house.sprite.parent.localToGlobal(house.sprite.x,house.sprite.y);
-        this.handSpr["texture"] = RES.getRes("paper_png");
+        this.handSpr["texture"] = RES.getRes("images_json#paper");
         this.handSpr.visible = true;
         this.handSpr.rotation = -60;
         this.handSpr.x = point.x;
         this.handSpr.y = point.y;
 
         await this.timeOutEff();
-        this.handSpr["texture"] = RES.getRes("rock_png");
+        this.handSpr["texture"] = RES.getRes("images_json#rock");
         if(this.timeItem.leftTime < 0) return;
         await this.timeOutEff();
         this.handSpr.visible = false;

@@ -182,7 +182,7 @@ class Scene_020 extends BaseScene{
         this.intervalId = egret.setInterval(()=>{
             for(let dice of this.diceArr){
                 let index = Math.ceil(6*Math.random());
-                dice['texture'] = RES.getRes(`dice${index}_png`);
+                dice['texture'] = RES.getRes(`images_json#dice${index}`);
                 dice.name = ''+index;
             }
         },this,40);

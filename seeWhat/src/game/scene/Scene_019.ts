@@ -78,7 +78,7 @@ class Scene_019 extends BaseScene{
         for(let i = 0;i < this.dataVo.sData.length;i++){
             let config = this.dataVo.sData[i];
             let box = this.allBoxDataArr[config.index].box;
-            box.getChildAt(0).texture = RES.getRes(`${config.box}_png`);
+            box.getChildAt(0).texture = RES.getRes(`images_json#${config.box}`);
             box.visible = true;
             box.name = `${config.box}_${config.index}`;
         }

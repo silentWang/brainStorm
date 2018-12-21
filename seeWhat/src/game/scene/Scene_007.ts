@@ -146,7 +146,7 @@ class Scene_007 extends BaseScene{
             },this);
         }
         else{
-            spr.texture = RES.getRes(`${char}_png`);
+            spr.texture = RES.getRes(`images_json#${char}`);
             spr.visible = true;
         }
         spr.touchEnabled = true;

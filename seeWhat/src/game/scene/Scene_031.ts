@@ -25,7 +25,7 @@ class Scene_031 extends BaseScene{
         
         let sprite = new egret.Sprite();
         sprite.graphics.beginFill(0x000000,0.01);
-        sprite.graphics.lineStyle(2,0x0000ff);
+        sprite.graphics.lineStyle(2,0xF8F8FF);
         sprite.graphics.drawCircle(0,0,300);
         sprite.x = SpriteUtil.stageCenterX;
         sprite.y = SpriteUtil.stageCenterY;

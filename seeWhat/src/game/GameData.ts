@@ -1,6 +1,7 @@
 class GameData{
     constructor(){}
-
+    //是否已经执行
+    public static isRunGame:boolean = false;
     //主要用来测试和区分 微信小游戏 必须为true
     public static isWxGame:boolean = true;
     public static wxUserInfo:any;
@@ -10,6 +11,13 @@ class GameData{
     public static currentLevel:number = 0;
     public static reviveCard:number = 1;
     public static gameConfig;
+    //share 文案
+    public static shareConf = [
+            {title:"有人@你！这个挑战有点意思！",head:"resource/assets/head0.png"},
+            {title:"有人@你！你能找到这顶帽子吗？",head:"resource/assets/head1.png"},
+            {title:"有人@你！猴子能吃到多少水果？",head:"resource/assets/head2.png"},
+            {title:"有人@你！你能微控小球旋转几圈？",head:"resource/assets/head3.png"},
+        ];
     //当前关卡参数
     public static getLevelConfig(){
         let vo:DataVO = new DataVO();

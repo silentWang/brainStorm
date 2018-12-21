@@ -20,11 +20,8 @@ class Scene_026 extends BaseScene{
         this.lineShape = new egret.Shape();
         this.addChild(this.lineShape);
 
-        let text = new egret.TextField();
-        text.textColor = 0x0000ff;
-        text.size = 36;
-        text.text = this.dataVo.extData;
-        text.x = SpriteUtil.stageCenterX - text.width/2;
+        let text = SpriteUtil.createText(this.dataVo.extData,36,0xF8F8FF);
+        text.x = SpriteUtil.stageCenterX;
         text.y = 160;
         this.addChild(text);
 
@@ -46,7 +43,7 @@ class Scene_026 extends BaseScene{
             spr.graphics.lineStyle(5,0x000000);
             spr.graphics.drawCircle(0,0,60);
             spr.graphics.endFill();
-            spr.graphics.beginFill(0x0000ff);
+            spr.graphics.beginFill(0xfff000);
             spr.graphics.drawCircle(0,0,10);
             spr.graphics.endFill();
             sprite.addChild(spr);
@@ -130,7 +127,7 @@ class Scene_026 extends BaseScene{
             }
         }
         else{
-            this.drawPath(point,0x0000ff);
+            this.drawPath(point,0xffff00);
         }
     }
 

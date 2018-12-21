@@ -66,7 +66,7 @@ class EffectUtil{
         text1.scaleY = 5;
         text1.alpha = 0.1;
         Game.instance().addMiddle(text1);
-        GameSound.instance().playSound('Ready');
+        GameSound.instance().playSound('ready');
         egret.Tween.get(text1).to({scaleX:1,scaleY:1,alpha:1},300,egret.Ease.cubicIn).call(()=>{
             let idx = egret.setTimeout(()=>{
                 egret.clearTimeout(idx);

@@ -14,6 +14,7 @@ declare namespace wx {
     let navigateToMiniProgram:Function;//跳转小游戏
     let createBannerAd:Function;//创建广告
     let createRewardedVideoAd:Function;//激励视频
+    let showModal:Function;//对话框
 }
 
 class WXApi{
@@ -48,6 +49,10 @@ class WXApi{
                 }
             }
         });
+    }
+
+    static showModal(obj){
+        wx.showModal(obj);
     }
 
     //创建授权按钮
@@ -90,9 +95,10 @@ class WXApi{
     static showShareMenu(){
         wx.showShareMenu({"withShareTicket":false,complete:res=>{
             wx.onShareAppMessage(()=>{
+                let obj = GameData.shareConf[Math.floor(GameData.shareConf.length*Math.random())];
                 return {
-                    title:'真的！原来我与正常人相差这么大距离！',
-                    imageUrl:'resource/assets/head.png',
+                    title:obj.title,
+                    imageUrl:obj.head,
                     query:''
                 }
             });
@@ -100,9 +106,10 @@ class WXApi{
     }
     //主动转发
     static shareAppMessage(){
+        let obj = GameData.shareConf[Math.floor(GameData.shareConf.length*Math.random())];
         wx.shareAppMessage({
-            title:"有人@你，来尝试下极限挑战！",
-            imageUrl:'resource/assets/head.png',
+            title:obj.title,
+            imageUrl:obj.head,
             query:''
         });
     }

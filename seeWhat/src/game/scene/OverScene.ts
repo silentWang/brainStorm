@@ -5,7 +5,9 @@ class OverScene extends BaseScene{
     }
 
     private init(){
-        let img = SpriteUtil.createImage("lose");
+        let img = new egret.Bitmap(RES.getRes("home_json#lose"));
+        img.anchorOffsetX = img.width/2;
+        img.anchorOffsetY = img.height/2;
         img.scaleX = 1.5;
         img.scaleY = 3;
         img.x = SpriteUtil.stageCenterX;

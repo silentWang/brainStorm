@@ -67,7 +67,7 @@ class SpriteUtil{
     }
     //创建bitmap
     static createImage(name:string,isBackground = false,backgroundColor = 0x9FB6CD){
-        let bitmap = new egret.Bitmap(RES.getRes(`${name}_png`));
+        let bitmap = new egret.Bitmap(RES.getRes(`images_json#${name}`));
         if(isBackground){
             let sprite = new egret.Sprite();
             sprite.graphics.beginFill(backgroundColor);

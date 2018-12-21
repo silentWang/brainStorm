@@ -49,7 +49,7 @@ class Scene_014 extends BaseScene{
     private selectPic(evt){
         GameSound.instance().playSound('click');
         let name = evt.target.name;
-        this.createSeparate(`${name}_png`);
+        this.createSeparate(`images_json#${name}`);
         this.beforeContainer.visible = false;
         this.removeChild(this.beforeContainer);
         this.titleTxt.text = '来吧！还原这个图像！';

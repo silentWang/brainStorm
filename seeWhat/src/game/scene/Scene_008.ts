@@ -57,7 +57,7 @@ class Scene_008 extends BaseScene{
         let animal = this.animalsArr[this.needCount];
         let emoji = this.dataVo.sData[Math.floor(this.dataVo.sData.length * Math.random())];
         this.passArr.push({animal:animal,emoji:emoji});
-        this.animalSpr.texture = RES.getRes(`${animal}_png`);
+        this.animalSpr.texture = RES.getRes(`images_json#${animal}`);
         this.animalSpr.name = animal;
         let pos = this.getRandomPos();
         this.animalSpr.x = pos[0];
@@ -70,7 +70,7 @@ class Scene_008 extends BaseScene{
                 
                 this.emojiSpr.x = this.animalSpr.x;
                 this.emojiSpr.y = this.animalSpr.y;
-                this.emojiSpr.texture = RES.getRes(`${emoji}_png`);
+                this.emojiSpr.texture = RES.getRes(`images_json#${emoji}`);
                 this.emojiSpr.visible = true;
 
                 let xid = egret.setTimeout(()=>{

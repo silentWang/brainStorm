@@ -66,9 +66,9 @@ class Scene_013 extends BaseScene{
     private enemyDoing(){
         let len = this.dataVo.sData.length;
         this.leftIndex = Math.floor(len * Math.random());
-        this.leftSpr.texture = RES.getRes(`${this.dataVo.sData[this.leftIndex]}_png`);
+        this.leftSpr.texture = RES.getRes(`images_json#${this.dataVo.sData[this.leftIndex]}`);
         this.rightIndex = Math.floor(len * Math.random());
-        this.rightSpr.texture = RES.getRes(`${this.dataVo.sData[this.rightIndex]}_png`);
+        this.rightSpr.texture = RES.getRes(`images_json#${this.dataVo.sData[this.rightIndex]}`);
         if(this.dataVo.level <= 2){
             if(this.leftIndex == 2){
                 this.leftSpr.scaleX = this.xScale;

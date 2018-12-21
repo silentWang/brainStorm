@@ -25,7 +25,7 @@ class Scene_001 extends BaseScene{
         this.tarText.textAlign = 'center';
         this.tarText.text = '';
         this.tarText.size = 36;
-        this.tarText.textColor = 0x0000ff;
+        this.tarText.textColor = 0xF8F8FF;
         this.tarText.stroke = 1;
         this.tarText.strokeColor = 0xffff00;
         this.tarText.bold = true;
