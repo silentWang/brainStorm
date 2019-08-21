@@ -91,7 +91,7 @@ var Main = (function (_super) {
             egret.ticker.resume();
         };
         this.runGame().catch(function (e) {
-            console.log(e);
+            console.error(e);
         });
     };
     Main.prototype.runGame = function () {
@@ -105,10 +105,9 @@ var Main = (function (_super) {
                         return [4 /*yield*/, RES.getResAsync("config_json")];
                     case 2:
                         result = _a.sent();
-                        GameData.config = result;
-                        return [4 /*yield*/, platform.login()];
-                    case 3:
-                        _a.sent();
+                        GameData.gameConfig = result;
+                        // console.log("游戏配置o%",result);
+                        // await platform.login();
                         this.createGameScene();
                         return [2 /*return*/];
                 }
@@ -146,14 +145,11 @@ var Main = (function (_super) {
      * Create a game scene
      */
     Main.prototype.createGameScene = function () {
-        // let sp = new egret.Shape();
-        // sp.graphics.beginFill(0xB0C4DE);
-        // sp.graphics.drawRect(0,0,this.stage.stageWidth,this.stage.stageHeight);
-        // sp.graphics.endFill();
-        // this.stage.addChild(sp);
         var bg = new egret.Bitmap(RES.getRes('bg_png'));
         this.stage.addChild(bg);
         Game.instance().setStage(this.stage);
+        //iphoneX 的适配
+        bg.height = this.stage.stageHeight;
     };
     return Main;
 }(egret.DisplayObjectContainer));

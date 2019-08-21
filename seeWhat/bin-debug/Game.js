@@ -33,10 +33,10 @@ var Game = (function () {
         this._gameView = new GameView();
         //进入菜单
         if (!GameData.isWxGame) {
-            this._gameScene.gotoMenu();
+            this._gameScene.enterMenu();
         }
         else {
-            WXApi.getSetting();
+            Game.instance().gameScene.enterMenu();
         }
     };
     Game.prototype.addBottom = function (display) {

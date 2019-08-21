@@ -17,9 +17,6 @@ var Scene_001 = (function (_super) {
         return _this;
     }
     Scene_001.prototype.init = function () {
-        // this.dataVo.sData = '鼠鹅牛猫虎驴兔鸭龙鱼蛇龟马鸟羊象猴蛙鸡熊狗狼猪凤';
-        // this.dataVo.tData = '鼠牛虎兔龙蛇马羊猴鸡狗猪';
-        // this.dataVo.time = 60;
         this.selectedArr = [];
         var rect = SpriteUtil.createRect(SpriteUtil.stageWidth, SpriteUtil.stageHeight / 8, 0xCDCDC1);
         rect.x = SpriteUtil.stageWidth / 2;
@@ -35,7 +32,7 @@ var Scene_001 = (function (_super) {
         this.tarText.textAlign = 'center';
         this.tarText.text = '';
         this.tarText.size = 36;
-        this.tarText.textColor = 0x0000ff;
+        this.tarText.textColor = 0xF8F8FF;
         this.tarText.stroke = 1;
         this.tarText.strokeColor = 0xffff00;
         this.tarText.bold = true;
@@ -50,7 +47,10 @@ var Scene_001 = (function (_super) {
     //事件处理
     Scene_001.prototype.textClk = function (evt) {
         var _this = this;
+        if (this.timeItem.leftTime <= 0)
+            return;
         var text = evt.target;
+        GameSound.instance().playSound('click');
         if (this.tarText == text) {
             text = this.selectedArr.pop();
             var xx = 200 + 320 * Math.random();
@@ -73,17 +73,18 @@ var Scene_001 = (function (_super) {
                 text.touchEnabled = true;
                 _this.tarText.touchEnabled = true;
                 _this.selectedArr.push(text);
-                if (str == _this.dataVo.tData) {
-                    if (_this.timeItem.leftTime >= 30) {
+                if (_this.dataVo.tData.indexOf(str) >= 0) {
+                    var leftTime = _this.timeItem.leftTime;
+                    _this.timeItem.stop();
+                    if (leftTime >= 30) {
                         EffectUtil.showResultEffect(EffectUtil.PERFECT);
                     }
-                    else if (_this.timeItem.leftTime >= 15) {
-                        EffectUtil.showResultEffect(EffectUtil.EXCELLENT);
+                    else if (leftTime >= 15) {
+                        EffectUtil.showResultEffect(EffectUtil.GREAT);
                     }
                     else {
                         EffectUtil.showResultEffect(EffectUtil.GOOD);
                     }
-                    _this.timeItem.stop();
                 }
             });
         }

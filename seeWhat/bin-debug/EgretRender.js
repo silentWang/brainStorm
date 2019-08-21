@@ -65,18 +65,17 @@ var EgretRender = (function () {
         return render;
     };
     EgretRender.run = function (render) {
-        egret.startTick(function (timeStamp) {
-            EgretRender.world(render);
-            return false;
-        }, EgretRender);
+        this.render = render;
+        egret.startTick(this.loop, EgretRender);
+    };
+    EgretRender.loop = function (timeStamp) {
+        EgretRender.world(this.render);
+        return false;
     };
     EgretRender.stop = function (cb) {
         if (cb === void 0) { cb = null; }
-        egret.stopTick(function (timeStamp) {
-            if (cb)
-                cb();
-            return false;
-        }, EgretRender);
+        egret.stopTick(this.loop, EgretRender);
+        this.render = null;
     };
     EgretRender.world = function (render) {
         var engine = render.engine;
@@ -250,6 +249,7 @@ var EgretRender = (function () {
         primitive.lineTo(toX, toY);
         primitive.endFill();
     };
+    EgretRender.render = null;
     return EgretRender;
 }());
 __reflect(EgretRender.prototype, "EgretRender");

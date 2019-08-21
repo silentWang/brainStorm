@@ -46,13 +46,29 @@ var LoadingUI = (function (_super) {
     LoadingUI.prototype.createView = function () {
         this.textField = new egret.TextField();
         this.addChild(this.textField);
-        this.textField.y = 300;
+        this.textField.y = 420;
         this.textField.width = 480;
         this.textField.height = 100;
         this.textField.textAlign = "center";
+        this.textField.textColor = 0x00ff00;
+        this.textField.size = 48;
+        this.textField.stroke = 2;
+        this.textField.strokeColor = 0xff0000;
+        this.textField.bold = true;
+        var text = new egret.TextField();
+        text.text = "健康游戏忠告\n抵制不良游戏，拒绝盗版游戏。\n注意自我保护，谨防受骗上当。\n适度游戏益脑，沉迷游戏伤身。\n合理安排时间，享受健康生活。";
+        text.textAlign = "center";
+        text.textColor = 0xffffff;
+        text.lineSpacing = 20;
+        text.size = 36;
+        text.anchorOffsetX = text.width / 2;
+        text.x = 360;
+        text.y = 700;
+        this.addChild(text);
     };
     LoadingUI.prototype.onProgress = function (current, total) {
-        this.textField.text = "Loading..." + current + "/" + total;
+        this.textField.text = "Loading..." + Math.floor(100 * current / total) + "%";
+        this.textField.x = 120;
     };
     return LoadingUI;
 }(egret.Sprite));

@@ -144,6 +144,7 @@ class WXApi{
     //广告显示
     static globalBannerAd;
     static showBannerAd(b:boolean = true){
+        if(!GameData.isWxGame) return;
         if(!this.globalBannerAd){
             let systemInfo:any = wx.getSystemInfoSync();
             let shgt = SpriteUtil.stageHeight;
@@ -197,10 +198,12 @@ class WXApi{
         let schapter = egret.localStorage.getItem('very_funny_small_game_chapter');
         if(parseInt(schapter) >= chapter) return;
         egret.localStorage.setItem("very_funny_small_game_chapter",""+chapter);
-        let openDataContext = platform['openDataContext'];
-        openDataContext.postMessage({
-            command:'cmd_user',
-            level:chapter
-        });
+        if(GameData.isWxGame){
+            let openDataContext = platform['openDataContext'];
+            openDataContext.postMessage({
+                command:'cmd_user',
+                level:chapter
+            });
+        }
     }
 }

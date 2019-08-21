@@ -17,7 +17,12 @@ var GameEvent = (function (_super) {
         return _this;
     }
     GameEvent.START_GAME = 'game_start';
-    GameEvent.GOTO_NEXT = 'goto_next';
+    //下一个游戏
+    GameEvent.GOT0_CHAPTER = 'goto_next_chapter';
+    //当前游戏的下一个关卡
+    GameEvent.GOTO_NEXT_LEVEL = 'goto_next_level';
+    //授权后刷新
+    GameEvent.AUTHORIZE_REFRESH = "authorize_refresh";
     return GameEvent;
 }(egret.Event));
 __reflect(GameEvent.prototype, "GameEvent");

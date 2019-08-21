@@ -23,18 +23,20 @@ var Scene_014 = (function (_super) {
         this.cropPics = [];
         this.createFruit();
     };
-    //选择水果
+    //选择水果  sData 各种图像  tdata 标题
     Scene_014.prototype.createFruit = function () {
-        var arr = ['apple_jpg', 'banana_jpg', 'cherry_jpg', 'grape_jpg', 'melon_jpg', 'orange_jpg', 'peach_jpg', 'pear_jpg', 'pineapple_jpg', 'pomegranate_jpg', 'strawberry_jpg', 'watermelon_jpg'];
+        var arr = this.dataVo.sData;
         var len = arr.length;
         this.beforeContainer = new egret.Sprite();
         this.addChild(this.beforeContainer);
         for (var i = 0; i < len; i++) {
             var xx = 25 + 225 * (i % 3);
             var yy = 150 + 225 * Math.floor(i / 3);
-            var bit = new egret.Bitmap(RES.getRes(arr[i]));
-            bit.width = 220;
-            bit.height = 220;
+            var bit = SpriteUtil.createImage(arr[i]);
+            bit.anchorOffsetX = 0;
+            bit.anchorOffsetY = 0;
+            bit.width = 200;
+            bit.height = 200;
             bit.x = xx;
             bit.y = yy;
             bit.name = arr[i];
@@ -42,17 +44,19 @@ var Scene_014 = (function (_super) {
             bit.addEventListener(egret.TouchEvent.TOUCH_TAP, this.selectPic, this);
             this.beforeContainer.addChild(bit);
         }
-        this.titleTxt = SpriteUtil.createText('那么你最喜欢下面哪种水果？', 32, 0x0000ff);
+        this.titleTxt = SpriteUtil.createText(this.dataVo.tData, 32, 0xF8F8FF);
         this.titleTxt.x = SpriteUtil.stageCenterX;
         this.titleTxt.y = 100;
         this.addChild(this.titleTxt);
     };
     Scene_014.prototype.selectPic = function (evt) {
+        GameSound.instance().playSound('click');
         var name = evt.target.name;
-        this.createSeparate(name);
+        this.createSeparate("images_json#" + name);
         this.beforeContainer.visible = false;
         this.removeChild(this.beforeContainer);
-        this.titleTxt.text = '没错！还原这个你最爱的水果吧！';
+        this.titleTxt.text = '来吧！还原这个图像！';
+        this.titleTxt.anchorOffsetX = this.titleTxt.width / 2;
         this.timeItem = new TimeItem(this.dataVo.time);
         this.addChild(this.timeItem);
         this.timeItem.start();
@@ -69,6 +73,8 @@ var Scene_014 = (function (_super) {
         this.picContainer.y = 200;
         this.addChild(this.picContainer);
         var bitmap = new egret.Bitmap(RES.getRes(res));
+        bitmap.width = 640;
+        bitmap.height = 640;
         var arr = [];
         for (var i = 0; i < 16; i++) {
             arr.push(i);
@@ -104,6 +110,7 @@ var Scene_014 = (function (_super) {
         var _this = this;
         if (this.isOperating || this.timeItem.leftTime <= 0)
             return;
+        GameSound.instance().playSound('click');
         var pic = evt.target;
         if (this.currTarget == null) {
             this.currTarget = pic;
@@ -125,7 +132,6 @@ var Scene_014 = (function (_super) {
             egret.Tween.get(this.currTarget).to({ x: this.cropPoints[index1].x, y: this.cropPoints[index1].y }, 200).call(function () {
                 egret.Tween.removeTweens(_this.currTarget);
                 _this.currTarget = null;
-                _this.checkOver();
             });
             egret.Tween.get(pic).to({ x: this.cropPoints[index2].x, y: this.cropPoints[index2].y }, 200).call(function () {
                 egret.Tween.removeTweens(pic);
@@ -141,7 +147,7 @@ var Scene_014 = (function (_super) {
                 EffectUtil.showResultEffect(EffectUtil.PERFECT);
             }
             else if (leftTime >= 60) {
-                EffectUtil.showResultEffect(EffectUtil.EXCELLENT);
+                EffectUtil.showResultEffect(EffectUtil.GREAT);
             }
             else {
                 EffectUtil.showResultEffect(EffectUtil.GOOD);

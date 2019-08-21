@@ -24,17 +24,22 @@ class GameSound{
     private _sound = null;
     private _music = null;
     playMusic(){
-        if(this._music == null){
-            this._music = WXApi.createInnerAudioContext(this.audio_url+"bg.mp3");
-            this._music.loop = true;
-            this._music.onCanplay(()=>{
-                this._music.play();
-                this._music.offCanplay();
-            });
-            return;
+        if(GameData.isWxGame){
+            if(this._music == null){
+                this._music = WXApi.createInnerAudioContext(this.audio_url+"bg.mp3");
+                this._music.loop = true;
+                this._music.onCanplay(()=>{
+                    this._music.play();
+                    this._music.offCanplay();
+                });
+                return;
+            }
+            this.stopMusic();
+            this._music.play();
         }
-        this.stopMusic();
-        this._music.play();
+        else{
+            this.playWebSound(this.audio_url+"bg.mp3",-1);
+        }
     }
 
     stopMusic(){
@@ -48,9 +53,39 @@ class GameSound{
             this._sound.stop();
             this._sound.destroy();
         }
-        this._sound = WXApi.createInnerAudioContext(this.soundsVec[type]);
+        if(GameData.isWxGame){
+            this.playWxSound(this.soundsVec[type]);
+        }
+        else{
+            this.playWebSound(this.soundsVec[type]);
+        }
+    }
+
+    private playWxSound(url){
+        this._sound = WXApi.createInnerAudioContext(url);
         this._sound.play();
         this._sound.loop = false;
+    }
+
+    private playWebSound(url,loop = 1){
+        try{
+            let sound:egret.Sound = new egret.Sound();
+            sound.addEventListener(egret.Event.COMPLETE,(event:egret.Event)=>{
+                try{
+                    sound.play(0,loop);
+                }
+                catch(e){
+                    console.log(e);
+                }
+            }, this);
+            sound.addEventListener(egret.IOErrorEvent.IO_ERROR, function loadError(event:egret.IOErrorEvent) {
+                console.log("loaded error!");
+            }, this);
+            sound.load(url);
+        }
+        catch(e){
+            console.log(e);
+        }
     }
 
 

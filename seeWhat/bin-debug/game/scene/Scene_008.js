@@ -20,7 +20,20 @@ var Scene_008 = (function (_super) {
         return _this;
     }
     Scene_008.prototype.init = function () {
-        this.passArr = [];
+        this.listSpr = new egret.Sprite();
+        this.listSpr.x = 100;
+        this.listSpr.y = 250;
+        this.listSpr.visible = false;
+        this.addChild(this.listSpr);
+        for (var i = 0; i < this.animalsArr.length; i++) {
+            var spr = SpriteUtil.createImage(this.animalsArr[i]);
+            spr.x = (i % 5) * 125;
+            spr.y = 125 * Math.floor(i / 5);
+            spr.touchEnabled = true;
+            spr.name = this.animalsArr[i];
+            spr.addEventListener(egret.TouchEvent.TOUCH_TAP, this.selectClk, this);
+            this.listSpr.addChild(spr);
+        }
         this.animalsArr.sort(function (a, b) {
             if (Math.random() > 0.5)
                 return 1;
@@ -28,10 +41,15 @@ var Scene_008 = (function (_super) {
                 return -1;
             return 0;
         });
-        this.animalSpr = SpriteUtil.createText(this.animalsArr[this.needCount], 200);
+        this.passArr = [];
+        this.animalSpr = SpriteUtil.createImage(this.animalsArr[this.needCount]);
         this.animalSpr.y = SpriteUtil.stageCenterY - 100;
+        this.animalSpr.scaleX = 3;
+        this.animalSpr.scaleY = 3;
         this.addChild(this.animalSpr);
-        this.emojiSpr = SpriteUtil.createText('😭', 280);
+        this.emojiSpr = SpriteUtil.createImage('emoji01');
+        this.emojiSpr.scaleX = 4;
+        this.emojiSpr.scaleY = 4;
         this.emojiSpr.visible = false;
         this.addChild(this.emojiSpr);
         EffectUtil.breath(this.emojiSpr);
@@ -43,7 +61,8 @@ var Scene_008 = (function (_super) {
         var animal = this.animalsArr[this.needCount];
         var emoji = this.dataVo.sData[Math.floor(this.dataVo.sData.length * Math.random())];
         this.passArr.push({ animal: animal, emoji: emoji });
-        this.animalSpr.text = animal;
+        this.animalSpr.texture = RES.getRes("images_json#" + animal);
+        this.animalSpr.name = animal;
         var pos = this.getRandomPos();
         this.animalSpr.x = pos[0];
         this.animalSpr.y = pos[1];
@@ -54,14 +73,14 @@ var Scene_008 = (function (_super) {
                 egret.Tween.removeTweens(_this.animalSpr);
                 _this.emojiSpr.x = _this.animalSpr.x;
                 _this.emojiSpr.y = _this.animalSpr.y;
-                _this.emojiSpr.text = emoji;
+                _this.emojiSpr.texture = RES.getRes("images_json#" + emoji);
                 _this.emojiSpr.visible = true;
                 var xid = egret.setTimeout(function () {
                     egret.clearTimeout(xid);
                     _this.emojiSpr.visible = false;
                     _this.animalSpr.visible = false;
                     _this.needCount++;
-                    if (_this.needCount >= 10) {
+                    if (_this.needCount >= _this.dataVo.tData) {
                         _this.startLook();
                         return;
                     }
@@ -90,20 +109,16 @@ var Scene_008 = (function (_super) {
         this.removeChild(this.animalSpr);
         this.removeChild(this.emojiSpr);
         this.dataVo.tData = this.passArr[Math.floor(this.passArr.length * Math.random())].emoji;
-        console.log(this.passArr);
-        var askstr = "\u8C1C\u9898:\u627E\u51FA\u6240\u6709\u53D1\u51FA\u8868\u60C5" + this.dataVo.tData + "\u7684\u52A8\u7269";
-        var text = SpriteUtil.createText(askstr, 36, 0x0000FF);
+        var emoji = SpriteUtil.createImage(this.dataVo.tData);
+        var askstr = "\u8C1C\u9898:\u627E\u51FA\u6240\u6709\u53D1\u51FA\u8868\u60C5       \u7684\u52A8\u7269";
+        var text = SpriteUtil.createText(askstr, 36, 0xF8F8FF);
         text.x = SpriteUtil.stageCenterX;
-        text.y = 100;
+        text.y = 150;
+        emoji.x = text.x + text.measuredWidth - text.width / 2 - text.measuredWidth * 4 / 15;
+        emoji.y = text.y;
+        this.addChild(emoji);
         this.addChild(text);
-        for (var i = 0; i < this.animalsArr.length; i++) {
-            var spr = SpriteUtil.createText(this.animalsArr[i], 100);
-            spr.x = 100 + (i % 5) * 125;
-            spr.y = 200 + 125 * Math.floor(i / 5);
-            spr.touchEnabled = true;
-            spr.addEventListener(egret.TouchEvent.TOUCH_TAP, this.selectClk, this);
-            this.addChild(spr);
-        }
+        this.listSpr.visible = true;
         this.timeItem = new TimeItem(this.dataVo.time);
         this.addChild(this.timeItem);
         this.timeItem.start();
@@ -111,14 +126,15 @@ var Scene_008 = (function (_super) {
     Scene_008.prototype.selectClk = function (evt) {
         if (this.isOperating)
             return;
-        var text = evt.target;
+        GameSound.instance().playSound('click');
+        var sprite = evt.target;
         var isFind = false;
         var len = this.passArr.length;
         for (var i = len - 1; i >= 0; i--) {
             var obj = this.passArr[i];
-            if (obj.emoji == this.dataVo.tData && obj.animal == text.text) {
-                text.alpha = 0.5;
-                text.touchEnabled = false;
+            if (obj.emoji == this.dataVo.tData && obj.animal == sprite.name) {
+                sprite.alpha = 0.5;
+                sprite.touchEnabled = false;
                 isFind = true;
                 this.passArr.splice(i, 1);
             }
@@ -133,7 +149,7 @@ var Scene_008 = (function (_super) {
                     EffectUtil.showResultEffect(EffectUtil.PERFECT);
                 }
                 else if (this.timeItem.leftTime >= 15) {
-                    EffectUtil.showResultEffect(EffectUtil.EXCELLENT);
+                    EffectUtil.showResultEffect(EffectUtil.GREAT);
                 }
                 else {
                     EffectUtil.showResultEffect(EffectUtil.GOOD);

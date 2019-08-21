@@ -8,6 +8,7 @@ var GameView = (function () {
     GameView.prototype.init = function () {
         this._guideView = new GuideView();
         this._rankView = new RankView();
+        this._tipsView = new TipsView();
     };
     Object.defineProperty(GameView.prototype, "guideView", {
         get: function () {
@@ -19,6 +20,13 @@ var GameView = (function () {
     Object.defineProperty(GameView.prototype, "rankView", {
         get: function () {
             return this._rankView;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(GameView.prototype, "tipsView", {
+        get: function () {
+            return this._tipsView;
         },
         enumerable: true,
         configurable: true

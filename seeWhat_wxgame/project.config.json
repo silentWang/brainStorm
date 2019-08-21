@@ -10,7 +10,9 @@
 	"compileType": "game",
 	"libVersion": "game",
 	"appid": "wxa042c83ba36ad280",
-	"projectname": "seeWhat",
+	"projectname": "seeWhat_wxgame",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,

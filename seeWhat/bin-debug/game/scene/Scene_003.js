@@ -17,8 +17,7 @@ var Scene_003 = (function (_super) {
         _this.angleSpeed1 = 0.06;
         _this.angleSpeed2 = 0.06;
         _this.angleSpeed3 = 0.07;
-        _this.angleSpeed4 = 0.08;
-        _this.speedDir = 1;
+        _this.angleSpeed4 = 0.075;
         _this.isTouching = false;
         _this.categories = [0x0001, 0x0002, 0x0004, 0x0008, 0x0010, 0x0020, 0x0040, 0x0080];
         _this.playerCategory = 0x0100;
@@ -28,6 +27,7 @@ var Scene_003 = (function (_super) {
     }
     Scene_003.prototype.init = function () {
         var _this = this;
+        //sdata 代表移动敌人的速度
         this.timeItem = new TimeItem(this.dataVo.time);
         this.timeItem.x = SpriteUtil.stageWidth - 250;
         this.addChild(this.timeItem);
@@ -48,6 +48,136 @@ var Scene_003 = (function (_super) {
         world.gravity.y = 0;
         Matter.Runner.run(this.runner, this.engine);
         EgretRender.run(render);
+        //player
+        var playerSpr = SpriteUtil.createImage("boy");
+        this.player = Matter.Bodies.rectangle(50, 1250, playerSpr.width - 20, playerSpr.height - 6, {
+            stiffness: 1,
+            collisionFilter: {
+                category: this.playerCategory
+            },
+            render: {
+                sprite: playerSpr
+            }
+        });
+        //target
+        var girl = SpriteUtil.createImage("girl");
+        this.girlbdy = Matter.Bodies.circle(SpriteUtil.stageCenterX, girl.height / 2 + 60, girl.width / 2, {
+            stiffness: 1,
+            collisionFilter: {
+                category: this.categories[0],
+                mask: this.playerCategory | this.categories[0]
+            },
+            render: {
+                sprite: girl
+            }
+        }, 0);
+        Matter.World.add(world, [this.player, this.girlbdy]);
+        playerSpr.touchEnabled = true;
+        playerSpr.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function (evt) {
+            _this.isTouching = true;
+        }, this);
+        playerSpr.addEventListener(egret.TouchEvent.TOUCH_MOVE, function (evt) {
+            if (_this.isTouching) {
+                var xx = evt['stageX'];
+                var yy = evt['stageY'];
+                if (xx < 0) {
+                    xx = 0;
+                }
+                else if (xx > SpriteUtil.stageWidth) {
+                    xx = SpriteUtil.stageWidth;
+                }
+                if (yy > SpriteUtil.stageHeight) {
+                    yy = SpriteUtil.stageHeight;
+                }
+                else if (yy < 0) {
+                    yy = 0;
+                }
+                Matter.Body.setPosition(_this.player, { x: xx, y: yy });
+            }
+        }, this);
+        playerSpr.addEventListener(egret.TouchEvent.TOUCH_END, function (evt) {
+            _this.isTouching = false;
+        }, this);
+        if (this.dataVo.level == 1) {
+            this.initL1();
+        }
+        else if (this.dataVo.level == 2) {
+            this.initL2();
+        }
+        else if (this.dataVo.level == 3) {
+            this.initL3();
+        }
+        //更新
+        Matter.Events.on(this.engine, 'beforeUpdate', this.beforeUpdateHandle.bind(this));
+        //碰撞检测
+        Matter.Events.on(this.engine, 'collisionStart', this.collisionHandle.bind(this));
+    };
+    Scene_003.prototype.initL1 = function () {
+        var world = this.engine.world;
+        var enemy1 = this.createEnemy(SpriteUtil.stageCenterX - 360, SpriteUtil.stageCenterY, this.categories[1], 36);
+        Matter.World.add(this.engine.world, enemy1);
+        this.enemies = [enemy1];
+        Matter.Body.setAngularVelocity(this.enemies[0][0], this.angleSpeed1 * 1.2);
+        //飞镖
+        var arrowspr1 = SpriteUtil.createImage('insect');
+        var scale = 50 / arrowspr1.width;
+        arrowspr1.scaleX = scale;
+        arrowspr1.scaleY = scale;
+        var arrow1 = Matter.Bodies.circle(100, 200, scale * arrowspr1.width / 2, {
+            label: 'Body_enemy',
+            friction: 0,
+            frictionAir: 0,
+            render: {
+                sprite: arrowspr1
+            }
+        }, 0);
+        var arrowspr2 = SpriteUtil.createImage('insect');
+        arrowspr2.scaleX = scale;
+        arrowspr2.scaleY = scale;
+        var arrow2 = Matter.Bodies.circle(SpriteUtil.stageWidth - 100, SpriteUtil.stageHeight - 200, scale * arrowspr2.width / 2, {
+            label: 'Body_enemy',
+            friction: 0,
+            frictionAir: 0,
+            render: {
+                sprite: arrowspr2
+            }
+        }, 0);
+        Matter.World.add(world, [arrow1, arrow2]);
+        this.enemies.push(arrow1);
+        this.enemies.push(arrow2);
+        Matter.Body.setVelocity(arrow1, { x: this.dataVo.sData, y: 0 });
+        Matter.Body.setVelocity(arrow2, { x: -1 * this.dataVo.sData, y: 0 });
+    };
+    Scene_003.prototype.initL2 = function () {
+        var _this = this;
+        var world = this.engine.world;
+        //飞镖
+        var func = function (i) {
+            var arrowspr1 = SpriteUtil.createImage('insect');
+            var scale = 50 / arrowspr1.width;
+            arrowspr1.scaleX = scale;
+            arrowspr1.scaleY = scale;
+            var xx = i % 2 == 0 ? SpriteUtil.stageWidth - 250 : 250;
+            var arrow1 = Matter.Bodies.circle(xx, 200 + i * 100, scale * arrowspr1.width / 2, {
+                label: 'Body_enemy',
+                friction: 0,
+                frictionAir: 0,
+                render: {
+                    sprite: arrowspr1
+                }
+            }, 0);
+            var dir = i % 2 == 0 ? -1 : 1;
+            Matter.Body.setVelocity(arrow1, { x: dir * _this.dataVo.sData * 10, y: 0 });
+            return arrow1;
+        };
+        this.enemies = [];
+        for (var i = 0; i < 8; i++) {
+            this.enemies.push(func(i));
+        }
+        Matter.World.add(world, this.enemies);
+    };
+    Scene_003.prototype.initL3 = function () {
+        var world = this.engine.world;
         var enemy1 = this.createEnemy(0, 560, this.categories[1]);
         Matter.World.add(world, enemy1);
         var enemy2 = this.createEnemy(200, 560, this.categories[2]);
@@ -65,16 +195,19 @@ var Scene_003 = (function (_super) {
         var enemy7 = this.createEnemy(210, 1100, this.categories[5], 15);
         Matter.World.add(world, enemy7);
         //包围机器人
-        var enemy8 = this.createEnemy(160, 100, this.categories[5]);
+        var enemy8 = this.createEnemy(160, 160, this.categories[5]);
         Matter.World.add(world, enemy8);
-        var enemy9 = this.createEnemy(310, 200, this.categories[5]);
+        var enemy9 = this.createEnemy(310, 260, this.categories[5]);
         Matter.World.add(world, enemy9);
-        var enemy10 = this.createEnemy(460, 100, this.categories[5]);
+        var enemy10 = this.createEnemy(460, 160, this.categories[5]);
         Matter.World.add(world, enemy10);
         this.enemies = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7, enemy8, enemy9, enemy10];
         //飞镖
-        var arrowspr1 = SpriteUtil.createText('🐙', 50, 0xff0000);
-        var arrow1 = Matter.Bodies.circle(100, 300, arrowspr1.width / 2, {
+        var arrowspr1 = SpriteUtil.createImage('insect');
+        var scale = 50 / arrowspr1.width;
+        arrowspr1.scaleX = scale;
+        arrowspr1.scaleY = scale;
+        var arrow1 = Matter.Bodies.circle(100, 360, scale * arrowspr1.width / 2, {
             label: 'Body_enemy',
             friction: 0,
             frictionAir: 0,
@@ -82,8 +215,10 @@ var Scene_003 = (function (_super) {
                 sprite: arrowspr1
             }
         }, 0);
-        var arrowspr2 = SpriteUtil.createText('🐙', 50, 0xff0000);
-        var arrow2 = Matter.Bodies.circle(SpriteUtil.stageWidth - 100, 400, arrowspr2.width / 2, {
+        var arrowspr2 = SpriteUtil.createImage('insect');
+        arrowspr2.scaleX = scale;
+        arrowspr2.scaleY = scale;
+        var arrow2 = Matter.Bodies.circle(SpriteUtil.stageWidth - 100, 460, scale * arrowspr2.width / 2, {
             label: 'Body_enemy',
             friction: 0,
             frictionAir: 0,
@@ -94,46 +229,6 @@ var Scene_003 = (function (_super) {
         Matter.World.add(world, [arrow1, arrow2]);
         this.enemies.push(arrow1);
         this.enemies.push(arrow2);
-        //player
-        var playerSpr = SpriteUtil.createText('👦', 80);
-        this.player = Matter.Bodies.circle(50, 1250, playerSpr.width / 2, {
-            stiffness: 1,
-            collisionFilter: {
-                category: this.playerCategory
-            },
-            render: {
-                sprite: playerSpr
-            }
-        }, 0);
-        //target
-        var girl = SpriteUtil.createText('👧', 80);
-        this.girlbdy = Matter.Bodies.circle(SpriteUtil.stageCenterX, girl.height / 2 + 10, girl.width / 2, {
-            stiffness: 1,
-            collisionFilter: {
-                category: this.categories[0],
-                mask: this.playerCategory | this.categories[0]
-            },
-            render: {
-                sprite: girl
-            }
-        }, 0);
-        Matter.World.add(world, [this.player, this.girlbdy]);
-        //更新
-        Matter.Events.on(this.engine, 'beforeUpdate', this.beforeUpdateHandle.bind(this));
-        //碰撞检测
-        Matter.Events.on(this.engine, 'collisionStart', this.collisionHandle.bind(this));
-        playerSpr.touchEnabled = true;
-        playerSpr.addEventListener(egret.TouchEvent.TOUCH_BEGIN, function (evt) {
-            _this.isTouching = true;
-        }, this);
-        playerSpr.addEventListener(egret.TouchEvent.TOUCH_MOVE, function (evt) {
-            if (_this.isTouching) {
-                Matter.Body.setPosition(_this.player, { x: evt['stageX'], y: evt['stageY'] });
-            }
-        }, this);
-        playerSpr.addEventListener(egret.TouchEvent.TOUCH_END, function (evt) {
-            _this.isTouching = false;
-        }, this);
         //运动起来 旋转起来
         Matter.Body.setAngularVelocity(this.enemies[0][0], 0.1);
         Matter.Body.setAngularVelocity(this.enemies[0][0], this.angleSpeed1);
@@ -146,22 +241,25 @@ var Scene_003 = (function (_super) {
         Matter.Body.setAngularVelocity(this.enemies[7][0], this.angleSpeed4);
         Matter.Body.setAngularVelocity(this.enemies[8][0], -this.angleSpeed4);
         Matter.Body.setAngularVelocity(this.enemies[9][0], this.angleSpeed4);
-        Matter.Body.setVelocity(this.enemies[10], { x: this.speedDir * 5, y: 0 });
-        Matter.Body.setVelocity(this.enemies[11], { x: -this.speedDir * 5, y: 0 });
+        Matter.Body.setVelocity(this.enemies[10], { x: this.dataVo.sData, y: 0 });
+        Matter.Body.setVelocity(this.enemies[11], { x: -1 * this.dataVo.sData, y: 0 });
     };
     //bdfore update
     Scene_003.prototype.beforeUpdateHandle = function (evt) {
         if (!this.isRunning)
             return;
-        if (this.enemies[10].position.x > SpriteUtil.stageWidth) {
-            this.speedDir = -1;
-            Matter.Body.setVelocity(this.enemies[10], { x: this.speedDir * 5, y: 0 });
-            Matter.Body.setVelocity(this.enemies[11], { x: -this.speedDir * 5, y: 0 });
+        var len = this.enemies.length;
+        var num = 0;
+        if (this.dataVo.level == 1 || this.dataVo.level == 3) {
+            num = len - 2;
         }
-        if (this.enemies[10].position.x < 0) {
-            this.speedDir = 1;
-            Matter.Body.setVelocity(this.enemies[10], { x: this.speedDir * 5, y: 0 });
-            Matter.Body.setVelocity(this.enemies[11], { x: -this.speedDir * 5, y: 0 });
+        for (var i = len - 1; i >= num; i--) {
+            if (this.enemies[i].position.x < 0) {
+                Matter.Body.setVelocity(this.enemies[i], { x: this.dataVo.sData, y: 0 });
+            }
+            else if (this.enemies[i].position.x > SpriteUtil.stageWidth) {
+                Matter.Body.setVelocity(this.enemies[i], { x: -1 * this.dataVo.sData, y: 0 });
+            }
         }
     };
     //collisionStart
@@ -194,7 +292,7 @@ var Scene_003 = (function (_super) {
                         EffectUtil.showResultEffect(EffectUtil.PERFECT);
                     }
                     else if (this.timeItem.leftTime >= 15) {
-                        EffectUtil.showResultEffect(EffectUtil.EXCELLENT);
+                        EffectUtil.showResultEffect(EffectUtil.GREAT);
                     }
                     else {
                         EffectUtil.showResultEffect(EffectUtil.GOOD);
@@ -215,8 +313,11 @@ var Scene_003 = (function (_super) {
             }, 0);
         });
         var spr = new egret.Sprite();
+        var scale = radius * 2 / 64;
         for (var i = 0; i < num; i++) {
-            var t1 = SpriteUtil.createText('🔥', radius * 2, 0xff0000, false);
+            var t1 = SpriteUtil.createImage("fireball");
+            t1.scaleX = scale;
+            t1.scaleY = scale;
             t1.x = i * radius * 2;
             spr.addChild(t1);
         }
@@ -249,6 +350,10 @@ var Scene_003 = (function (_super) {
     Scene_003.prototype.exit = function () {
         Matter.World.remove(this.engine.world, this.engine.world.bodies, 0);
         Matter.World.remove(this.engine.world, this.engine.world.constraints, 0);
+        Matter.Runner.stop(this.runner);
+        EgretRender.stop();
+        Matter.Engine.clear(this.engine);
+        Matter.Events.off(this.engine, 'collisionStart', this.collisionHandle);
         while (this.numChildren > 1) {
             var child = this.getChildAt(this.numChildren - 1);
             this.removeChild(child);

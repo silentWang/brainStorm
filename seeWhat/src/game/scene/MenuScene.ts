@@ -54,51 +54,53 @@ class MenuScene extends BaseScene{
             WXApi.shareAppMessage();
         },this);
 
-        let sprite = new egret.Sprite();
-        //超越指尖
-        let cybtn = new egret.Bitmap(RES.getRes('home_json#zhijian'));
-        cybtn.anchorOffsetX = cybtn.width/2;
-        cybtn.anchorOffsetY = cybtn.height/2;
-        cybtn.x = cybtn.width/2;
-        this.addChild(cybtn);
-        cybtn.touchEnabled = true;
-        cybtn.addEventListener(egret.TouchEvent.TOUCH_TAP,()=>{ 
-            if(!GameData.isWxGame) return;
-            WXApi.navigateToMiniProgram("wxf461dfd74e17709f");
-        },this);
-        sprite.addChild(cybtn);
-        //球球回家
-        let qqbtn = new egret.Bitmap(RES.getRes('home_json#qiuqiuhome'));
-        qqbtn.anchorOffsetX = qqbtn.width/2;
-        qqbtn.anchorOffsetY = qqbtn.height/2;
-        qqbtn.x = cybtn.x + cybtn.width + 40;
-        this.addChild(qqbtn);
-        qqbtn.touchEnabled = true;
-        qqbtn.addEventListener(egret.TouchEvent.TOUCH_TAP,()=>{ 
-            if(!GameData.isWxGame) return;
-            WXApi.navigateToMiniProgram("wxe79f94f71d43ffd7");
-        },this);
-        sprite.addChild(qqbtn);
-        //逻辑迷宫
-        let jumpbtn = new egret.Bitmap(RES.getRes('home_json#migong'));
-        jumpbtn.anchorOffsetX = jumpbtn.width/2;
-        jumpbtn.anchorOffsetY = jumpbtn.height/2;
-        jumpbtn.x = qqbtn.x + qqbtn.width + 40;
-        this.addChild(jumpbtn);
-        jumpbtn.touchEnabled = true;
-        jumpbtn.addEventListener(egret.TouchEvent.TOUCH_TAP,()=>{ 
-            if(!GameData.isWxGame) return;
-            WXApi.navigateToMiniProgram("wx8bc01658647ef87a");
-        },this);
-        sprite.addChild(jumpbtn);
-        sprite.x = SpriteUtil.stageCenterX - sprite.width/2;
-        sprite.y = rankbtn.y + rankbtn.height + 50;
-        this.addChild(sprite);
+        if(GameData.isWxGame){
+            let sprite = new egret.Sprite();
+            //超越指尖
+            let cybtn = new egret.Bitmap(RES.getRes('home_json#zhijian'));
+            cybtn.anchorOffsetX = cybtn.width/2;
+            cybtn.anchorOffsetY = cybtn.height/2;
+            cybtn.x = cybtn.width/2;
+            this.addChild(cybtn);
+            cybtn.touchEnabled = true;
+            cybtn.addEventListener(egret.TouchEvent.TOUCH_TAP,()=>{ 
+                if(!GameData.isWxGame) return;
+                WXApi.navigateToMiniProgram("wxf461dfd74e17709f");
+            },this);
+            sprite.addChild(cybtn);
+            //球球回家
+            let qqbtn = new egret.Bitmap(RES.getRes('home_json#qiuqiuhome'));
+            qqbtn.anchorOffsetX = qqbtn.width/2;
+            qqbtn.anchorOffsetY = qqbtn.height/2;
+            qqbtn.x = cybtn.x + cybtn.width + 40;
+            this.addChild(qqbtn);
+            qqbtn.touchEnabled = true;
+            qqbtn.addEventListener(egret.TouchEvent.TOUCH_TAP,()=>{ 
+                if(!GameData.isWxGame) return;
+                WXApi.navigateToMiniProgram("wxe79f94f71d43ffd7");
+            },this);
+            sprite.addChild(qqbtn);
+            //逻辑迷宫
+            let jumpbtn = new egret.Bitmap(RES.getRes('home_json#migong'));
+            jumpbtn.anchorOffsetX = jumpbtn.width/2;
+            jumpbtn.anchorOffsetY = jumpbtn.height/2;
+            jumpbtn.x = qqbtn.x + qqbtn.width + 40;
+            this.addChild(jumpbtn);
+            jumpbtn.touchEnabled = true;
+            jumpbtn.addEventListener(egret.TouchEvent.TOUCH_TAP,()=>{ 
+                if(!GameData.isWxGame) return;
+                WXApi.navigateToMiniProgram("wx8bc01658647ef87a");
+            },this);
+            sprite.addChild(jumpbtn);
+            sprite.x = SpriteUtil.stageCenterX - sprite.width/2;
+            sprite.y = rankbtn.y + rankbtn.height + 50;
+            this.addChild(sprite);
+            this.gameClubBtn = WXApi.createGameClubButton();
+            //
+            EventCenter.instance().addEventListener(GameEvent.AUTHORIZE_REFRESH,this.initOpenData,this);
+            WXApi.getSetting();
+        }
 
-        this.gameClubBtn = WXApi.createGameClubButton();
-        //
-        EventCenter.instance().addEventListener(GameEvent.AUTHORIZE_REFRESH,this.initOpenData,this);
-        WXApi.getSetting();
     }
 
     private initOpenData(){
@@ -115,11 +117,15 @@ class MenuScene extends BaseScene{
     enter(){
         super.enter();
         egret.Tween.get(this.startBtn,{loop:true}).to({scaleX:2.2,scaleY:2.2},1500).to({scaleX:2,scaleY:2},1500);
-        this.gameClubBtn.show();
+        if(GameData.isWxGame){
+            this.gameClubBtn.show();
+        }
     }
     exit(){
         super.exit();
-        this.gameClubBtn.hide();
+        if(GameData.isWxGame){
+            this.gameClubBtn.hide();
+        }
         egret.Tween.removeTweens(this.startBtn);
         this.startBtn.scaleX = 2;
         this.startBtn.scaleY = 2;

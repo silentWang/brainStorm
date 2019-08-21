@@ -28,8 +28,7 @@ var RankView = (function (_super) {
             _this.close();
         }, this);
         this.listSpr = new egret.Sprite();
-        this.listSpr.x = 120;
-        this.listSpr.y = 160;
+        this.listSpr.y = 100;
         this.addChild(this.listSpr);
         var txt = new egret.TextField();
         txt.text = '排行榜';
@@ -48,7 +47,10 @@ var RankView = (function (_super) {
             var openDatactx = platform['openDataContext'];
             openDatactx.postMessage({ command: 'cmd_rank' });
             var rank = openDatactx.createDisplayObject();
+            var scale = SpriteUtil.stageWidth / rank.width;
             _this.listSpr.addChild(rank);
+            _this.listSpr.scaleX = scale;
+            _this.listSpr.scaleY = scale;
         }, this, 40);
     };
     RankView.prototype.close = function () {

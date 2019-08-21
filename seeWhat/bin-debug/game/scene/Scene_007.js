@@ -33,7 +33,7 @@ var Scene_007 = (function (_super) {
         for (var i = 0; i < 40; i++) {
             var point = new egret.Point();
             point.x = 90 + 140 * (i % 5);
-            point.y = 120 + 120 * Math.floor(i / 5);
+            point.y = 120 + 100 * Math.floor(i / 5);
             this.pointsArr.push(point);
         }
     };
@@ -41,6 +41,21 @@ var Scene_007 = (function (_super) {
         if (time <= 0) {
             this.isOperating = true;
             this.timeItem.stop();
+            if (this.scoreItem.isCanPass()) {
+                var score = this.score - this.dataVo.score;
+                if (score >= 10) {
+                    EffectUtil.showResultEffect(EffectUtil.PERFECT);
+                }
+                else if (score >= 5) {
+                    EffectUtil.showResultEffect(EffectUtil.GREAT);
+                }
+                else {
+                    EffectUtil.showResultEffect(EffectUtil.GOOD);
+                }
+            }
+            else {
+                EffectUtil.showResultEffect();
+            }
             return;
         }
         if (time <= 8) {
@@ -74,9 +89,6 @@ var Scene_007 = (function (_super) {
                 index = 0;
             }
             var spr = _this.getPools(index);
-            if (spr.name == '🐁') {
-                console.log('ccccccccccccc');
-            }
             spr.x = _this.pointsArr[arr[num]].x;
             spr.y = _this.pointsArr[arr[num]].y;
             num++;
@@ -89,9 +101,6 @@ var Scene_007 = (function (_super) {
                     for (var _i = 0, _a = _this.pools; _i < _a.length; _i++) {
                         var spr_1 = _a[_i];
                         spr_1.visible = false;
-                        spr_1.scaleX = 1;
-                        spr_1.scaleY = 1;
-                        spr_1.text = '';
                     }
                     _this.showSprites(_this.needNums);
                 }, _this, 1000);
@@ -120,40 +129,27 @@ var Scene_007 = (function (_super) {
         else {
             for (var _i = 0, _a = this.pools; _i < _a.length; _i++) {
                 var item = _a[_i];
-                if (!item.visible && item.text == '') {
+                if (!item.visible) {
                     spr = item;
                     break;
                 }
             }
         }
         if (!spr) {
-            spr = SpriteUtil.createText(char, 100);
+            spr = SpriteUtil.createImage(char);
             this.pools.push(spr);
+            var scale = 100 / spr.width;
+            spr.scaleX = scale;
+            spr.scaleY = scale;
             spr.addEventListener(egret.TouchEvent.TOUCH_TAP, function (evt) {
                 if (_this.isOperating)
                     return;
+                GameSound.instance().playSound('click');
                 var spr = evt.target;
-                if (spr.name == '🐁') {
+                if (spr.name == _this.dataVo.tData) {
                     spr.visible = false;
-                    spr.scaleX = 1;
-                    spr.scaleY = 1;
-                    spr.text = '';
                     _this.score++;
                     _this.scoreItem.setSTScore(_this.score);
-                    if (_this.scoreItem.isCanPass()) {
-                        _this.isOperating = true;
-                        var leftTime = _this.timeItem.leftTime;
-                        _this.timeItem.stop();
-                        if (leftTime >= 10) {
-                            EffectUtil.showResultEffect(EffectUtil.PERFECT);
-                        }
-                        else if (leftTime >= 5) {
-                            EffectUtil.showResultEffect(EffectUtil.EXCELLENT);
-                        }
-                        else {
-                            EffectUtil.showResultEffect(EffectUtil.GOOD);
-                        }
-                    }
                 }
                 else {
                     _this.timeItem.stop();
@@ -163,7 +159,7 @@ var Scene_007 = (function (_super) {
             }, this);
         }
         else {
-            spr.text = char;
+            spr.texture = RES.getRes("images_json#" + char);
             spr.visible = true;
         }
         spr.touchEnabled = true;

@@ -14,10 +14,14 @@ var SpriteUtil = (function () {
         return circle;
     };
     //创建矩形
-    SpriteUtil.createRect = function (width, height, color) {
+    SpriteUtil.createRect = function (width, height, color, isLine) {
         if (color === void 0) { color = 0x00ff00; }
+        if (isLine === void 0) { isLine = false; }
         var rect = new egret.Shape();
         rect.graphics.beginFill(color);
+        if (isLine) {
+            rect.graphics.lineStyle(1, 0x000000);
+        }
         rect.graphics.drawRect(0, 0, width, height);
         rect.graphics.endFill();
         rect.anchorOffsetX = width / 2;
@@ -26,18 +30,18 @@ var SpriteUtil = (function () {
     };
     //多边形
     SpriteUtil.createPolygon = function (points, color) {
-        if (color === void 0) { color = 0x00ff00; }
+        if (color === void 0) { color = 0x0000ff; }
         if (!points || !points.length) {
             return;
         }
         var polygon = new egret.Shape();
         var len = points.length;
-        polygon.graphics.beginFill(color);
         polygon.graphics.lineStyle(1, color);
+        polygon.graphics.beginFill(color);
         polygon.graphics.moveTo(points[0], points[1]);
         for (var i = 0; i < len; i += 2) {
             polygon.graphics.lineTo(points[i], points[i + 1]);
-            polygon.graphics.moveTo(points[i], points[i + 1]);
+            // polygon.graphics.moveTo(points[i],points[i+1]);
         }
         polygon.graphics.lineTo(points[0], points[1]);
         polygon.graphics.endFill();
@@ -58,7 +62,7 @@ var SpriteUtil = (function () {
         text.background = isBackground;
         text.backgroundColor = backgroundColor;
         text.stroke = 1;
-        text.strokeColor = 0x000000;
+        text.strokeColor = 0xCDAD00;
         text.textAlign = 'center';
         text.verticalAlign = 'middle';
         text.bold = true;
@@ -67,32 +71,48 @@ var SpriteUtil = (function () {
         return text;
     };
     //创建bitmap
-    SpriteUtil.createImage = function (src) {
-        var bitmap = new egret.Bitmap(RES.getRes(src));
+    SpriteUtil.createImage = function (name, isBackground, backgroundColor) {
+        if (isBackground === void 0) { isBackground = false; }
+        if (backgroundColor === void 0) { backgroundColor = 0x9FB6CD; }
+        var bitmap = new egret.Bitmap(RES.getRes("images_json#" + name));
+        if (isBackground) {
+            var sprite = new egret.Sprite();
+            sprite.graphics.beginFill(backgroundColor);
+            sprite.graphics.drawRect(0, 0, bitmap.width, bitmap.height);
+            sprite.graphics.endFill();
+            sprite.addChild(bitmap);
+            sprite.anchorOffsetX = sprite.width / 2;
+            sprite.anchorOffsetY = sprite.height / 2;
+            sprite.touchEnabled = true;
+            return sprite;
+        }
         bitmap.anchorOffsetX = bitmap.width / 2;
         bitmap.anchorOffsetY = bitmap.height / 2;
+        bitmap.touchEnabled = true;
         return bitmap;
     };
     //create a button
-    SpriteUtil.createButton = function (label, width, height, backgroundColor, size) {
+    SpriteUtil.createButton = function (label, width, height, backgroundColor, size, lineWidth, lineColor) {
         if (width === void 0) { width = 200; }
         if (height === void 0) { height = 80; }
-        if (backgroundColor === void 0) { backgroundColor = 0x0000ff; }
+        if (backgroundColor === void 0) { backgroundColor = 0x00FF00; }
         if (size === void 0) { size = 40; }
+        if (lineWidth === void 0) { lineWidth = 0; }
+        if (lineColor === void 0) { lineColor = 0x666666; }
         var btn = new egret.Sprite();
         var rect = new egret.Shape();
-        rect.graphics.lineStyle(5, 0xB03060);
+        rect.graphics.lineStyle(lineWidth, lineColor);
         rect.graphics.beginFill(backgroundColor);
-        rect.graphics.drawRect(0, 0, width, height);
+        rect.graphics.drawRoundRect(0, 0, width, height, height);
         rect.graphics.endFill();
         var text = new egret.TextField();
         text.text = label;
         text.size = size;
         text.textAlign = 'center';
         text.width = width;
-        text.y = 20;
+        text.y = 25;
         text.stroke = 1;
-        text.strokeColor = 0x000000;
+        text.strokeColor = 0x333333;
         text.bold = true;
         text.touchEnabled = false;
         btn.addChild(rect);

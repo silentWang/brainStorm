@@ -14,46 +14,22 @@ var Scene_012 = (function (_super) {
     function Scene_012() {
         var _this = _super.call(this) || this;
         _this.isTouching = false;
+        //
+        _this.vsArr = [];
         _this.lineCount = 0;
         _this.init();
         return _this;
     }
     Scene_012.prototype.init = function () {
-        this.lineVs = [
-            { x: 150, y: 270 },
-            { x: 540, y: 270 },
-            { x: 350, y: 520 },
-            { x: 360, y: 180 },
-            { x: 470, y: 640 },
-            { x: 300, y: 660 },
-            { x: 280, y: 850 },
-            { x: 570, y: 840 },
-            { x: 500, y: 980 },
-            { x: 230, y: 1000 },
-        ];
-        this.lineEs = [
-            { start: this.lineVs[0], end: this.lineVs[1] },
-            { start: this.lineVs[1], end: this.lineVs[2] },
-            { start: this.lineVs[0], end: this.lineVs[2] },
-            { start: this.lineVs[0], end: this.lineVs[3] },
-            { start: this.lineVs[3], end: this.lineVs[4] },
-            { start: this.lineVs[4], end: this.lineVs[2] },
-            { start: this.lineVs[2], end: this.lineVs[5] },
-            { start: this.lineVs[5], end: this.lineVs[6] },
-            { start: this.lineVs[6], end: this.lineVs[4] },
-            { start: this.lineVs[4], end: this.lineVs[5] },
-            { start: this.lineVs[5], end: this.lineVs[0] },
-            { start: this.lineVs[0], end: this.lineVs[6] },
-            { start: this.lineVs[6], end: this.lineVs[7] },
-            { start: this.lineVs[7], end: this.lineVs[4] },
-            { start: this.lineVs[4], end: this.lineVs[1] },
-            { start: this.lineVs[1], end: this.lineVs[7] },
-            { start: this.lineVs[7], end: this.lineVs[8] },
-            { start: this.lineVs[8], end: this.lineVs[6] },
-            { start: this.lineVs[6], end: this.lineVs[9] },
-            { start: this.lineVs[9], end: this.lineVs[8] },
-            { start: this.lineVs[8], end: this.lineVs[4] }
-        ];
+        var _this = this;
+        this.lineVs = this.dataVo.sData;
+        var lines = this.dataVo.tData;
+        var len = lines.length;
+        this.lineEs = [];
+        for (var i = 0; i < len; i++) {
+            var line = lines[i];
+            this.lineEs.push({ start: this.lineVs[line[0]], end: this.lineVs[line[1]] });
+        }
         this.drawLines();
         this.pathShape = new egret.Shape();
         this.addChild(this.pathShape);
@@ -61,16 +37,42 @@ var Scene_012 = (function (_super) {
         this.paths = [];
         this.timeItem = new TimeItem(this.dataVo.time);
         this.addChild(this.timeItem);
+        var btn = SpriteUtil.createButton("重来", 140, 60, 0x0000ff, 28);
+        btn.x = SpriteUtil.stageCenterX - btn.width / 2;
+        btn.y = SpriteUtil.stageHeight - 300;
+        this.addChild(btn);
+        btn.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+            _this.pathShape.graphics.clear();
+            _this.paths = [];
+            _this.lineEs = [];
+            for (var i = 0; i < len; i++) {
+                var line = lines[i];
+                _this.lineEs.push({ start: _this.lineVs[line[0]], end: _this.lineVs[line[1]] });
+            }
+            for (var _i = 0, _a = _this.vsArr; _i < _a.length; _i++) {
+                var shape = _a[_i];
+                shape.alpha = 0.5;
+            }
+        }, this);
+        //only for looking for point
         // this.touchEnabled = true;
+        // let rect = SpriteUtil.createRect(SpriteUtil.stageWidth,SpriteUtil.stageHeight);
+        // rect.alpha = 0.01;
+        // rect.anchorOffsetX = 0;
+        // rect.anchorOffsetY = 0;
+        // this.addChild(rect);
         // this.addEventListener(egret.TouchEvent.TOUCH_TAP,this.touchHandler,this);
     };
     Scene_012.prototype.touchHandler = function (evt) {
-        // let point = {x:evt['stageX'],y:evt['stageY']};
-        // this.lineVs.push(point);
-        // this.drawLines();
+        var point = { x: evt['stageX'], y: evt['stageY'] };
+        this.paths.push(point);
+        this.drawPath();
     };
     //点击开始连线
     Scene_012.prototype.clkStart = function (evt) {
+        if (this.timeItem.leftTime <= 0)
+            return;
+        GameSound.instance().playSound('click');
         var ptshape = evt.target;
         var name = ptshape.name;
         var index = name.split('_')[1];
@@ -87,7 +89,7 @@ var Scene_012 = (function (_super) {
                         EffectUtil.showResultEffect(EffectUtil.PERFECT);
                     }
                     else if (leftTime_1 >= 45) {
-                        EffectUtil.showResultEffect(EffectUtil.EXCELLENT);
+                        EffectUtil.showResultEffect(EffectUtil.GREAT);
                     }
                     else {
                         EffectUtil.showResultEffect(EffectUtil.GOOD);
@@ -139,6 +141,8 @@ var Scene_012 = (function (_super) {
             var pt = this.paths[i];
             this.pathShape.graphics.lineTo(pt.x, pt.y);
         }
+        // console.clear();
+        // console.table(this.paths);
     };
     //画线
     Scene_012.prototype.drawLines = function () {
@@ -155,6 +159,7 @@ var Scene_012 = (function (_super) {
     };
     //画点
     Scene_012.prototype.drawCircles = function () {
+        this.vsArr = [];
         for (var i = 0; i < this.lineVs.length; i++) {
             var shape = new egret.Shape();
             var point = this.lineVs[i];
@@ -167,11 +172,22 @@ var Scene_012 = (function (_super) {
             shape.name = 'vertex_' + i;
             shape.addEventListener(egret.TouchEvent.TOUCH_TAP, this.clkStart, this);
             shape.touchEnabled = true;
+            this.vsArr.push(shape);
         }
     };
     Scene_012.prototype.enter = function () {
         _super.prototype.enter.call(this);
         this.timeItem.start();
+    };
+    Scene_012.prototype.exit = function () {
+        _super.prototype.exit.call(this);
+        for (var _i = 0, _a = this.vsArr; _i < _a.length; _i++) {
+            var shape = _a[_i];
+            shape.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.clkStart, this);
+            if (shape.parent) {
+                shape.parent.removeChild(shape);
+            }
+        }
     };
     return Scene_012;
 }(BaseScene));

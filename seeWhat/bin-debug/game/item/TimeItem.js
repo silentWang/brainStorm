@@ -23,11 +23,12 @@ var TimeItem = (function (_super) {
         this.timeTxt = new egret.TextField();
         this.timeTxt.width = 240;
         this.timeTxt.size = 32;
-        this.timeTxt.textColor = 0xff0000;
-        this.timeTxt.stroke = 1;
+        this.timeTxt.textColor = 0xEE00EE;
+        this.timeTxt.stroke = 0.5;
         this.timeTxt.strokeColor = 0x000000;
+        this.timeTxt.bold = true;
         this.timeTxt.text = "\u5269\u4F59\u65F6\u95F4  " + CommonUtil.getMSTimeBySeconds(this._leftTime);
-        this.y = 10;
+        this.y = 30;
         this.x = (SpriteUtil.stageWidth - 200) / 2;
         this.addChild(this.timeTxt);
     };
@@ -64,6 +65,7 @@ var TimeItem = (function (_super) {
         this.timeTxt.text = "\u5269\u4F59\u65F6\u95F4  " + CommonUtil.getMSTimeBySeconds(this._leftTime);
         if (this.loop) {
             this.loop.call(this.callBackContext, this._leftTime);
+            return;
         }
         if (this._leftTime <= 0) {
             if (!this.loop) {

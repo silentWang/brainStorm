@@ -21,23 +21,24 @@ var Scene_011 = (function (_super) {
         this.timeItem = new TimeItem(this.dataVo.time);
         this.addChild(this.timeItem);
         var sprite = new egret.Sprite();
-        var rand = Math.floor(100 * Math.random() + 10);
-        console.log(rand);
-        for (var i = 0; i < 120; i++) {
+        var str = this.dataVo.sData[0];
+        var num = this.dataVo.sData[1];
+        var rand = Math.floor((num - 10) * Math.random() + 10);
+        // console.log(rand);
+        for (var i = 0; i < num; i++) {
             var text = void 0;
             if (i == rand) {
                 text = this.createText(this.dataVo.tData);
                 this.tarTxt = text;
             }
             else {
-                text = this.createText(this.dataVo.sData);
+                text = this.createText(str);
             }
             text.x = (i % 10) * 66;
             text.y = 66 * Math.floor(i / 10);
             sprite.addChild(text);
         }
         sprite.anchorOffsetX = sprite.width / 2;
-        // sprite.anchorOffsetY = sprite.height/2;
         sprite.x = SpriteUtil.stageCenterX;
         sprite.y = 100;
         this.addChild(sprite);
@@ -45,6 +46,7 @@ var Scene_011 = (function (_super) {
     Scene_011.prototype.textClk = function (evt) {
         if (this.isOperating)
             return;
+        GameSound.instance().playSound('click');
         this.isOperating = true;
         var name = evt.target.text;
         if (name == this.dataVo.tData) {
@@ -54,7 +56,7 @@ var Scene_011 = (function (_super) {
                 EffectUtil.showResultEffect(EffectUtil.PERFECT);
             }
             else if (time >= 15) {
-                EffectUtil.showResultEffect(EffectUtil.EXCELLENT);
+                EffectUtil.showResultEffect(EffectUtil.GREAT);
             }
             else {
                 EffectUtil.showResultEffect(EffectUtil.GOOD);
@@ -70,9 +72,9 @@ var Scene_011 = (function (_super) {
         var text = new egret.TextField();
         text.size = 54;
         text.text = name;
-        text.textColor = 0x0000ff; //0xffffff*(8*Math.random() + 2)/10;
+        text.textColor = 0x7FFFD4; //0xffffff*(8*Math.random() + 2)/10;
         text.stroke = 0.5;
-        text.strokeColor = 0xffff00;
+        text.strokeColor = 0xCDAD00;
         text.bold = true;
         this.addChild(text);
         text.touchEnabled = true;

@@ -22,6 +22,7 @@ var Scene_005 = (function (_super) {
     }
     Scene_005.prototype.init = function () {
         var _this = this;
+        //sdata 水果  tdata 物品  time 总数
         this.engine = Matter.Engine.create({ enableSleeping: false }, null);
         this.runner = Matter.Runner.create(null);
         this.render = EgretRender.create({
@@ -38,8 +39,11 @@ var Scene_005 = (function (_super) {
         this.engine.world.gravity.y = 0;
         this.recycleArr = [];
         this.initAllItem();
-        var plySpr = SpriteUtil.createText('🙉', 100);
-        this.player = Matter.Bodies.circle(SpriteUtil.stageCenterX, SpriteUtil.stageCenterY, plySpr.height / 2, {
+        var plySpr = SpriteUtil.createImage(this.dataVo.extData);
+        var scale = 100 / plySpr.width;
+        plySpr.scaleX = scale;
+        plySpr.scaleY = scale;
+        this.player = Matter.Bodies.circle(SpriteUtil.stageCenterX, SpriteUtil.stageCenterY, scale * (plySpr.height - 10) / 2, {
             isStatic: true,
             collisionFilter: {
                 category: this.playerCategory
@@ -77,28 +81,32 @@ var Scene_005 = (function (_super) {
     Scene_005.prototype.initAllItem = function () {
         this.recycleArr = [];
         this.fruitArr = [];
-        var arr1 = ['🍏', '🍐', '🍑', '🍒', '🍓', '🍅', '🍇', '🍈', '🍉', '🍊', '🍋', '🍌', '🍍'];
-        var arr2 = ['💩', '🍖', '🍗', '🍬', '🍔', '🍕', '🍩', '🍡', '⚽', '🍭', '🍟', '💣', '🔋'];
+        var arr1 = this.dataVo.sData;
+        var arr2 = this.dataVo.tData;
         var len1 = arr1.length;
         var len2 = arr2.length;
         var index = 0;
-        for (var i = 0; i < 80; i++) {
+        var num = this.dataVo.time;
+        var mids1 = Math.ceil(num / 4);
+        var mids2 = Math.ceil(num / 2);
+        var mids3 = Math.ceil(num * 3 / 4);
+        for (var i = 0; i < num; i++) {
             var xx = 0;
             var yy = 0;
-            if (i < 25) {
+            if (i < mids1) {
                 xx = -50;
-                yy = (i % 25) * (SpriteUtil.stageHeight / 25);
+                yy = (i % mids1) * (SpriteUtil.stageHeight / mids1);
             }
-            else if (i < 40) {
-                xx = ((i - 25) % 15) * (SpriteUtil.stageWidth / 15);
+            else if (i < mids2) {
+                xx = ((i - mids1) % mids2) * (SpriteUtil.stageWidth / mids2);
                 yy = SpriteUtil.stageHeight + 50;
             }
-            else if (i < 65) {
+            else if (i < mids3) {
                 xx = SpriteUtil.stageWidth + 50;
-                yy = ((i - 40) % 25) * (SpriteUtil.stageHeight / 25);
+                yy = ((i - mids2) % mids3) * (SpriteUtil.stageHeight / mids3);
             }
             else {
-                xx = ((i - 65) % 15) * (SpriteUtil.stageWidth / 15);
+                xx = ((i - mids3) % mids3) * (SpriteUtil.stageWidth / mids3);
                 yy = -50;
             }
             var fruit = void 0;
@@ -130,7 +138,7 @@ var Scene_005 = (function (_super) {
                     this.scoreItem.setSTScore(this.score);
                     if (this.scoreItem.isCanPass()) {
                         this.destroy();
-                        EffectUtil.showResultEffect(EffectUtil.GOOD);
+                        EffectUtil.showResultEffect(EffectUtil.PERFECT);
                     }
                 }
                 else if (pair.bodyB.name == 'enemy') {
@@ -145,7 +153,7 @@ var Scene_005 = (function (_super) {
                     this.scoreItem.setSTScore(this.score);
                     if (this.scoreItem.isCanPass()) {
                         this.destroy();
-                        EffectUtil.showResultEffect(EffectUtil.GOOD);
+                        EffectUtil.showResultEffect(EffectUtil.PERFECT);
                     }
                 }
                 else if (pair.bodyA.name == 'enemy') {
@@ -187,7 +195,13 @@ var Scene_005 = (function (_super) {
         if (len <= 0) {
             if (this.recycleArr.length == 0) {
                 this.destroy();
-                EventCenter.instance().dispatchEvent(new GameEvent(GameEvent.GOTO_NEXT));
+                if (this.scoreItem.isCanPass()) {
+                    this.destroy();
+                    EffectUtil.showResultEffect(EffectUtil.PERFECT);
+                }
+                else {
+                    EffectUtil.showResultEffect();
+                }
                 return false;
             }
             return true;
@@ -204,18 +218,20 @@ var Scene_005 = (function (_super) {
         if (rate < -10) {
             rate = -10;
         }
-        var fx = dx / Math.abs(dx);
-        var fy = fx * rate;
-        Matter.Body.setVelocity(body, { x: fx * 3, y: fy * 3 });
+        var fx = 2.5 * dx / Math.abs(dx);
+        var fy = 2.5 * fx * rate;
+        fx = Math.abs(fx) > 4 ? 4 * fx / Math.abs(fx) : fx;
+        fy = Math.abs(fy) > 5 ? 5 * fy / Math.abs(fy) : fy;
+        Matter.Body.setVelocity(body, { x: fx, y: fy });
         Matter.Body.setAngularVelocity(body, 0.01 * fx);
         return true;
     };
     //create fruit
-    Scene_005.prototype.createItem = function (cstr, name, sx, sy) {
+    Scene_005.prototype.createItem = function (srs, name, sx, sy) {
         if (sx === void 0) { sx = 0; }
         if (sy === void 0) { sy = 0; }
-        var item = SpriteUtil.createText(cstr, 50);
-        var itemBody = Matter.Bodies.circle(sx, sy, item.height / 2, {
+        var item = SpriteUtil.createImage(srs);
+        var itemBody = Matter.Bodies.circle(sx, sy, (item.height - 20) / 2, {
             name: name,
             frictionAir: 0,
             collisionFilter: {

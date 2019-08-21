@@ -18,9 +18,12 @@ class TipsView extends BaseView{
 
         let sprite = new egret.Sprite();
         this.addChild(sprite);
-        let shape = SpriteUtil.createRect(SpriteUtil.stageWidth/1.2,SpriteUtil.stageWidth/1.8,0x8F8F8F);
-        shape.anchorOffsetX = 0;
-        shape.anchorOffsetY = 0;
+        let shape = new egret.Shape();//SpriteUtil.createRect(SpriteUtil.stageWidth/1.2,SpriteUtil.stageWidth/1.8,0x8F8F8F);
+        shape.graphics.beginFill(0x3498DB);
+        shape.graphics.drawRoundRect(0,0,SpriteUtil.stageWidth/1.2,SpriteUtil.stageWidth/1.8,50);
+        shape.graphics.endFill();
+        // shape.anchorOffsetX = 0;
+        // shape.anchorOffsetY = 0;
         sprite.addChild(shape);
         let title = SpriteUtil.createText('提示',42,0x00ff00);
         title.x = shape.width/2;
@@ -38,16 +41,20 @@ class TipsView extends BaseView{
         sprite.addChild(text);
         this.tipsTxt = text;
 
-        let closebtn = SpriteUtil.createButton('X',80,80,0x8F8F8F,50);
-        closebtn.x = shape.width - 82;
-        closebtn.y = 2;
+        let closebtn = SpriteUtil.createText("X",48,0xF0F8FF);//SpriteUtil.createButton('x',60,60,0x3498DB,48);
+        closebtn.bold = true;
+        closebtn.stroke = 1;
+        closebtn.strokeColor = 0xeeeeee;
+        closebtn.x = shape.width - 35;
+        closebtn.y = 32;
+        closebtn.touchEnabled = true;
         sprite.addChild(closebtn);
         closebtn.addEventListener(egret.TouchEvent.TOUCH_TAP,()=>{
             this.close();
             Game.instance().gameScene.enterOver();
         },this);
 
-        let btn1 = SpriteUtil.createButton('立即复活',200,80,0x473C8B,32);
+        let btn1 = SpriteUtil.createButton('立即复活',200,80,0x00FF00,32);
         btn1.x = shape.width/2 - btn1.width - 40;
         btn1.y = shape.height - 100;
         sprite.addChild(btn1);
@@ -60,7 +67,7 @@ class TipsView extends BaseView{
         },this);
         this.reviveBtn = btn1;
 
-        let btn2 = SpriteUtil.createButton('看视频复活',200,80,0x473C8B,32);
+        let btn2 = SpriteUtil.createButton('看视频复活',200,80,0x00FF00,32);
         btn2.x = shape.width/2 + 40;
         btn2.y = shape.height - 100;
         sprite.addChild(btn2);

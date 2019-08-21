@@ -14,6 +14,7 @@ var ScoreItem = (function (_super) {
         var _this = _super.call(this) || this;
         _this.score = 0;
         _this.tarScore = 0;
+        _this.tarLose = 0;
         _this.init();
         return _this;
     }
@@ -23,11 +24,13 @@ var ScoreItem = (function (_super) {
         this.scoreTxt.text = '0';
         this.scoreTxt.textColor = 0x00ff00;
         this.scoreTxt.width = 300;
-        this.scoreTxt.stroke = 1;
+        this.scoreTxt.stroke = 0.5;
+        this.scoreTxt.bold = true;
         this.scoreTxt.strokeColor = 0x000000;
         // this.scoreTxt.bold = true;
         this.addChild(this.scoreTxt);
-        this.y = 10;
+        this.y = 30;
+        this.x = 30;
     };
     //目标分和当前分
     ScoreItem.prototype.setSTScore = function (score, tarScore) {
@@ -37,10 +40,18 @@ var ScoreItem = (function (_super) {
         }
         this.scoreTxt.text = "\u5206\u6570 " + this.score + "  \u76EE\u6807 " + this.tarScore;
     };
-    //分数
-    ScoreItem.prototype.setScore = function (score) {
+    //目标损失和当前损失
+    ScoreItem.prototype.setSTLose = function (score, tarLose) {
         this.score = score;
-        this.scoreTxt.text = "\u5206\u6570 " + score;
+        if (tarLose) {
+            this.tarLose = tarLose;
+        }
+        this.scoreTxt.text = "\u5DF2\u7528 " + this.score + "  \u603B\u6570 " + this.tarLose;
+    };
+    //自定义模式
+    ScoreItem.prototype.setCustomText = function (str) {
+        if (str === void 0) { str = ''; }
+        this.scoreTxt.text = str;
     };
     //是否达成目标分
     ScoreItem.prototype.isCanPass = function () {

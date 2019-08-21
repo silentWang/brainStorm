@@ -18,7 +18,14 @@ var Scene_002 = (function (_super) {
     }
     Scene_002.prototype.init = function () {
         //无序化
-        var arr = this.dataVo.sData.split('');
+        var arr1 = this.dataVo.sData;
+        var arr = arr1.concat(arr1);
+        var num = arr.length;
+        //多少列
+        var columns = Math.round(Math.sqrt(num));
+        //每个格子宽度
+        var wid = Math.round(SpriteUtil.stageWidth - 50) / columns;
+        //乱序
         arr.sort(function (a, b) {
             if (Math.random() > 0.5)
                 return 1;
@@ -27,22 +34,29 @@ var Scene_002 = (function (_super) {
             return 0;
         });
         this.group = new egret.Sprite();
-        this.group.x = 5;
-        this.group.y = 200;
         var len = arr.length;
         for (var i = 0; i < len; i++) {
-            var text = this.createText(arr[i]);
-            text.x = 90 * (i % 8);
-            text.y = 86 * Math.floor(i / 8);
-            this.group.addChild(text);
+            var img = SpriteUtil.createImage(arr[i], true);
+            img.anchorOffsetX = 0;
+            img.anchorOffsetY = 0;
+            img.scaleX = wid / img.width;
+            img.scaleY = wid / img.height;
+            img.name = arr[i];
+            img.x = (wid + 2) * (i % columns);
+            img.y = (wid + 2) * Math.floor(i / columns);
+            this.group.addChild(img);
+            img.addEventListener(egret.TouchEvent.TOUCH_TAP, this.clkHandler, this);
         }
         this.addChild(this.group);
+        this.group.x = SpriteUtil.stageCenterX - this.group.width / 2;
+        this.group.y = 200;
         this.timeItem = new TimeItem(this.dataVo.time);
         this.addChild(this.timeItem);
     };
-    Scene_002.prototype.textClk = function (evt) {
+    Scene_002.prototype.clkHandler = function (evt) {
         if (this.timeItem && this.timeItem.leftTime <= 0)
             return;
+        GameSound.instance().playSound('click');
         if (!this.currentSelect) {
             this.currentSelect = evt.target;
             this.currentSelect.alpha = 0.5;
@@ -52,7 +66,7 @@ var Scene_002 = (function (_super) {
             this.currentSelect = null;
         }
         else {
-            if (this.currentSelect.text == evt.target.text) {
+            if (this.currentSelect.name == evt.target.name) {
                 this.group.removeChild(this.currentSelect);
                 this.group.removeChild(evt.target);
                 this.currentSelect = null;
@@ -70,30 +84,12 @@ var Scene_002 = (function (_super) {
                 EffectUtil.showResultEffect(EffectUtil.PERFECT);
             }
             else if (leftTime >= 30) {
-                EffectUtil.showResultEffect(EffectUtil.EXCELLENT);
+                EffectUtil.showResultEffect(EffectUtil.GREAT);
             }
             else {
                 EffectUtil.showResultEffect(EffectUtil.GOOD);
             }
         }
-    };
-    Scene_002.prototype.createText = function (name) {
-        var text = new egret.TextField();
-        text.size = 60;
-        text.text = name;
-        text.textColor = 0x0000ff;
-        text.stroke = 0.5;
-        text.strokeColor = 0x000000;
-        text.width = 80;
-        text.height = 80;
-        text.background = true;
-        text.backgroundColor = 0x00C5CD;
-        text.textAlign = 'center';
-        text.verticalAlign = 'middle';
-        text.bold = true;
-        text.touchEnabled = true;
-        text.addEventListener(egret.TouchEvent.TOUCH_TAP, this.textClk, this);
-        return text;
     };
     Scene_002.prototype.enter = function () {
         _super.prototype.enter.call(this);
@@ -103,8 +99,8 @@ var Scene_002 = (function (_super) {
         _super.prototype.exit.call(this);
         while (this.numChildren > 1) {
             var child = this.getChildAt(this.numChildren - 1);
-            if (child instanceof egret.TextField) {
-                child.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.textClk, this);
+            if (child.hasEventListener(egret.TouchEvent.TOUCH_TAP)) {
+                child.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.clkHandler, this);
             }
             this.removeChild(child);
         }

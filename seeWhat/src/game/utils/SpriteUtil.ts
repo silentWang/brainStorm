@@ -85,12 +85,12 @@ class SpriteUtil{
         return bitmap;
     }
     //create a button
-    static createButton(label:string,width = 200,height = 80,backgroundColor = 0xff00ff,size = 40){
+    static createButton(label:string,width = 200,height = 80,backgroundColor = 0x00FF00,size = 40,lineWidth = 0,lineColor = 0x666666){
         let btn = new egret.Sprite();
         let rect = new egret.Shape();
-        rect.graphics.lineStyle(5,0x8F8F8F);
+        rect.graphics.lineStyle(lineWidth,lineColor);
         rect.graphics.beginFill(backgroundColor);
-        rect.graphics.drawRect(0,0,width,height);
+        rect.graphics.drawRoundRect(0,0,width,height,height);
         rect.graphics.endFill();
 
         let text = new egret.TextField();
@@ -98,9 +98,9 @@ class SpriteUtil{
         text.size = size;
         text.textAlign = 'center';
         text.width = width;
-        text.y = 20;
+        text.y = 25;
         text.stroke = 1;
-        text.strokeColor = 0x000000;
+        text.strokeColor = 0x333333;
         text.bold = true;
         text.touchEnabled = false;
 

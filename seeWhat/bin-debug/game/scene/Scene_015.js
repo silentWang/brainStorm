@@ -50,6 +50,7 @@ var Scene_015 = (function (_super) {
     Scene_015.prototype.clkShape = function (evt) {
         if (this.timeItem.leftTime <= 0)
             return;
+        GameSound.instance().playSound('click');
         var name = evt.target.name;
         if (name == this.dataVo.tData) {
             var leftTime = this.timeItem.leftTime;
@@ -58,7 +59,7 @@ var Scene_015 = (function (_super) {
                 EffectUtil.showResultEffect(EffectUtil.PERFECT);
             }
             else if (leftTime >= this.dataVo.time / 2) {
-                EffectUtil.showResultEffect(EffectUtil.EXCELLENT);
+                EffectUtil.showResultEffect(EffectUtil.GREAT);
             }
             else {
                 EffectUtil.showResultEffect(EffectUtil.GOOD);

@@ -17,7 +17,7 @@ var BaseScene = (function (_super) {
         _this.timeItem = null;
         //分数 子类实现
         _this.scoreItem = null;
-        _this.dataVo = GameData.getCurrentSceneData();
+        _this.dataVo = GameData.getLevelConfig();
         return _this;
     }
     BaseScene.prototype.enter = function () {
