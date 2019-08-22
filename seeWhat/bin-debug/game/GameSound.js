@@ -88,4 +88,3 @@ var GameSound = (function () {
     return GameSound;
 }());
 __reflect(GameSound.prototype, "GameSound");
-//# sourceMappingURL=GameSound.js.map

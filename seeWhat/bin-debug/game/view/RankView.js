@@ -60,4 +60,3 @@ var RankView = (function (_super) {
     return RankView;
 }(BaseView));
 __reflect(RankView.prototype, "RankView");
-//# sourceMappingURL=RankView.js.map

@@ -152,4 +152,3 @@ var Scene_022 = (function (_super) {
     return Scene_022;
 }(BaseScene));
 __reflect(Scene_022.prototype, "Scene_022");
-//# sourceMappingURL=Scene_022.js.map

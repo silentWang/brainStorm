@@ -24,13 +24,15 @@ class openDataContextMain{
   addOpenDataContextListener(){
     console.log('开放作用域添加onMessage');
     wx.onMessage(data=>{
-      if(data.command == 'cmd_user'){
+      if (data.command == 'cmd_openId'){
         this.openId = data.openId;
+      }
+      else if(data.command == 'cmd_user'){
         wx.getUserCloudStorage({
           keyList:['level'],
           complete:res=>{
-            console.log('我的level');
-            console.log(res);
+            // console.log('我的level');
+            // console.log(res);
             let kv = res.KVDataList;
             if (!kv || kv.length == 0){
               //注意key value 都必须是string 否则报错
@@ -38,20 +40,20 @@ class openDataContextMain{
               wx.setUserCloudStorage({
                 KVDataList:kv,
                 complete:res=>{
-                  console.log(res);
+                  // console.log(res);
                 }
               });
             }
             else{
               let nlvl = parseInt(data.level);
               let slvl = parseInt(kv[0].value);
-              console.log(nlvl +'----' + slvl);
+              // console.log(nlvl +'----' + slvl);
               if(nlvl > slvl){
                 kv[0].value = ''+nlvl;
                 wx.setUserCloudStorage({
                   KVDataList: kv,
                   complete: res => {
-                    console.log(res);
+                    // console.log(res);
                   }
                 });
               }
@@ -84,7 +86,7 @@ class openDataContextMain{
   getOwnRank() {
     let len = this.listData.length;
     for (let i = 0; i < len; i++) {
-      if (this.listData[i].openid == this.ownOpenId) {
+      if (this.listData[i].avatarUrl == this.openId) {
         return [i + 1, this.listData[i]];
       }
     }
@@ -126,47 +128,46 @@ class openDataContextMain{
       page = Math.ceil(len/10);
     }
 
-    let itemWidth = this.sWidth * 2 / 3;
-    let itemHeight = this.sHeight * 720 / 1280;
-    let mid = itemHeight / 10;
-    let lx = itemWidth / 500;
-    let ly = mid / 20;
+    let itemWidth = this.sWidth * 3/4;
+    let itemHeight = this.sHeight * 4/5;
+    let lx = itemWidth / 100;
+    let ly = itemHeight / 100;
     let fontSize = this.sWidth / 25;
-    let i = (page - 1) * 10;
-    let max = page * 10;
+    let i = (page - 1) * 8;
+    let max = page * 8;
+    let xx = this.sWidth / 8;
     for (; i < max; i++) {
-      let obj = this.listData[0];
+      let obj = this.listData[i];
       if (!obj) break;
-      let yy = (i % 10) * mid;
+      let yy = (i % 8) * ly * 10;
       this.context.fillStyle = '#65b5f7';
       this.context.font = fontSize + 'px Arial bold';
       this.context.textAlign = 'center';
-      this.context.fillText('' + (i + 1), 20 * lx, yy + ly * 12);
+      this.context.fillText('' + (i + 1), xx , yy + ly*10);
       let image = wx.createImage();
       image.src = obj.avatarUrl;
-      this.drawImage(image, 80 * lx, yy + ly * 1, 70 * lx, 70 * lx);
+      this.drawImage(image, xx + 10 * lx, yy + ly * 5, 14 * lx, 14 * lx);
       this.context.fillStyle = '#a1a1a1';
-      this.context.fillText(obj.nickname, 250 * lx, yy + 12 * ly);
-      this.context.fillText(obj.KVDataList[0].value, 450 * lx, yy + 12 * ly);
-      this.context.fillStyle = '#0000ff';
-      this.context.fillRect(0,yy + ly*21,500*lx,ly/5);
+      this.context.fillText(obj.nickname, xx + 50 * lx, yy + 10 * ly);
+      this.context.fillText(obj.KVDataList[0].value, xx + 94 * lx, yy + 10 * ly);
+      this.context.fillStyle = '#00ffff';
+      this.context.fillRect(xx, yy + ly * 13, itemWidth,ly/10);
     }
 
     //绘制自己的排名
     let rank = this.getOwnRank();
     if (!rank) return;
     let robj = rank[1];
-    let myy = 12 * mid;
-    this.context.fillText('' + rank[0], 20 * lx, myy + ly * 12);
+    let myy = 90 * ly;
+    this.context.fillStyle = '#ffff00';
+    this.context.fillText('' + rank[0], xx, myy + ly * 10);
     let image = wx.createImage();
     image.src = robj.avatarUrl;
-    this.drawImage(image, 80 * lx, myy + ly * 1, 70 * lx, 70 * lx);
-    this.context.fillStyle = '#a7a7a7';
-    this.context.fillText(robj.nickname, 250 * lx, myy + 12 * ly);
-    this.context.fillText(robj.KVDataList[0].value, 500 * lx, myy + 12 * ly);
-    this.context.fillStyle = '#00ff00';
-    this.context.fillRect(0, myy + ly * 21, 500 * lx, ly / 5);
-
+    this.drawImage(image, xx + 10 * lx, myy + ly * 5, 14 * lx, 14 * lx);
+    this.context.fillText(robj.nickname, xx + 50 * lx, myy + 10 * ly);
+    this.context.fillText(robj.KVDataList[0].value, xx + 94 * lx, myy + 10 * ly);
+    this.context.fillStyle = '#ffff00';
+    this.context.fillRect(xx, myy + ly * 13, itemWidth, ly / 10);
   }
 
   /**

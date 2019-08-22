@@ -261,4 +261,3 @@ var MatterSprite = (function (_super) {
     return MatterSprite;
 }(egret.Sprite));
 __reflect(MatterSprite.prototype, "MatterSprite");
-//# sourceMappingURL=EgretRender.js.map

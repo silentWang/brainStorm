@@ -87,4 +87,3 @@ var TimeItem = (function (_super) {
     return TimeItem;
 }(egret.Sprite));
 __reflect(TimeItem.prototype, "TimeItem");
-//# sourceMappingURL=TimeItem.js.map

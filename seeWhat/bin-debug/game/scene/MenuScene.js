@@ -62,49 +62,46 @@ var MenuScene = (function (_super) {
             WXApi.shareAppMessage();
         }, this);
         if (GameData.isWxGame) {
-            var sprite = new egret.Sprite();
+            // let sprite = new egret.Sprite();
             //超越指尖
-            var cybtn = new egret.Bitmap(RES.getRes('home_json#zhijian'));
-            cybtn.anchorOffsetX = cybtn.width / 2;
-            cybtn.anchorOffsetY = cybtn.height / 2;
-            cybtn.x = cybtn.width / 2;
-            this.addChild(cybtn);
-            cybtn.touchEnabled = true;
-            cybtn.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
-                if (!GameData.isWxGame)
-                    return;
-                WXApi.navigateToMiniProgram("wxf461dfd74e17709f");
-            }, this);
-            sprite.addChild(cybtn);
+            // let cybtn = new egret.Bitmap(RES.getRes('home_json#zhijian'));
+            // cybtn.anchorOffsetX = cybtn.width/2;
+            // cybtn.anchorOffsetY = cybtn.height/2;
+            // cybtn.x = cybtn.width/2;
+            // this.addChild(cybtn);
+            // cybtn.touchEnabled = true;
+            // cybtn.addEventListener(egret.TouchEvent.TOUCH_TAP,()=>{ 
+            //     if(!GameData.isWxGame) return;
+            //     WXApi.navigateToMiniProgram("wxf461dfd74e17709f");
+            // },this);
+            // sprite.addChild(cybtn);
             //球球回家
-            var qqbtn = new egret.Bitmap(RES.getRes('home_json#qiuqiuhome'));
-            qqbtn.anchorOffsetX = qqbtn.width / 2;
-            qqbtn.anchorOffsetY = qqbtn.height / 2;
-            qqbtn.x = cybtn.x + cybtn.width + 40;
-            this.addChild(qqbtn);
-            qqbtn.touchEnabled = true;
-            qqbtn.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
-                if (!GameData.isWxGame)
-                    return;
-                WXApi.navigateToMiniProgram("wxe79f94f71d43ffd7");
-            }, this);
-            sprite.addChild(qqbtn);
+            // let qqbtn = new egret.Bitmap(RES.getRes('home_json#qiuqiuhome'));
+            // qqbtn.anchorOffsetX = qqbtn.width/2;
+            // qqbtn.anchorOffsetY = qqbtn.height/2;
+            // qqbtn.x = cybtn.x + cybtn.width + 40;
+            // this.addChild(qqbtn);
+            // qqbtn.touchEnabled = true;
+            // qqbtn.addEventListener(egret.TouchEvent.TOUCH_TAP,()=>{ 
+            //     if(!GameData.isWxGame) return;
+            //     WXApi.navigateToMiniProgram("wxe79f94f71d43ffd7");
+            // },this);
+            // sprite.addChild(qqbtn);
             //逻辑迷宫
-            var jumpbtn = new egret.Bitmap(RES.getRes('home_json#migong'));
-            jumpbtn.anchorOffsetX = jumpbtn.width / 2;
-            jumpbtn.anchorOffsetY = jumpbtn.height / 2;
-            jumpbtn.x = qqbtn.x + qqbtn.width + 40;
-            this.addChild(jumpbtn);
-            jumpbtn.touchEnabled = true;
-            jumpbtn.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
-                if (!GameData.isWxGame)
-                    return;
-                WXApi.navigateToMiniProgram("wx8bc01658647ef87a");
-            }, this);
-            sprite.addChild(jumpbtn);
-            sprite.x = SpriteUtil.stageCenterX - sprite.width / 2;
-            sprite.y = rankbtn.y + rankbtn.height + 50;
-            this.addChild(sprite);
+            // let jumpbtn = new egret.Bitmap(RES.getRes('home_json#migong'));
+            // jumpbtn.anchorOffsetX = jumpbtn.width/2;
+            // jumpbtn.anchorOffsetY = jumpbtn.height/2;
+            // jumpbtn.x = qqbtn.x + qqbtn.width + 40;
+            // this.addChild(jumpbtn);
+            // jumpbtn.touchEnabled = true;
+            // jumpbtn.addEventListener(egret.TouchEvent.TOUCH_TAP,()=>{ 
+            //     if(!GameData.isWxGame) return;
+            //     WXApi.navigateToMiniProgram("wx8bc01658647ef87a");
+            // },this);
+            // sprite.addChild(jumpbtn);
+            // sprite.x = SpriteUtil.stageCenterX - sprite.width/2;
+            // sprite.y = rankbtn.y + rankbtn.height + 50;
+            // this.addChild(sprite);
             this.gameClubBtn = WXApi.createGameClubButton();
             //
             EventCenter.instance().addEventListener(GameEvent.AUTHORIZE_REFRESH, this.initOpenData, this);
@@ -140,4 +137,3 @@ var MenuScene = (function (_super) {
     return MenuScene;
 }(BaseScene));
 __reflect(MenuScene.prototype, "MenuScene");
-//# sourceMappingURL=MenuScene.js.map

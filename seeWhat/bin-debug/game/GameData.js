@@ -31,7 +31,7 @@ var GameData = (function () {
     //是否已经执行
     GameData.isRunGame = false;
     //主要用来测试和区分 微信小游戏 必须为true
-    GameData.isWxGame = false;
+    GameData.isWxGame = true;
     //当前游戏
     GameData.currentChapter = 0;
     //当前关卡
@@ -47,4 +47,3 @@ var GameData = (function () {
     return GameData;
 }());
 __reflect(GameData.prototype, "GameData");
-//# sourceMappingURL=GameData.js.map

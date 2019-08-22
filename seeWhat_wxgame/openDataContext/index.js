@@ -6,50 +6,50 @@
 //间隔多少秒重新刷新
 const MID_TIME = 30;
 
-class openDataContextMain{
-  constructor(){
+class openDataContextMain {
+  constructor() {
     this.init();
   }
-  init(){
+  init() {
     this.context = sharedCanvas.getContext('2d');
     this.context.globalCompositeOperation = 'source-over';
     this.sWidth = sharedCanvas.width;
-    this.sHeight = this.sWidth* 1280/720;
+    this.sHeight = this.sWidth * 1280 / 720;
     this.openId = "";
     this.userData = null;
     this.listData = null;
-    this.lastTime = 0;  
+    this.lastTime = 0;
   }
 
-  addOpenDataContextListener(){
+  addOpenDataContextListener() {
     console.log('开放作用域添加onMessage');
-    wx.onMessage(data=>{
-      if (data.command == 'cmd_openId'){
+    wx.onMessage(data => {
+      if (data.command == 'cmd_openId') {
         this.openId = data.openId;
       }
-      else if(data.command == 'cmd_user'){
+      else if (data.command == 'cmd_user') {
         wx.getUserCloudStorage({
-          keyList:['level'],
-          complete:res=>{
+          keyList: ['level'],
+          complete: res => {
             // console.log('我的level');
             // console.log(res);
             let kv = res.KVDataList;
-            if (!kv || kv.length == 0){
+            if (!kv || kv.length == 0) {
               //注意key value 都必须是string 否则报错
-              kv[0] = {key:'level',value:''+data.level};
+              kv[0] = { key: 'level', value: '' + data.level };
               wx.setUserCloudStorage({
-                KVDataList:kv,
-                complete:res=>{
+                KVDataList: kv,
+                complete: res => {
                   // console.log(res);
                 }
               });
             }
-            else{
+            else {
               let nlvl = parseInt(data.level);
               let slvl = parseInt(kv[0].value);
               // console.log(nlvl +'----' + slvl);
-              if(nlvl > slvl){
-                kv[0].value = ''+nlvl;
+              if (nlvl > slvl) {
+                kv[0].value = '' + nlvl;
                 wx.setUserCloudStorage({
                   KVDataList: kv,
                   complete: res => {
@@ -61,22 +61,22 @@ class openDataContextMain{
           }
         })
       }
-      else if(data.command == 'cmd_rank'){
+      else if (data.command == 'cmd_rank') {
         let nowTime = (new Date()).getTime();
-        let mid = Math.round(nowTime - this.lastTime)/1000;
-        if (mid >= MID_TIME){
+        let mid = Math.round(nowTime - this.lastTime) / 1000;
+        if (mid >= MID_TIME) {
           this.lastTime = nowTime;
           wx.getFriendCloudStorage({
-            keyList:['level'],
-            complete:res=>{
-              if (res.errMsg == 'getFriendCloudStorage:ok'){
+            keyList: ['level'],
+            complete: res => {
+              if (res.errMsg == 'getFriendCloudStorage:ok') {
                 this.listData = this.sortListData(res.data);
                 this.drawRankList(data.page);
               }
             }
           });
         }
-        else{
+        else {
           this.drawRankList(data.page);
         }
       }
@@ -93,8 +93,8 @@ class openDataContextMain{
     return null;
   }
   //排序
-  sortListData(arr){
-    if(!arr || arr.length == 0) return;
+  sortListData(arr) {
+    if (!arr || arr.length == 0) return;
     let len = arr.length;
     for (let i = 0; i < len; i++) {
       let data = arr[i];
@@ -117,19 +117,19 @@ class openDataContextMain{
     return arr;
   }
   //绘画
-  drawRankList(page){
-    if(!page){
+  drawRankList(page) {
+    if (!page) {
       page = 1;
     }
-    if(!this.listData || this.listData.length == 0) return;
+    if (!this.listData || this.listData.length == 0) return;
     this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
     let len = this.listData.length;
     if (page > Math.ceil(len / 10)) {
-      page = Math.ceil(len/10);
+      page = Math.ceil(len / 10);
     }
 
-    let itemWidth = this.sWidth * 3/4;
-    let itemHeight = this.sHeight * 4/5;
+    let itemWidth = this.sWidth * 3 / 4;
+    let itemHeight = this.sHeight * 4 / 5;
     let lx = itemWidth / 100;
     let ly = itemHeight / 100;
     let fontSize = this.sWidth / 25;
@@ -143,7 +143,7 @@ class openDataContextMain{
       this.context.fillStyle = '#65b5f7';
       this.context.font = fontSize + 'px Arial bold';
       this.context.textAlign = 'center';
-      this.context.fillText('' + (i + 1), xx , yy + ly*10);
+      this.context.fillText('' + (i + 1), xx, yy + ly * 10);
       let image = wx.createImage();
       image.src = obj.avatarUrl;
       this.drawImage(image, xx + 10 * lx, yy + ly * 5, 14 * lx, 14 * lx);
@@ -151,7 +151,7 @@ class openDataContextMain{
       this.context.fillText(obj.nickname, xx + 50 * lx, yy + 10 * ly);
       this.context.fillText(obj.KVDataList[0].value, xx + 94 * lx, yy + 10 * ly);
       this.context.fillStyle = '#00ffff';
-      this.context.fillRect(xx, yy + ly * 13, itemWidth,ly/10);
+      this.context.fillRect(xx, yy + ly * 13, itemWidth, ly / 10);
     }
 
     //绘制自己的排名
