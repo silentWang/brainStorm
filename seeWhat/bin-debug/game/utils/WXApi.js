@@ -193,3 +193,4 @@ var WXApi = (function () {
     return WXApi;
 }());
 __reflect(WXApi.prototype, "WXApi");
+//# sourceMappingURL=WXApi.js.map

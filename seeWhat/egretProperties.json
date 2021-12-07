@@ -1,35 +1,35 @@
 {
-  "engineVersion": "5.2.7",
-  "compilerVersion": "5.2.7",
-  "template": {},
-  "target": {
-    "current": "wxgame"
-  },
-  "modules": [
-    {
-      "name": "egret"
-    },
-    {
-      "name": "game"
-    },
-    {
-      "name": "tween"
-    },
-    {
-      "name": "assetsmanager"
-    },
-    {
-      "name": "promise"
-    },
-    {
-      "name": "matter",
-      "path": "../matterlib"
-    }
-  ],
-  "targets": {
-    "android": {
-      "appname": "welldown",
-      "packagename": "com.silencewzs"
-    }
-  }
+	"engineVersion": "5.2.33",
+	"compilerVersion": "5.2.33",
+	"template": {},
+	"target": {
+		"current": "web"
+	},
+	"modules": [
+		{
+			"name": "egret"
+		},
+		{
+			"name": "game"
+		},
+		{
+			"name": "tween"
+		},
+		{
+			"name": "assetsmanager"
+		},
+		{
+			"name": "promise"
+		},
+		{
+			"name": "matter",
+			"path": "../matterlib"
+		}
+	],
+	"targets": {
+		"android": {
+			"appname": "welldown",
+			"packagename": "com.silencewzs"
+		}
+	}
 }

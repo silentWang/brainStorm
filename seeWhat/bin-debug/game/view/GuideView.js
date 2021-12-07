@@ -74,3 +74,4 @@ var GuideView = (function (_super) {
     return GuideView;
 }(BaseView));
 __reflect(GuideView.prototype, "GuideView");
+//# sourceMappingURL=GuideView.js.map

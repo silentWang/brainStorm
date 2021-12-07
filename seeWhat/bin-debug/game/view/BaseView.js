@@ -33,3 +33,4 @@ var BaseView = (function (_super) {
     return BaseView;
 }(egret.Sprite));
 __reflect(BaseView.prototype, "BaseView");
+//# sourceMappingURL=BaseView.js.map

@@ -157,3 +157,4 @@ var GameScene = (function () {
     return GameScene;
 }());
 __reflect(GameScene.prototype, "GameScene");
+//# sourceMappingURL=GameScene.js.map

@@ -63,3 +63,4 @@ var ScoreItem = (function (_super) {
     return ScoreItem;
 }(egret.Sprite));
 __reflect(ScoreItem.prototype, "ScoreItem");
+//# sourceMappingURL=ScoreItem.js.map

@@ -31,11 +31,11 @@ var GameData = (function () {
     //是否已经执行
     GameData.isRunGame = false;
     //主要用来测试和区分 微信小游戏 必须为true
-    GameData.isWxGame = true;
+    GameData.isWxGame = false;
     //当前游戏
-    GameData.currentChapter = 0;
+    GameData.currentChapter = 32;
     //当前关卡
-    GameData.currentLevel = 0;
+    GameData.currentLevel = 32;
     GameData.reviveCard = 1;
     //share 文案
     GameData.shareConf = [
@@ -47,3 +47,4 @@ var GameData = (function () {
     return GameData;
 }());
 __reflect(GameData.prototype, "GameData");
+//# sourceMappingURL=GameData.js.map

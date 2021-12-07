@@ -3,12 +3,12 @@ class GameData{
     //是否已经执行
     public static isRunGame:boolean = false;
     //主要用来测试和区分 微信小游戏 必须为true
-    public static isWxGame:boolean = true;
+    public static isWxGame:boolean = false;
     public static wxUserInfo:any;
     //当前游戏
-    public static currentChapter:number = 0;
+    public static currentChapter:number = 32;
     //当前关卡
-    public static currentLevel:number = 0;
+    public static currentLevel:number = 32;
     public static reviveCard:number = 1;
     public static gameConfig;
     //share 文案

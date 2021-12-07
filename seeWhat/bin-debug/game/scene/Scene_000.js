@@ -24,3 +24,4 @@ var Scene_000 = (function (_super) {
     return Scene_000;
 }(BaseScene));
 __reflect(Scene_000.prototype, "Scene_000");
+//# sourceMappingURL=Scene_000.js.map

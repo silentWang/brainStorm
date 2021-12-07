@@ -35,3 +35,4 @@ var BaseScene = (function (_super) {
     return BaseScene;
 }(egret.DisplayObjectContainer));
 __reflect(BaseScene.prototype, "BaseScene");
+//# sourceMappingURL=BaseScene.js.map

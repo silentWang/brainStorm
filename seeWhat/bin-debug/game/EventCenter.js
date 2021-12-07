@@ -23,3 +23,4 @@ var EventCenter = (function (_super) {
     return EventCenter;
 }(egret.EventDispatcher));
 __reflect(EventCenter.prototype, "EventCenter");
+//# sourceMappingURL=EventCenter.js.map

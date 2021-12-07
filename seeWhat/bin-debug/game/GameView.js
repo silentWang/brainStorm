@@ -34,3 +34,4 @@ var GameView = (function () {
     return GameView;
 }());
 __reflect(GameView.prototype, "GameView");
+//# sourceMappingURL=GameView.js.map

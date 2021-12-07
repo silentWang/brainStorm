@@ -130,3 +130,4 @@ var TipsView = (function (_super) {
     return TipsView;
 }(BaseView));
 __reflect(TipsView.prototype, "TipsView");
+//# sourceMappingURL=TipsView.js.map
